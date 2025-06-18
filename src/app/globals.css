@@ -1,0 +1,665 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+:root {
+  --background: #FBFBFB;
+  --foreground: #171717;
+  --primary: #212466;
+  --secondary: #991212;
+  --primary-accent: #FFEDED;
+  --foreground-accent: #454545;
+  --hero-background: #F3F3F5;
+  --footer-background: #212466;
+}
+
+html {
+  @apply scroll-smooth;
+}
+
+body {
+  @apply text-lg;
+  color: var(--foreground);
+  background: var(--background);
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+.manrope {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+/* Specific styles for the logo carousel */
+
+/* Wrapper for the carousel, controls overflow and height */
+.logo-carousel-wrapper {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  height: 60px;
+  /* Base height for the logos */
+}
+
+/* Inner container that moves */
+.logo-carousel-inner {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+}
+
+/* Individual logo item container */
+.logo-item {
+  flex-shrink: 0;
+  margin-left: 1rem;
+  /* 16px */
+  margin-right: 1rem;
+  /* 16px */
+  /* For small screens: sm:mx-8 (32px each side) */
+}
+
+/* Base styles for the image within the carousel */
+.logo-item img {
+  width: auto;
+  /* Allow image to size based on height */
+  height: 38px;
+  filter: grayscale(80%);
+  /* Initial grayscale filter */
+  transition: filter 0.3s ease-in-out;
+  /* Smooth transition for the filter */
+}
+
+/* On hover, remove the grayscale filter */
+.logo-item:hover img {
+  filter: grayscale(0%);
+}
+
+/* Responsive adjustment for small screens */
+@media (min-width: 640px) {
+  .logo-carousel-wrapper {
+    height: 90px;
+    /* Adjust height for larger logos on small screens */
+  }
+
+  .logo-item {
+    margin-left: 2rem;
+    /* 32px */
+    margin-right: 2rem;
+    /* 32px */
+  }
+
+  .logo-item img {
+    height: 60px;
+  }
+}
+
+.benefit-section:last-of-type>div {
+  @apply mb-10;
+}
+
+.text-shadow-md {
+  text-shadow: 1px 1px 2px rgba(0, 29, 14, 0.2);
+}
+
+.text-shadow-lg {
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+}
+
+.text-shadow-xl {
+  text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.text-shadow-subtle {
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+#daily-tips {
+  background-image: url('/images/product-bg.jpeg');
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+#daily-tips::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(33, 36, 102, 0.774);
+  z-index: 1;
+}
+
+#daily-tips>div {
+  position: relative;
+  z-index: 2;
+}
+
+.bg-CTA-cover {
+  background-image: url('/images/ctacover.JPG');
+}
+
+/* Preloader Styles */
+.preloader-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+}
+
+.preloader-container.preloader-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  /* Prevent clicks on the invisible element */
+}
+
+.preloader-logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.preloader-logo {
+  width: 213px;
+  height: 100px;
+}
+
+.logo-path {
+  stroke-width: 1;
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: draw 0.5s linear forwards, color-fill 0.5s linear forwards;
+  fill-opacity: 0;
+}
+
+/* Logomark paths (1 to 3) */
+.logo-path-1 {
+  stroke: #991212;
+  fill: #991212;
+  animation-delay: 0s;
+}
+
+.logo-path-2 {
+  stroke: #991212;
+  fill: #991212;
+  animation-delay: 0.5s;
+}
+
+.logo-path-3 {
+  stroke: #991212;
+  fill: #991212;
+  animation-delay: 1s;
+}
+
+/* Text paths (4 to 33) */
+.logo-path-4 {
+  stroke: #212466;
+  fill: #212466;
+  animation-delay: 1.5s;
+  animation-duration: 0.1s;
+}
+
+.logo-path-5 {
+  stroke: #212466;
+  fill: #212466;
+  animation-delay: 1.6s;
+  animation-duration: 0.1s;
+}
+
+.logo-path-6 {
+  stroke: #212466;
+  fill: #212466;
+  animation-delay: 1.7s;
+  animation-duration: 0.1s;
+}
+
+.logo-path-7 {
+  stroke: #212466;
+  fill: #212466;
+  animation-delay: 1.8s;
+  animation-duration: 0.1s;
+}
+
+.logo-path-8 {
+  stroke: #212466;
+  fill: #212466;
+  animation-delay: 1.9s;
+  animation-duration: 0.1s;
+}
+
+.logo-path-9 {
+  stroke: #212466;
+  fill: #212466;
+  animation-delay: 2.0s;
+  animation-duration: 0.1s;
+}
+
+.logo-path-10 {
+  stroke: #212466;
+  fill: #212466;
+  animation-delay: 2.1s;
+  animation-duration: 0.1s;
+}
+
+.logo-path-11 {
+  stroke: #212466;
+  fill: #212466;
+  animation-delay: 2.2s;
+  animation-duration: 0.1s;
+}
+
+.logo-path-12 {
+  stroke: #212466;
+  fill: #212466;
+  animation-delay: 2.3s;
+  animation-duration: 0.1s;
+}
+
+.logo-path-13 {
+  stroke: #212466;
+  fill: #212466;
+  animation-delay: 2.4s;
+  animation-duration: 0.1s;
+}
+
+.logo-path-14 {
+  stroke: #212466;
+  fill: #212466;
+  animation-delay: 2.5s;
+  animation-duration: 0.1s;
+}
+
+.logo-path-15 {
+  stroke: #212466;
+  fill: #212466;
+  animation-delay: 2.6s;
+  animation-duration: 0.1s;
+}
+
+.logo-path-16 {
+  stroke: #212466;
+  fill: #212466;
+  animation-delay: 2.7s;
+  animation-duration: 0.1s;
+}
+
+.logo-path-17 {
+  stroke: #212466;
+  fill: #212466;
+  animation-delay: 2.8s;
+  animation-duration: 0.1s;
+}
+
+.logo-path-18 {
+  stroke: #212466;
+  fill: #212466;
+  animation-delay: 2.9s;
+  animation-duration: 0.1s;
+}
+
+.logo-path-19 {
+  stroke: #212466;
+  fill: #212466;
+  animation-delay: 3.0s;
+  animation-duration: 0.1s;
+}
+
+.logo-path-20 {
+  stroke: #212466;
+  fill: #212466;
+  animation-delay: 3.1s;
+  animation-duration: 0.1s;
+}
+
+.logo-path-21 {
+  stroke: #212466;
+  fill: #212466;
+  animation-delay: 3.2s;
+  animation-duration: 0.1s;
+}
+
+.logo-path-22 {
+  stroke: #212466;
+  fill: #212466;
+  animation-delay: 3.3s;
+  animation-duration: 0.1s;
+}
+
+.logo-path-23 {
+  stroke: #212466;
+  fill: #212466;
+  animation-delay: 3.4s;
+  animation-duration: 0.1s;
+}
+
+.logo-path-24 {
+  stroke: #212466;
+  fill: #212466;
+  animation-delay: 3.5s;
+  animation-duration: 0.1s;
+}
+
+.logo-path-25 {
+  stroke: #212466;
+  fill: #212466;
+  animation-delay: 3.6s;
+  animation-duration: 0.1s;
+}
+
+.logo-path-26 {
+  stroke: #212466;
+  fill: #212466;
+  animation-delay: 3.7s;
+  animation-duration: 0.1s;
+}
+
+.logo-path-27 {
+  stroke: #212466;
+  fill: #212466;
+  animation-delay: 3.8s;
+  animation-duration: 0.1s;
+}
+
+.logo-path-28 {
+  stroke: #212466;
+  fill: #212466;
+  animation-delay: 3.9s;
+  animation-duration: 0.1s;
+}
+
+.logo-path-29 {
+  stroke: #212466;
+  fill: #212466;
+  animation-delay: 4.0s;
+  animation-duration: 0.1s;
+}
+
+.logo-path-30 {
+  stroke: #212466;
+  fill: #212466;
+  animation-delay: 4.1s;
+  animation-duration: 0.1s;
+}
+
+.logo-path-31 {
+  stroke: #212466;
+  fill: #212466;
+  animation-delay: 4.2s;
+  animation-duration: 0.1s;
+}
+
+.logo-path-32 {
+  stroke: #212466;
+  fill: #212466;
+  animation-delay: 4.3s;
+  animation-duration: 0.1s;
+}
+
+.logo-path-33 {
+  stroke: #212466;
+  fill: #212466;
+  animation-delay: 4.4s;
+  animation-duration: 0.1s;
+}
+
+/* Keyframe Animations */
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes color-fill {
+  to {
+    fill-opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+.map-div {
+  width: 100%;
+  height: 100%;
+}
+
+.our-approach-background {
+  background-size: cover;
+  background-position: center;
+  min-height: 400px;
+}
+
+
+.logos-container img {
+  object-fit: contain;
+}
+
+/* PromiseCard Styles */
+.promise-card {
+  background: white;
+  border-radius: 0.375rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e5e7eb;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  cursor: default;
+  position: relative;
+}
+
+.promise-card-hover::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at var(--mouse-x, 0px) var(--mouse-y, 0px),
+      rgba(8, 1, 107, 0.15) 0%,
+      rgba(13, 7, 71, 0) 60%);
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 0.1s ease;
+}
+
+.promise-card-hover:hover::before {
+  opacity: 1;
+}
+
+.promise-card>* {
+  position: relative;
+  z-index: 1;
+}
+
+.promise-card-title,
+.promise-card-description,
+.promise-card-list-item {
+  cursor: default;
+}
+
+/* Custom Cursor Styles 
+.custom-cursor {
+  position: fixed;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 50%,
+      rgba(153, 18, 18, 0.211) 0%,
+      rgba(153, 18, 18, 0) 30%);
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+}
+*/
+
+
+
+
+/* Product Listings Styles*/
+#product-listings {
+  background-image: url('/images/product-bg.JPG');
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: relative;
+}
+
+
+#product-listings-title {
+  color: #F3F3F5;
+}
+
+
+
+.product-card-hover::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at var(--mouse-x, 0px) var(--mouse-y, 0px),
+      rgba(153, 18, 18, 0.33) 0%,
+      rgba(33, 36, 102, 0.433) 60%);
+  z-index: -10;
+  opacity: 0;
+  transition: opacity 0.1s ease;
+}
+
+.product-card-hover:hover::before {
+  opacity: 1;
+}
+
+/* Testimonials Carousel Styles */
+.testimonial-slide {
+  transition: transform 0.3s ease;
+}
+
+.slick-center .testimonial-slide {
+  transform: scale(1.1);
+  /* Middle item slightly larger */
+  z-index: 10;
+}
+
+.slick-slide {
+  opacity: 0.6;
+  /* Slightly fade non-center slides */
+}
+
+.slick-center {
+  opacity: 1;
+  /* Full opacity for center slide */
+}
+
+/* Header Navigation Styles */
+.nav-link {
+  position: relative;
+  padding: 8px 0;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 3px;
+  background-color: #991212;
+  /* --secondary */
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after,
+.nav-link:focus::after {
+  width: 100%;
+}
+
+/* Active state for current page (you may need to add logic to apply this class) */
+.nav-link.active::after {
+  width: 100%;
+}
+
+/* Dropdown Menu Styles */
+.headlessui-menu-items {
+  transform-origin: top;
+  transition: all 0.2s ease-out;
+}
+
+/* Mobile Menu Styles */
+#mobile-menu {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  /* Ensure solid white background */
+}
+
+/* Ensure submenu items are styled consistently */
+#mobile-menu a,
+#mobile-menu button {
+  transition: color 0.3s ease;
+}
+
+/* Ensure mobile menu is full-screen with solid background */
+.md\:hidden {
+  z-index: 500;
+  background-color: #ffffff !important;
+  /* Force solid white background */
+}
+
+/* Prevent body scrolling when mobile menu is open */
+body.overflow-hidden {
+  overflow: hidden !important;
+  height: 100vh;
+  touch-action: none;
+  /* Prevent touch scrolling on mobile */
+}
+
+.footer-bg-filter {
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
