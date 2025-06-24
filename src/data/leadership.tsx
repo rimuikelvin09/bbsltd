@@ -35,7 +35,7 @@ export const leaders: ILeadership[] = [
         icon: <FiEye size={26} />,
       },
     ],
-    imageSrc: "/images/jgachinga.JPG",
+    imageSrc: "/images/jgachinga.jpg",
   },
   {
     title: "Meet Alice Karanja",
