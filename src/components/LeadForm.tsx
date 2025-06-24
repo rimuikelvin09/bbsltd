@@ -72,16 +72,18 @@ const LeadForm: React.FC<LeadFormProps> = ({ onClose }) => {
 
     setIsSubmitting(true);
     try {
-      // Placeholder API call
-      await new Promise<void>((resolve, reject) => {
-        setTimeout(() => {
-          Math.random() > 0.2
-            ? resolve()
-            : reject(new Error("Failed to submit"));
-        }, 1000);
+      // Placeholder API call (replace with your endpoint)
+      const response = await fetch("YOUR_API_ENDPOINT", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
       });
+      if (!response.ok) {
+        throw new Error("Failed to submit");
+      }
+      await response.json(); // Ensure response is consumed
       setSubmitStatus("success");
-    } catch (error) {
+    } catch {
       setSubmitStatus("error");
       setErrors({ api: "Submission failed. Please try again." });
     } finally {
