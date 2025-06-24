@@ -663,3 +663,180 @@ body.overflow-hidden {
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
 }
+
+
+/* Lock body scrolling when form is open */
+body.form-open {
+  overflow: hidden;
+}
+
+/* Lead Form Styles */
+.lead-form-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.lead-form {
+  background: #fffffffd;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.lead-form-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-align: center;
+  color: #212466;
+}
+
+.lead-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.lead-form-group label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #212466;
+}
+
+.lead-form-group input,
+.lead-form-group select {
+  padding: 0.5rem;
+  font-size: 0.9rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.lead-form-group input:focus,
+.lead-form-group select:focus {
+  border-color: #212466;
+  outline: none;
+}
+
+.lead-form-radio-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.lead-form-radio-group label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: #333;
+}
+
+.lead-form-consent-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: #333;
+}
+
+.lead-form-consent-label input {
+  margin-top: 0.2rem;
+}
+
+.lead-form-error-input {
+  border-color: #dc3545 !important;
+}
+
+.lead-form-error {
+  color: #dc3545;
+  font-size: 0.8rem;
+}
+
+.lead-form-submit-button {
+  padding: 0.5rem;
+  font-size: 0.9rem;
+  color: #fffffffd;
+  background: #212466;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.lead-form-submit-button:hover {
+  background: #1a1d4f;
+}
+
+.lead-form-submit-button:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+}
+
+.lead-form-close-button {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #212466;
+  line-height: 1;
+  padding: 0.25rem;
+}
+
+.lead-form-success-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.lead-form-success-content {
+  background: #fffffffd;
+  padding: 2rem;
+  border-radius: 8px;
+  text-align: center;
+  position: relative;
+}
+
+.lead-form-success-message {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #28a745;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 600px) {
+
+  .lead-form,
+  .lead-form-success-content {
+    padding: 1.5rem;
+  }
+
+  .lead-form-title,
+  .lead-form-success-message {
+    font-size: 1.2rem;
+  }
+}

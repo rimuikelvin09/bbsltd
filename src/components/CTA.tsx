@@ -1,8 +1,17 @@
-import { ctaDetails } from "@/data/cta";
+"use client";
 
+import React, { useState } from "react";
+import { ctaDetails } from "@/data/cta";
 import CtaButton from "./CtaButton";
+import LeadForm from "./LeadForm";
 
 const CTA: React.FC = () => {
+  const [isFormOpen, setIsFormOpen] = useState(false);
+
+  const toggleForm = () => {
+    setIsFormOpen((prev) => !prev);
+  };
+
   return (
     <section
       id="cta"
@@ -25,11 +34,12 @@ const CTA: React.FC = () => {
               {ctaDetails.heading}
             </h2>
             <div className="mt-4 flex flex-col sm:flex-row items-center sm:gap-4">
-              <CtaButton />
+              <CtaButton onClick={toggleForm} />
             </div>
           </div>
         </div>
       </div>
+      {isFormOpen && <LeadForm onClose={toggleForm} />}
     </section>
   );
 };

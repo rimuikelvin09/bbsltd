@@ -1,9 +1,18 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import { heroDetails } from "@/data/hero";
 import CtaButton from "./CtaButton";
 import Container from "./Container";
+import LeadForm from "./LeadForm";
 
 const Hero: React.FC = () => {
+  const [isFormOpen, setIsFormOpen] = useState(false);
+
+  const toggleForm = () => {
+    setIsFormOpen((prev) => !prev);
+  };
+
   return (
     <section
       id="hero"
@@ -40,7 +49,7 @@ const Hero: React.FC = () => {
             </p>
 
             <div className="mt-6 flex flex-col sm:flex-row items-start gap-4">
-              <CtaButton />
+              <CtaButton onClick={toggleForm} />
             </div>
           </div>
 
@@ -63,6 +72,7 @@ const Hero: React.FC = () => {
           </div>
         </div>
       </Container>
+      {isFormOpen && <LeadForm onClose={toggleForm} />}
     </section>
   );
 };

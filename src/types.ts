@@ -158,3 +158,16 @@ export interface Project {
   location: string;
   videoUrl: string;
 }
+
+import { Country } from "@/data/location";
+export interface LeadFormData {
+  firstName: string;
+  secondName: string;
+  gender: string;
+  email: string;
+  phone: string;
+  contactMethod: string;
+  location: "Kenya" | "Diaspora";
+  diasporaCountry: Country;
+  consent: boolean;
+}
