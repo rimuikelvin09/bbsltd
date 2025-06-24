@@ -12,7 +12,7 @@ const AboutUsPage = () => {
   return (
     <>
       <AboutUsHero />
-      <Container>
+      <Container className="py-16">
         <OurPromise />
         <OurApproach approach={ourApproachData} />
         <Section
