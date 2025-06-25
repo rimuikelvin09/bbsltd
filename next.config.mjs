@@ -3,7 +3,7 @@ const nextConfig = {
         return [
             {
                 source: "/api/:path*",
-                destination: "http://68.183.80.112/api/api/:path*",
+                destination: "http://bbsltd.ke/api/api/:path*",
             },
         ];
     },
@@ -25,3 +25,4 @@ const nextConfig = {
 };
 
 export default nextConfig;
+

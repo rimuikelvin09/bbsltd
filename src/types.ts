@@ -159,7 +159,8 @@ export interface Project {
   videoUrl: string;
 }
 
-import { Country } from "@/data/location";
+import { Country, KenyaCounty } from "@/data/location";
+
 export interface LeadFormData {
   firstName: string;
   secondName: string;
@@ -169,5 +170,6 @@ export interface LeadFormData {
   contactMethod: string;
   location: "Kenya" | "Diaspora";
   diasporaCountry: Country;
+  kenyaCounty: KenyaCounty;
   consent: boolean;
 }

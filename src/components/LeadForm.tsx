@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { LeadFormData } from "@/types";
-import { countries } from "@/data/location";
+import { countries, kenyaCounties } from "@/data/location";
 
 interface LeadFormProps {
   onClose: () => void;
@@ -18,6 +18,7 @@ const LeadForm: React.FC<LeadFormProps> = ({ onClose }) => {
     contactMethod: "",
     location: "Kenya",
     diasporaCountry: "",
+    kenyaCounty: "",
     consent: false,
   });
   const [errors, setErrors] = useState<
@@ -50,6 +51,8 @@ const LeadForm: React.FC<LeadFormProps> = ({ onClose }) => {
       newErrors.contactMethod = "Preferred contact method is required";
     if (formData.location === "Diaspora" && !formData.diasporaCountry)
       newErrors.diasporaCountry = "Country is required";
+    if (formData.location === "Kenya" && !formData.kenyaCounty)
+      newErrors.kenyaCounty = "County is required";
     if (!formData.consent) newErrors.consent = "You must consent to proceed";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -59,10 +62,20 @@ const LeadForm: React.FC<LeadFormProps> = ({ onClose }) => {
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value, type, checked } = e.target as HTMLInputElement;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: type === "checkbox" ? checked : value,
-    }));
+    setFormData((prev) => {
+      const newFormData = {
+        ...prev,
+        [name]: type === "checkbox" ? checked : value,
+      };
+      // Reset irrelevant fields when location changes
+      if (name === "location") {
+        newFormData.diasporaCountry =
+          value === "Diaspora" ? newFormData.diasporaCountry : "";
+        newFormData.kenyaCounty =
+          value === "Kenya" ? newFormData.kenyaCounty : "";
+      }
+      return newFormData;
+    });
     setErrors((prev) => ({ ...prev, [name]: undefined }));
   };
 
@@ -101,7 +114,7 @@ const LeadForm: React.FC<LeadFormProps> = ({ onClose }) => {
     return (
       <div className="lead-form-success-container" onClick={handleOutsideClick}>
         <div className="lead-form-success-content">
-          <h2 className="mb-4 text-2xl font-semibold text-center text-[#1b8333]">
+          <h2 className="lead-form-success-message">
             Details successfully submitted!
           </h2>
           <button
@@ -110,7 +123,7 @@ const LeadForm: React.FC<LeadFormProps> = ({ onClose }) => {
             onClick={onClose}
             aria-label="Close success message"
           >
-            ×
+            Close
           </button>
         </div>
       </div>
@@ -133,7 +146,7 @@ const LeadForm: React.FC<LeadFormProps> = ({ onClose }) => {
         >
           ×
         </button>
-        <h2 className="lead-form-title">Request A Callback </h2>
+        <h2 className="lead-form-title">Lead Generation Form</h2>
         <div className="lead-form-group">
           <label htmlFor="firstName">First Name</label>
           <input
@@ -288,6 +301,28 @@ const LeadForm: React.FC<LeadFormProps> = ({ onClose }) => {
             <option value="Diaspora">Diaspora</option>
           </select>
         </div>
+        {formData.location === "Kenya" && (
+          <div className="lead-form-group">
+            <label htmlFor="kenyaCounty">County</label>
+            <select
+              id="kenyaCounty"
+              name="kenyaCounty"
+              value={formData.kenyaCounty}
+              onChange={handleChange}
+              className={errors.kenyaCounty ? "lead-form-error-input" : ""}
+              aria-required="true"
+            >
+              {kenyaCounties.map((county) => (
+                <option key={county || "empty"} value={county}>
+                  {county || "Select a county"}
+                </option>
+              ))}
+            </select>
+            {errors.kenyaCounty && (
+              <span className="lead-form-error">{errors.kenyaCounty}</span>
+            )}
+          </div>
+        )}
         {formData.location === "Diaspora" && (
           <div className="lead-form-group">
             <label htmlFor="diasporaCountry">Country</label>
