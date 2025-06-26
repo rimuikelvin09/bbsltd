@@ -267,7 +267,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
                   { stage: "C", file: files.roofing },
                   { stage: "B", file: files.walling },
                   { stage: "A", file: files.foundation },
-                ].map(({ stage, file }, idx) => (
+                ].map(({ stage, file }) => (
                   <div
                     key={stage}
                     className="relative h-64 cursor-pointer group"
