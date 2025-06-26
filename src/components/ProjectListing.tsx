@@ -36,6 +36,20 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
   const openGalleryModal = () => setIsGalleryOpen(true);
   const closeGalleryModal = () => setIsGalleryOpen(false);
 
+  // Effect to disable/enable body scrolling
+  useEffect(() => {
+    if (selectedImage || selectedVideo || isGalleryOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+
+    // Cleanup function to re-enable scrolling when component unmounts or modals close
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [selectedImage, selectedVideo, isGalleryOpen]);
+
   // Animation variants for sliding effect
   const childVariants = {
     offscreen: {
@@ -129,7 +143,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
   return (
     <div className="w-full max-w-7xl mx-auto">
       <motion.div
-        className={`bg-white/95 backdrop-blur-md border border-gray-200 p-8 shadow-sm flex flex-col lg:flex-row gap-8 ${
+        className={`bg-white/95 backdrop-blur-md border border-gray-200 p-6 shadow-sm flex flex-col lg:flex-row gap-8 ${
           index % 2 === 0 ? "" : "lg:flex-row-reverse"
         }`}
         variants={childVariants}
@@ -145,14 +159,16 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
       <AnimatePresence>
         {selectedImage && (
           <motion.div
-            className="fixed inset-0 z-60 flex items-center justify-center bg-black/50 backdrop-blur-md"
+            // Changed z-60 to z-[999] for a very high z-index
+            // Changed bg-black/50 to bg-[#21246638] for consistent blur background with gallery
+            className="fixed inset-0 z-[999] flex items-center justify-center bg-[#21246638] backdrop-blur-md p-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={closeImageModal}
           >
             <motion.div
-              className="relative max-w-3xl w-full mx-4 bg-white rounded-lg overflow-hidden"
+              className="relative max-w-3xl w-full mx-auto bg-white rounded-lg overflow-hidden"
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
@@ -170,7 +186,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
               />
               <button
                 onClick={closeImageModal}
-                className="absolute top-4 right-4 text-[#991212]"
+                className="absolute top-4 right-4 text-[#991212] z-10"
                 aria-label="Close image modal"
               >
                 <svg
@@ -196,14 +212,16 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
       <AnimatePresence>
         {selectedVideo && (
           <motion.div
-            className="fixed inset-0 z-60 flex items-center justify-center bg-black/50 backdrop-blur-md"
+            // Changed z-60 to z-[999] for a very high z-index
+            // Changed bg-black/50 to bg-[#21246638] for consistent blur background with gallery
+            className="fixed inset-0 z-[999] flex items-center justify-center bg-[#21246638] backdrop-blur-md p-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={closeVideoModal}
           >
             <motion.div
-              className="relative max-w-4xl w-full mx-4 bg-white rounded-lg overflow-hidden"
+              className="relative max-w-4xl w-full mx-auto bg-white rounded-lg overflow-hidden"
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
@@ -215,13 +233,13 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
                   .replace("youtube.com/shorts/", "youtube.com/embed/")
                   .replace("?feature=share", "")}
                 title={`Video for ${title}`}
-                className="w-full h-[500px]"
+                className="w-full h-[300px] sm:h-[400px] lg:h-[500px]"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
               />
               <button
                 onClick={closeVideoModal}
-                className="absolute top-4 right-4 text-[#991212]"
+                className="absolute top-4 right-4 text-[#991212] z-10"
                 aria-label="Close video modal"
               >
                 <svg
@@ -247,14 +265,14 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
       <AnimatePresence>
         {isGalleryOpen && files && (
           <motion.div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-[#21246638] backdrop-blur-md"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-[#21246638] backdrop-blur-md p-4 overflow-y-auto"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={closeGalleryModal}
           >
             <motion.div
-              className="relative max-w-4xl w-full mx-4 bg-white/0  overflow-hidden p-10"
+              className="relative max-w-4xl w-full mx-auto bg-white/0 rounded-lg overflow-hidden p-4 sm:p-10"
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
@@ -263,34 +281,38 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
             >
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {[
-                  { stage: "D", file: files.finishing },
-                  { stage: "C", file: files.roofing },
-                  { stage: "B", file: files.walling },
-                  { stage: "A", file: files.foundation },
-                ].map(({ stage, file }) => (
-                  <div
-                    key={stage}
-                    className="relative h-64 cursor-pointer group"
-                    onClick={() => openImageModal(file.fileUrl)}
-                  >
-                    <Image
-                      src={file.fileUrl}
-                      alt={`${title} - ${stage}`}
-                      fill
-                      className="object-cover rounded-lg group-hover:brightness-75 transition-brightness duration-300"
-                      sizes="(max-width: 640px) 100vw, 50vw"
-                    />
-                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/30 rounded-lg">
-                      <span className="text-white font-semibold text-lg capitalize">
-                        {stage}
-                      </span>
-                    </div>
-                  </div>
-                ))}
+                  { stage: "D", file: files.finishing, label: "Finishing" },
+                  { stage: "C", file: files.roofing, label: "Roofing" },
+                  { stage: "B", file: files.walling, label: "Walling" },
+                  { stage: "A", file: files.foundation, label: "Foundation" },
+                ].map(
+                  ({ stage, file, label }) =>
+                    file?.fileUrl &&
+                    file?.fileType === "IMAGE" && (
+                      <div
+                        key={stage}
+                        className="relative h-64 cursor-pointer group"
+                        onClick={() => openImageModal(file.fileUrl)}
+                      >
+                        <Image
+                          src={file.fileUrl}
+                          alt={`${title} - ${label}`}
+                          fill
+                          className="object-cover rounded-lg group-hover:brightness-75 transition-brightness duration-300"
+                          sizes="(max-width: 640px) 100vw, 50vw"
+                        />
+                        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/30 rounded-lg">
+                          <span className="text-white font-semibold text-lg capitalize">
+                            {label}
+                          </span>
+                        </div>
+                      </div>
+                    )
+                )}
               </div>
               <button
                 onClick={closeGalleryModal}
-                className="absolute top-4 right-4 text-[#991212]"
+                className="absolute top-4 right-4 text-[#991212] z-10"
                 aria-label="Close gallery modal"
               >
                 <svg
@@ -361,7 +383,7 @@ const ProjectListing: React.FC = () => {
   return (
     <section id="project-listings" className="py-4 bg-gray-50">
       <Container>
-        <div className="relative z-10 container mx-auto px-4 py-16">
+        <div className="relative z-10 container py-16">
           <div className="flex flex-col items-center gap-6">
             {projects.map((project, index) => (
               <ProjectCard key={project.id} project={project} index={index} />
