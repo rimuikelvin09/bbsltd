@@ -146,8 +146,9 @@ const LeadForm: React.FC<LeadFormProps> = ({ onClose }) => {
         >
           ×
         </button>
-        <h2 className="lead-form-title">Lead Generation Form</h2>
-        <div className="lead-form-group">
+        <h2 className="lead-form-title">Request a call back</h2>
+
+        <div className="lead-form-group text-left">
           <label htmlFor="firstName">First Name</label>
           <input
             type="text"
@@ -161,7 +162,7 @@ const LeadForm: React.FC<LeadFormProps> = ({ onClose }) => {
             <span className="lead-form-error">{errors.firstName}</span>
           )}
         </div>
-        <div className="lead-form-group">
+        <div className="lead-form-group text-left">
           <label htmlFor="secondName">Second Name</label>
           <input
             type="text"
@@ -175,7 +176,7 @@ const LeadForm: React.FC<LeadFormProps> = ({ onClose }) => {
             <span className="lead-form-error">{errors.secondName}</span>
           )}
         </div>
-        <div className="lead-form-group">
+        <div className="lead-form-group text-left">
           <label>Gender</label>
           <div className="lead-form-radio-group">
             <label>
@@ -213,7 +214,7 @@ const LeadForm: React.FC<LeadFormProps> = ({ onClose }) => {
             <span className="lead-form-error">{errors.gender}</span>
           )}
         </div>
-        <div className="lead-form-group">
+        <div className="lead-form-group text-left">
           <label htmlFor="email">Email Address</label>
           <input
             type="email"
@@ -227,7 +228,7 @@ const LeadForm: React.FC<LeadFormProps> = ({ onClose }) => {
             <span className="lead-form-error">{errors.email}</span>
           )}
         </div>
-        <div className="lead-form-group">
+        <div className="lead-form-group text-left">
           <label htmlFor="phone">Phone Number</label>
           <input
             type="tel"
@@ -241,7 +242,7 @@ const LeadForm: React.FC<LeadFormProps> = ({ onClose }) => {
             <span className="lead-form-error">{errors.phone}</span>
           )}
         </div>
-        <div className="lead-form-group">
+        <div className="lead-form-group text-left">
           <label>Preferred contact method</label>
           <div className="lead-form-radio-group">
             <label>
@@ -289,7 +290,7 @@ const LeadForm: React.FC<LeadFormProps> = ({ onClose }) => {
             <span className="lead-form-error">{errors.contactMethod}</span>
           )}
         </div>
-        <div className="lead-form-group">
+        <div className="lead-form-group text-left">
           <label htmlFor="location">Location</label>
           <select
             id="location"
@@ -302,7 +303,7 @@ const LeadForm: React.FC<LeadFormProps> = ({ onClose }) => {
           </select>
         </div>
         {formData.location === "Kenya" && (
-          <div className="lead-form-group">
+          <div className="lead-form-group text-left">
             <label htmlFor="kenyaCounty">County</label>
             <select
               id="kenyaCounty"
@@ -324,7 +325,7 @@ const LeadForm: React.FC<LeadFormProps> = ({ onClose }) => {
           </div>
         )}
         {formData.location === "Diaspora" && (
-          <div className="lead-form-group">
+          <div className="lead-form-group text-left">
             <label htmlFor="diasporaCountry">Country</label>
             <select
               id="diasporaCountry"
@@ -345,7 +346,7 @@ const LeadForm: React.FC<LeadFormProps> = ({ onClose }) => {
             )}
           </div>
         )}
-        <div className="lead-form-group">
+        <div className="lead-form-group text-left">
           <label className="lead-form-consent-label">
             <input
               type="checkbox"

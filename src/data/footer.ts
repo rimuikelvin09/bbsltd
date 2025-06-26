@@ -14,11 +14,11 @@ export const footerDetails: {
     },
     {
       text: "Client Portal",
-      url: "http://app.bbsltd.co.ke/",
+      url: "http://bbsltd.ke/auth",
     },
     {
       text: "Agent Portal",
-      url: "http://app.bbsltd.co.ke/",
+      url: "http://bbsltd.ke/auth",
     },
     {
       text: "Portfolio",
@@ -34,5 +34,6 @@ export const footerDetails: {
     linkedin: "https://www.linkedin.com/company/bbsltdofficial",
     instagram: "https://www.instagram.com/bbsltdofficial/",
   },
-  address: "K-unity Building (Mapa House), Kiambu town, 1st Floor, Room 1",
+  address:
+    "K-unity building, residential wing 1st floor, room F10 - Kiambu town",
 };

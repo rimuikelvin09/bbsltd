@@ -134,7 +134,11 @@ export interface ITestimonial {
 export interface Product {
   id: number;
   productTitle: string;
-  description: string;
+  description: {
+    a: string;
+    b: string;
+    c: string;
+  }[];
   fileType: string;
   fileName: string;
   objectKey: string;
@@ -148,15 +152,37 @@ export interface Project {
   id: number;
   title: string;
   description: string;
-  fileType: string;
-  fileName: string;
-  objectKey: string;
-  fileUrl: string;
   createdAt: string;
   client: string;
   typeOfContract: string;
   location: string;
   videoUrl: string;
+  files: {
+    foundation: {
+      fileName: string;
+      objectKey: string;
+      fileUrl: string;
+      fileType: string;
+    };
+    walling: {
+      fileName: string;
+      objectKey: string;
+      fileUrl: string;
+      fileType: string;
+    };
+    roofing: {
+      fileName: string;
+      objectKey: string;
+      fileUrl: string;
+      fileType: string;
+    };
+    finishing: {
+      fileName: string;
+      objectKey: string;
+      fileUrl: string;
+      fileType: string;
+    };
+  };
 }
 
 import { Country, KenyaCounty } from "@/data/location";

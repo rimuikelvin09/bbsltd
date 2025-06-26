@@ -840,3 +840,8 @@ body.form-open {
     font-size: 1.2rem;
   }
 }
+
+/* Transition Utilities for portfolio section*/
+.transition-brightness {
+  transition-property: brightness;
+}

@@ -84,7 +84,7 @@ const ProductPage = () => {
         router.push(`/products/${productSlug}`);
       }
     },
-    [router, latestSlug]
+    [router]
   );
 
   // Loading state with red spinner
@@ -145,7 +145,7 @@ const ProductPage = () => {
         <div className="absolute inset-0 h-full w-full bg-hero-background bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_60%,transparent_100%)]"></div>
       </div>
 
-      {/* Mobile Sidebar Toggle Note */}
+      {/* Mobile Sidebar Toggle */}
       <div
         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
         className="lg:hidden fixed top-32 right-4 z-[100] px-4 py-2 text-white bg-[#991212]/90 rounded-md shadow-lg cursor-pointer"
@@ -160,7 +160,6 @@ const ProductPage = () => {
         className={clsx(
           "fixed top-52 left-0 h-auto max-h-[70vh] w-64 bg-white/70 backdrop-blur-md shadow-lg z-50 transform transition-transform duration-300 ease-in-out",
           "py-8 px-6 overflow-y-hidden",
-          // Adjusted for spacing from top
           {
             "-translate-x-full": !isSidebarOpen,
             "translate-x-0": isSidebarOpen,
@@ -221,14 +220,19 @@ const ProductPage = () => {
                   >
                     {currentProduct.productHook}
                   </motion.h1>
-                  {currentProduct.description && (
-                    <motion.p
-                      className="mt-4 max-w-lg md:max-w-xl font-normal text-white mx-auto md:mx-0"
-                      variants={contentVariants}
-                    >
-                      {currentProduct.description}
-                    </motion.p>
-                  )}
+                  {currentProduct.description &&
+                    currentProduct.description.length > 0 && (
+                      <motion.ul
+                        className="mt-4 max-w-lg md:max-w-xl font-normal text-white mx-auto md:mx-0 list-disc list-outside pl-5"
+                        variants={contentVariants}
+                      >
+                        {currentProduct.description.flatMap((desc, index) => [
+                          <li key={`${index}-a`}>{desc.a}</li>,
+                          <li key={`${index}-b`}>{desc.b}</li>,
+                          <li key={`${index}-c`}>{desc.c}</li>,
+                        ])}
+                      </motion.ul>
+                    )}
                   <div className="mt-6 flex flex-col sm:flex-row items-start gap-4">
                     <a
                       href="#"
@@ -261,7 +265,6 @@ const ProductPage = () => {
                         height={810}
                         quality={100}
                         sizes="(max-width: 768px) 100vw, 1508px"
-                        priority={true}
                         unoptimized={true}
                         alt={currentProduct.productTitle}
                         className="w-full max-w-lg filter object-cover"
