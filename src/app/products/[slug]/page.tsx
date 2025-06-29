@@ -262,12 +262,12 @@ const ProductPage = () => {
                       <Image
                         src={currentProduct.fileUrl}
                         width={854}
-                        height={810}
+                        height={480}
                         quality={100}
                         sizes="(max-width: 768px) 100vw, 1508px"
                         unoptimized={true}
                         alt={currentProduct.productTitle}
-                        className="w-full max-w-lg filter object-cover"
+                        className="md:h-[400px] w-full max-w-lg filter object-cover"
                       />
                     ) : (
                       <div className="w-full max-w-lg h-64 bg-gray-200 flex items-center justify-center text-gray-500">
