@@ -3,7 +3,12 @@
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import { Transition } from "@headlessui/react";
-import { HiOutlineXMark, HiBars3, HiChevronLeft } from "react-icons/hi2";
+import {
+  HiOutlineXMark,
+  HiBars3,
+  HiChevronLeft,
+  HiUser,
+} from "react-icons/hi2";
 import Image from "next/image";
 import { generateSlug } from "@/utils";
 import { Product } from "@/types";
@@ -47,9 +52,11 @@ const Header: React.FC = () => {
     setActiveMenu(menuText);
   };
 
-  // Handle mouse leave for the entire menu
-  const handleMenuLeave = () => {
-    setActiveMenu(null);
+  // Handle mouse leave for menu items
+  const handleMouseLeave = (menuText: string) => {
+    if (activeMenu === menuText) {
+      setActiveMenu(null);
+    }
   };
 
   // Fetch products and handle scroll
@@ -89,104 +96,134 @@ const Header: React.FC = () => {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-[50] w-full transition-colors duration-300 ${
-        isScrolled ? "bg-white shadow-md" : "bg-transparent "
+        isScrolled ? "bg-white shadow-md" : "bg-transparent"
       }`}
     >
       <Container className="!px-0">
-        <nav
-          className="shadow-md md:shadow-none bg-white md:bg-transparent mx-auto flex justify-between items-center py-2 px-5 md:py-10"
-          onMouseLeave={handleMenuLeave}
-        >
-          {/* Logo */}
-          <Link
-            href="/"
-            className="flex items-center gap-2"
-            onClick={() => setIsOpen(false)}
-          >
-            <div className="hidden md:block w-40 h-auto relative">
-              <Image
-                width={140}
-                height={20}
-                src={
-                  isScrolled ? siteDetails.siteLogo : siteDetails.siteWhiteLogo
-                }
-                alt={siteDetails.siteName}
-                className="object-contain"
-              />
-            </div>
-            <div className="md:hidden w-20 h-auto relative">
-              <Image
-                width={100}
-                height={10}
-                src={siteDetails.siteLogo}
-                alt={siteDetails.siteName}
-                className="object-contain"
-              />
-            </div>
-          </Link>
+        <nav className="shadow-md md:shadow-none bg-white md:bg-transparent mx-auto flex items-end py-2 px-5 md:py-10">
+          {/* Mobile Nav: Logo and Hamburger */}
+          <div className="flex justify-between items-center w-full md:hidden">
+            <Link
+              href="/"
+              className="flex items-center gap-2"
+              onClick={() => setIsOpen(false)}
+            >
+              <div className="w-20 h-auto relative">
+                <Image
+                  width={100}
+                  height={10}
+                  src={siteDetails.siteLogo}
+                  alt={siteDetails.siteName}
+                  className="object-contain"
+                />
+              </div>
+            </Link>
+            <button
+              className="bg-primary text-[#212466] rounded-full w-10 h-10 flex items-center justify-center"
+              onClick={toggleMenu}
+              aria-label={isOpen ? "Close menu" : "Open menu"}
+            >
+              {isOpen ? (
+                <HiOutlineXMark className="h-6 w-6" />
+              ) : (
+                <HiBars3 className="h-6 w-6" />
+              )}
+            </button>
+          </div>
 
-          {/* Desktop Menu */}
-          <ul className="hidden md:flex text-xl font-semibold text-[#212466] space-x-6 items-center">
-            {menuItems.map((item) => (
-              <li
-                key={item.text}
-                className="relative"
-                onMouseEnter={() => handleMouseEnter(item.text)}
+          {/* Desktop Nav: Logo, Menu, Login */}
+          <div className="hidden md:flex items-end w-full">
+            {/* Logo (Left) */}
+            <div className="flex justify-start">
+              <Link
+                href="/"
+                className="flex items-center gap-2"
+                onClick={() => setIsOpen(false)}
               >
-                {item.text === "Products" ? (
-                  <>
-                    <button
+                <div className="w-40 h-auto relative">
+                  <Image
+                    width={140}
+                    height={20}
+                    src={
+                      isScrolled
+                        ? siteDetails.siteLogo
+                        : siteDetails.siteWhiteLogo
+                    }
+                    alt={siteDetails.siteName}
+                    className="object-contain"
+                  />
+                </div>
+              </Link>
+            </div>
+
+            {/* Desktop Menu (Centered) */}
+            <ul className="flex flex-1 justify-center text-xl font-semibold space-x-6 items-end">
+              {menuItems.map((item) => (
+                <li
+                  key={item.text}
+                  className="flex items-end relative"
+                  onMouseEnter={() => handleMouseEnter(item.text)}
+                  onMouseLeave={() => handleMouseLeave(item.text)}
+                >
+                  {item.text === "Products" ? (
+                    <>
+                      <button
+                        className={`nav-link ${
+                          isScrolled ? "text-[#212466]" : "text-white"
+                        } hover:text-foreground-accent transition-colors`}
+                      >
+                        {item.text}
+                      </button>
+                      {activeMenu === "Products" && (
+                        <div
+                          className="absolute top-full left-0 w-80 bg-white/90 backdrop-blur-md text-[#212466] border border-white/20 rounded-md shadow-lg"
+                          onMouseEnter={() => handleMouseEnter("Products")}
+                          onMouseLeave={() => handleMouseLeave("Products")}
+                        >
+                          <ul className="py-1">
+                            {products.map((product) => (
+                              <li key={product.id}>
+                                <Link
+                                  href={`/products/${generateSlug(
+                                    product.productTitle
+                                  )}`}
+                                  className="block px-4 py-2 text-lg font-normal text-primary hover:bg-[#ffeded] hover:text-secondary transition-colors"
+                                >
+                                  {product.productTitle}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    <Link
+                      href={item.url}
                       className={`nav-link ${
-                        isScrolled ? "text-foreground" : "text-white"
+                        isScrolled ? "text-[#212466]" : "text-white"
                       } hover:text-foreground-accent transition-colors`}
                     >
                       {item.text}
-                    </button>
-                    {activeMenu === "Products" && (
-                      <div className="absolute left-0 mt-2 w-48 bg-white/90 backdrop-blur-md border border-white/20 rounded-md shadow-lg">
-                        <ul className="py-1">
-                          {products.map((product) => (
-                            <li key={product.id}>
-                              <Link
-                                href={`/products/${generateSlug(
-                                  product.productTitle
-                                )}`}
-                                className="block px-4 py-2 text-sm text-primary hover:bg-white/20 hover:text-secondary transition-colors"
-                              >
-                                {product.productTitle}
-                              </Link>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                  </>
-                ) : (
-                  <Link
-                    href={item.url}
-                    className={`nav-link ${
-                      isScrolled ? "text-foreground" : "text-white"
-                    } hover:text-foreground-accent transition-colors`}
-                  >
-                    {item.text}
-                  </Link>
-                )}
-              </li>
-            ))}
-          </ul>
+                    </Link>
+                  )}
+                </li>
+              ))}
+            </ul>
 
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden bg-primary text-[#212466] rounded-full w-10 h-10 flex items-center justify-center"
-            onClick={toggleMenu}
-            aria-label={isOpen ? "Close menu" : "Open menu"}
-          >
-            {isOpen ? (
-              <HiOutlineXMark className="h-6 w-6" />
-            ) : (
-              <HiBars3 className="h-6 w-6" />
-            )}
-          </button>
+            {/* Login Button (Right) */}
+            <div className="flex justify-end items-end">
+              <Link
+                href="https://bbsltd.ke/auth"
+                className={`nav-link ${
+                  isScrolled ? "text-[#212466]" : "text-white"
+                } hover:text-foreground-accent transition-colors flex items-center gap-2 text-xl font-semibold`}
+              >
+                <HiUser className="h-6 w-6" />
+                Login
+              </Link>
+            </div>
+          </div>
         </nav>
       </Container>
 
@@ -219,7 +256,7 @@ const Header: React.FC = () => {
       >
         <div className="md:hidden fixed top-0 left-0 h-full w-3/4 bg-white/90 backdrop-blur-md z-[50] flex flex-col shadow-lg isolate">
           {/* Mobile Menu Header */}
-          <div className="flex justify-between items-center p-4 border-b border-gray-200">
+          <div className="flex justify-start items-center p-4 border-b border-gray-200">
             <div className="w-10 h-auto relative">
               <Image
                 width={100}
@@ -229,13 +266,6 @@ const Header: React.FC = () => {
                 className="object-contain"
               />
             </div>
-            <button
-              className="text-[#212466] rounded-full w-10 h-10 flex items-center justify-center"
-              onClick={toggleMenu}
-              aria-label="Close menu"
-            >
-              <HiOutlineXMark className="h-6 w-6" />
-            </button>
           </div>
 
           {/* Mobile Menu Content */}
@@ -246,7 +276,7 @@ const Header: React.FC = () => {
                   <li key={item.text}>
                     {item.text === "Products" ? (
                       <button
-                        className="text-primary hover:text-secondary text-xl font-medium flex items-center justify-between w-full pr-4"
+                        className="text-[#212466] hover:text-secondary text-xl font-medium flex items-center justify-between w-full pr-4"
                         onClick={toggleProductsSubmenu}
                       >
                         {item.text}
@@ -254,7 +284,7 @@ const Header: React.FC = () => {
                     ) : (
                       <Link
                         href={item.url}
-                        className="text-primary hover:text-secondary text-xl font-medium block"
+                        className="text-[#212466] hover:text-secondary text-xl font-medium block"
                         onClick={toggleMenu}
                       >
                         {item.text}
@@ -262,6 +292,16 @@ const Header: React.FC = () => {
                     )}
                   </li>
                 ))}
+                <li>
+                  <Link
+                    href="https://bbsltd.ke/auth"
+                    className="text-[#212466] hover:text-secondary text-xl font-medium flex items-center gap-2"
+                    onClick={toggleMenu}
+                  >
+                    <HiUser className="h-6 w-6" />
+                    Login
+                  </Link>
+                </li>
               </ul>
             ) : (
               <div key="products-submenu">
@@ -277,13 +317,23 @@ const Header: React.FC = () => {
                     <li key={product.id}>
                       <Link
                         href={`/products/${generateSlug(product.productTitle)}`}
-                        className="text-primary hover:text-secondary text-xl font-medium block"
+                        className="text-[#212466] hover:text-secondary text-xl font-medium block"
                         onClick={toggleMenu}
                       >
                         {product.productTitle}
                       </Link>
                     </li>
                   ))}
+                  <li>
+                    <Link
+                      href="https://bbsltd.ke/auth"
+                      className="text-[#212466] hover:text-secondary text-xl font-medium flex items-center gap-2"
+                      onClick={toggleMenu}
+                    >
+                      <HiUser className="h-6 w-6" />
+                      Login
+                    </Link>
+                  </li>
                 </ul>
               </div>
             )}

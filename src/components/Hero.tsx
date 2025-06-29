@@ -35,7 +35,7 @@ const Hero: React.FC = () => {
 
       {/* Content Container - Visible Once Preloader Completes */}
       <Container>
-        <div className="max-w-7xl container mx-auto py-16 flex flex-col-reverse lg:flex-row items-center justify-between gap-4">
+        <div className="max-w-7xl container mx-auto mt-16 flex flex-col-reverse lg:flex-row items-center justify-between gap-4">
           {/* Text Content */}
           <div className="lg:w-7/12 text-left">
             <p className="mt-4 max-w-lg md:max-w-xl text-white mx-auto md:mx-0">
