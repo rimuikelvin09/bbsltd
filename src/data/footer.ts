@@ -35,5 +35,5 @@ export const footerDetails: {
     instagram: "https://www.instagram.com/bbsltdofficial/",
   },
   address:
-    "K-unity building, residential wing 1st floor, room F10 - Kiambu town",
+    "Room F10, 1st Floor, Residential Wing, K-Unity Building - Kiambu Town",
 };

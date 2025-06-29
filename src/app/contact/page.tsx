@@ -13,7 +13,7 @@ const ContactPage = () => {
         <MapSection
           title="Office Location"
           description="Find us at our office in Kiambu, Kenya."
-          address="K-unity building, residential wing 1st floor, room F10 - Kiambu town"
+          address="Room F10, 1st Floor, Residential Wing, K-Unity Building - Kiambu Town"
           phone="+254 722 333324"
           email="info@bbsltd.co.ke"
         />

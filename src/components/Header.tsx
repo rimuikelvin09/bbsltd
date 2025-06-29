@@ -16,6 +16,7 @@ const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
   const [showProductsSubmenu, setShowProductsSubmenu] = useState(false);
+  const [activeMenu, setActiveMenu] = useState<string | null>(null);
 
   // Toggle mobile menu
   const toggleMenu = () => {
@@ -29,6 +30,16 @@ const Header: React.FC = () => {
   // Toggle products submenu
   const toggleProductsSubmenu = () => {
     setShowProductsSubmenu((prev) => !prev);
+  };
+
+  // Handle mouse enter for menu items
+  const handleMouseEnter = (menuText: string) => {
+    setActiveMenu(menuText);
+  };
+
+  // Handle mouse leave for the entire menu
+  const handleMenuLeave = () => {
+    setActiveMenu(null);
   };
 
   // Fetch products and handle scroll
@@ -64,11 +75,16 @@ const Header: React.FC = () => {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 w-full transition-colors duration-300 ${
-        isScrolled ? "bg-white/70 backdrop-blur-md shadow-md" : "bg-transparent"
+        isScrolled
+          ? "bg-white/70 backdrop-blur-md shadow-md"
+          : "bg-[#212466]/10 backdrop-blur-[0.5px]"
       }`}
     >
       <Container className="!px-0">
-        <nav className="shadow-md md:shadow-none bg-white md:bg-transparent mx-auto flex justify-between items-center py-2 px-5 md:py-10">
+        <nav
+          className="shadow-md md:shadow-none bg-white md:bg-transparent mx-auto flex justify-between items-center py-2 px-5 md:py-10"
+          onMouseLeave={handleMenuLeave}
+        >
           {/* Logo */}
           <Link
             href="/"
@@ -86,11 +102,11 @@ const Header: React.FC = () => {
                 className="object-contain"
               />
             </div>
-            <div className="md:hidden w-10 h-auto relative">
+            <div className="md:hidden w-20 h-auto relative">
               <Image
                 width={100}
                 height={10}
-                src={siteDetails.siteLogomark}
+                src={siteDetails.siteLogo}
                 alt={siteDetails.siteName}
                 className="object-contain"
               />
@@ -99,35 +115,41 @@ const Header: React.FC = () => {
 
           {/* Desktop Menu */}
           <ul className="hidden md:flex text-xl font-semibold text-[#212466] space-x-6 items-center">
-            {menuItems.map((item) =>
-              item.text === "Products" ? (
-                <li key={item.text} className="relative group">
-                  <button
-                    className={`nav-link ${
-                      isScrolled ? "text-foreground" : "text-white"
-                    } hover:text-foreground-accent transition-colors`}
-                  >
-                    {item.text}
-                  </button>
-                  <div className="absolute left-0 mt-2 w-48 hidden group-hover:block bg-white/90 backdrop-blur-md border border-white/20 rounded-md shadow-lg">
-                    <ul className="py-1">
-                      {products.map((product) => (
-                        <li key={product.id}>
-                          <Link
-                            href={`/products/${generateSlug(
-                              product.productTitle
-                            )}`}
-                            className="block px-4 py-2 text-sm text-primary hover:bg-white/20 hover:text-secondary transition-colors"
-                          >
-                            {product.productTitle}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </li>
-              ) : (
-                <li key={item.text}>
+            {menuItems.map((item) => (
+              <li
+                key={item.text}
+                className="relative"
+                onMouseEnter={() => handleMouseEnter(item.text)}
+              >
+                {item.text === "Products" ? (
+                  <>
+                    <button
+                      className={`nav-link ${
+                        isScrolled ? "text-foreground" : "text-white"
+                      } hover:text-foreground-accent transition-colors`}
+                    >
+                      {item.text}
+                    </button>
+                    {activeMenu === "Products" && (
+                      <div className="absolute left-0 mt-2 w-48 bg-white/90 backdrop-blur-md border border-white/20 rounded-md shadow-lg">
+                        <ul className="py-1">
+                          {products.map((product) => (
+                            <li key={product.id}>
+                              <Link
+                                href={`/products/${generateSlug(
+                                  product.productTitle
+                                )}`}
+                                className="block px-4 py-2 text-sm text-primary hover:bg-[#FFEDED] hover:text-secondary transition-colors"
+                              >
+                                {product.productTitle}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </>
+                ) : (
                   <Link
                     href={item.url}
                     className={`nav-link ${
@@ -136,9 +158,9 @@ const Header: React.FC = () => {
                   >
                     {item.text}
                   </Link>
-                </li>
-              )
-            )}
+                )}
+              </li>
+            ))}
           </ul>
 
           {/* Mobile Menu Button */}
@@ -158,10 +180,7 @@ const Header: React.FC = () => {
 
       {/* Mobile Menu Overlay */}
       {isOpen && (
-        <div
-          className="fixed inset-0 bg-black/50 z-40" // Darker overlay for better contrast
-          onClick={toggleMenu}
-        />
+        <div className="fixed inset-0 bg-black/50 z-40" onClick={toggleMenu} />
       )}
 
       <Transition
@@ -185,7 +204,6 @@ const Header: React.FC = () => {
                 className="object-contain"
               />
             </div>
-            {/* Removed the 'X' button here as per requirement 1 */}
           </div>
 
           {/* Mobile Menu Content - Main Menu vs. Products Submenu */}
@@ -200,7 +218,6 @@ const Header: React.FC = () => {
               leaveFrom="opacity-100 translate-x-0"
               leaveTo="opacity-0 -translate-x-full"
             >
-              {/* Added a div to hold the className for styling the transition content */}
               <div className="absolute inset-0 p-4">
                 <ul className="flex flex-col space-y-6 text-left">
                   {menuItems.map((item) =>
@@ -239,7 +256,6 @@ const Header: React.FC = () => {
               leaveFrom="opacity-100 translate-x-0"
               leaveTo="opacity-0 -translate-x-full"
             >
-              {/* Added a div to hold the className for styling the transition content */}
               <div className="absolute inset-0 p-4">
                 <button
                   className="flex items-center text-[#991212] text-sm font-bold mb-6 text-left"

@@ -137,7 +137,7 @@ const ProductPage = () => {
           ) : (
             <div className="w-full h-full bg-[#212466]" />
           )}
-          <div className="absolute inset-0 bg-[rgba(33,36,102,0.61)]" />
+          <div className="absolute inset-0 bg-[rgba(33,36,102,0.84)]" />
         </motion.div>
       </AnimatePresence>
 
@@ -201,7 +201,7 @@ const ProductPage = () => {
       )}
 
       {/* Product Content Area */}
-      <main className="flex-1 flex items-center justify-center p-5 lg:pl-0 lg:ml-64">
+      <main className="flex-1 flex items-center justify-center mt-24 p-5 lg:pl-0 lg:ml-64">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentProduct.productTitle}
@@ -215,7 +215,7 @@ const ProductPage = () => {
               <div className="mx-auto py-16 flex flex-col-reverse lg:flex-row items-center justify-between gap-4">
                 <div className="text-left md:w-1/2 md:pr-8">
                   <motion.h1
-                    className="text-3xl md:leading-tight font-bold text-shadow-md text-[#fefeff] max-w-lg md:max-w-2xl mx-auto md:mx-0 capitalize"
+                    className="text-2xl md:leading-tight font-semibold text-shadow-md text-[#fefeff] max-w-lg md:max-w-2xl mx-auto md:mx-0"
                     variants={contentVariants}
                   >
                     {currentProduct.productHook}
@@ -233,7 +233,7 @@ const ProductPage = () => {
                         ])}
                       </motion.ul>
                     )}
-                  <div className="mt-6 flex flex-col sm:flex-row items-start gap-4">
+                  {/*<div className="mt-6 flex flex-col sm:flex-row items-start gap-4">
                     <a
                       href="#"
                       target="_blank"
@@ -246,7 +246,7 @@ const ProductPage = () => {
                         </div>
                       </div>
                     </a>
-                  </div>
+                  </div>*/}
                 </div>
                 <motion.div
                   className="md:w-1/2 flex justify-center mt-12 md:mt-0"
