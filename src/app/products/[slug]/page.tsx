@@ -272,9 +272,6 @@ const ProductPage = () => {
           </AnimatePresence>
         </main>
       </section>
-      <Container className="m-16">
-        <CTA />
-      </Container>
     </>
   );
 };

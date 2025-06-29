@@ -86,11 +86,14 @@ const LeadForm: React.FC<LeadFormProps> = ({ onClose }) => {
     setIsSubmitting(true);
     try {
       // Placeholder API call (replace with your endpoint)
-      const response = await fetch("YOUR_API_ENDPOINT", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
+      const response = await fetch(
+        "https://bbsltd.ke/api/api/clients/register",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        }
+      );
       if (!response.ok) {
         throw new Error("Failed to submit");
       }
