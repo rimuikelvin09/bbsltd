@@ -193,8 +193,8 @@ const LeadForm: React.FC<LeadFormProps> = ({ onClose }) => {
             Details Successfully Submitted!
           </h2>
           <p className="font-sans text-base text-gray-600 mb-6">
-            Thank you{formData.firstName ? `, ${formData.firstName}` : ""}!{" "}
-            We'll be in touch soon.
+            Thank you{formData.firstName ? `, ${formData.firstName}` : ""}!
+            We&apos;ll be in touch soon.
           </p>
 
           <button
