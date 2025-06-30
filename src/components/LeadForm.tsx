@@ -12,13 +12,26 @@ const LeadForm: React.FC<LeadFormProps> = ({ onClose }) => {
   const [formData, setFormData] = useState<LeadFormData>({
     firstName: "",
     secondName: "",
+    surName: "",
     gender: "",
+    dob: "",
+    idNumber: "",
+    projectName: "",
     email: "",
-    phone: "",
-    contactMethod: "",
-    location: "Kenya",
-    diasporaCountry: "",
-    kenyaCounty: "",
+    countryCode: "",
+    phoneNumber: "",
+    preferredContact: "",
+    clientSource: "website",
+    locationType: "KENYA",
+    county: "",
+    country: "",
+    productOffering: "JENGA_KWAKO",
+    productTag: "",
+    bankName: "",
+    bankBranch: "",
+    consultancySubtags: [],
+    followUpDate: "",
+    notes: "",
     consent: false,
   });
   const [errors, setErrors] = useState<
@@ -45,14 +58,14 @@ const LeadForm: React.FC<LeadFormProps> = ({ onClose }) => {
     if (!formData.gender) newErrors.gender = "Gender is required";
     if (!formData.email.match(/^[\w.-]+@([\w-]+\.)+[\w-]{2,4}$/))
       newErrors.email = "Valid email is required";
-    if (!formData.phone.match(/^\+?\d{10,14}$/))
-      newErrors.phone = "Valid phone number is required";
-    if (!formData.contactMethod)
-      newErrors.contactMethod = "Preferred contact method is required";
-    if (formData.location === "Diaspora" && !formData.diasporaCountry)
-      newErrors.diasporaCountry = "Country is required";
-    if (formData.location === "Kenya" && !formData.kenyaCounty)
-      newErrors.kenyaCounty = "County is required";
+    if (!formData.phoneNumber.match(/^\+?\d{10,14}$/))
+      newErrors.phoneNumber = "Valid phone number is required";
+    if (!formData.preferredContact)
+      newErrors.preferredContact = "Preferred contact method is required";
+    if (formData.locationType === "INTERNATIONAL" && !formData.country)
+      newErrors.country = "Please select a country";
+    if (formData.locationType === "KENYA" && !formData.county)
+      newErrors.county = "Please select a county";
     if (!formData.consent) newErrors.consent = "You must consent to proceed";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -67,12 +80,11 @@ const LeadForm: React.FC<LeadFormProps> = ({ onClose }) => {
         ...prev,
         [name]: type === "checkbox" ? checked : value,
       };
-      // Reset irrelevant fields when location changes
-      if (name === "location") {
-        newFormData.diasporaCountry =
-          value === "Diaspora" ? newFormData.diasporaCountry : "";
-        newFormData.kenyaCounty =
-          value === "Kenya" ? newFormData.kenyaCounty : "";
+      // Reset irrelevant fields when locationType changes
+      if (name === "locationType") {
+        newFormData.country =
+          value === "INTERNATIONAL" ? newFormData.country : "";
+        newFormData.county = value === "KENYA" ? newFormData.county : "";
       }
       return newFormData;
     });
@@ -85,23 +97,56 @@ const LeadForm: React.FC<LeadFormProps> = ({ onClose }) => {
 
     setIsSubmitting(true);
     try {
-      // Placeholder API call (replace with your endpoint)
+      const apiData = {
+        firstName: formData.firstName,
+        secondName: formData.secondName,
+        surName: formData.surName || "",
+        gender: formData.gender || "",
+        dob: formData.dob || "",
+        idNumber: formData.idNumber || "",
+        projectName: formData.projectName || "",
+        email: formData.email,
+        countryCode: formData.phoneNumber.startsWith("+")
+          ? formData.phoneNumber.match(/^\+\d{1,4}/)?.[0] || ""
+          : "",
+        phoneNumber: formData.phoneNumber,
+        preferredContact: formData.preferredContact || "",
+        clientSource: "website",
+        locationType: formData.locationType,
+        county: formData.county || null,
+        country: formData.country || null,
+        productOffering: "JENGA_KWAKO",
+        productTag: formData.productTag || "",
+        bankName: formData.bankName || "",
+        bankBranch: formData.bankBranch || "",
+        consultancySubtags: formData.consultancySubtags || [],
+        followUpDate: formData.followUpDate || "",
+        notes: formData.notes || "",
+      };
+      console.log("Submitting API payload:", JSON.stringify(apiData, null, 2));
       const response = await fetch(
         "https://bbsltd.ke/api/api/clients/register",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formData),
+          body: JSON.stringify(apiData),
         }
       );
       if (!response.ok) {
-        throw new Error("Failed to submit");
+        const errorData = await response.json().catch(() => ({}));
+        console.error("API error response:", errorData);
+        throw new Error(
+          `Failed to submit: ${errorData.message || response.statusText}`
+        );
       }
-      await response.json(); // Ensure response is consumed
+      await response.json();
       setSubmitStatus("success");
-    } catch {
+    } catch (error: any) {
+      console.error("Submission error:", error.message);
       setSubmitStatus("error");
-      setErrors({ api: "Submission failed. Please try again." });
+      setErrors({
+        api: error.message || "Submission failed. Please try again.",
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -115,18 +160,44 @@ const LeadForm: React.FC<LeadFormProps> = ({ onClose }) => {
 
   if (submitStatus === "success") {
     return (
-      <div className="lead-form-success-container" onClick={handleOutsideClick}>
-        <div className="lead-form-success-content">
-          <h2 className="lead-form-success-message">
-            Details successfully submitted!
+      <div
+        className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+        onClick={handleOutsideClick}
+      >
+        <div className="bg-white rounded-xl shadow-lg p-6 max-w-md w-full mx-4 text-center relative">
+          <div className="mb-6">
+            <svg
+              className="checkmark w-16 h-16 mx-auto"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 52 52"
+            >
+              <circle
+                className="checkmark-circle"
+                cx="26"
+                cy="26"
+                r="25"
+                fill="none"
+              />
+              <path
+                className="checkmark-check"
+                fill="none"
+                d="M14.1 27.2l7.1 7.2 16.7-16.8"
+              />
+            </svg>
+          </div>
+          <h2 className="font-sans text-2xl font-semibold text-gray-800 mb-2">
+            Details Successfully Submitted!
           </h2>
+          <p className="font-sans text-base text-gray-600 mb-6">
+            Thank you for your submission. We'll be in touch soon!
+          </p>
           <button
             type="button"
-            className="lead-form-close-button"
+            className="absolute top-4 right-4 text-gray-600 text-xl font-medium hover:text-gray-800 transition-colors"
             onClick={onClose}
             aria-label="Close success message"
           >
-            Close
+            ×
           </button>
         </div>
       </div>
@@ -186,8 +257,8 @@ const LeadForm: React.FC<LeadFormProps> = ({ onClose }) => {
               <input
                 type="radio"
                 name="gender"
-                value="Male"
-                checked={formData.gender === "Male"}
+                value="MALE"
+                checked={formData.gender === "MALE"}
                 onChange={handleChange}
               />
               Male
@@ -196,8 +267,8 @@ const LeadForm: React.FC<LeadFormProps> = ({ onClose }) => {
               <input
                 type="radio"
                 name="gender"
-                value="Female"
-                checked={formData.gender === "Female"}
+                value="FEMALE"
+                checked={formData.gender === "FEMALE"}
                 onChange={handleChange}
               />
               Female
@@ -206,8 +277,8 @@ const LeadForm: React.FC<LeadFormProps> = ({ onClose }) => {
               <input
                 type="radio"
                 name="gender"
-                value="Rather not say"
-                checked={formData.gender === "Rather not say"}
+                value="RATHER_NOT_SAY"
+                checked={formData.gender === "RATHER_NOT_SAY"}
                 onChange={handleChange}
               />
               Rather not say
@@ -232,17 +303,17 @@ const LeadForm: React.FC<LeadFormProps> = ({ onClose }) => {
           )}
         </div>
         <div className="lead-form-group text-left">
-          <label htmlFor="phone">Phone Number</label>
+          <label htmlFor="phoneNumber">Phone Number</label>
           <input
             type="tel"
-            id="phone"
-            name="phone"
-            value={formData.phone}
+            id="phoneNumber"
+            name="phoneNumber"
+            value={formData.phoneNumber}
             onChange={handleChange}
-            className={errors.phone ? "lead-form-error-input" : ""}
+            className={errors.phoneNumber ? "lead-form-error-input" : ""}
           />
-          {errors.phone && (
-            <span className="lead-form-error">{errors.phone}</span>
+          {errors.phoneNumber && (
+            <span className="lead-form-error">{errors.phoneNumber}</span>
           )}
         </div>
         <div className="lead-form-group text-left">
@@ -251,9 +322,9 @@ const LeadForm: React.FC<LeadFormProps> = ({ onClose }) => {
             <label>
               <input
                 type="radio"
-                name="contactMethod"
-                value="Call"
-                checked={formData.contactMethod === "Call"}
+                name="preferredContact"
+                value="CALL"
+                checked={formData.preferredContact === "CALL"}
                 onChange={handleChange}
               />
               Call
@@ -261,9 +332,9 @@ const LeadForm: React.FC<LeadFormProps> = ({ onClose }) => {
             <label>
               <input
                 type="radio"
-                name="contactMethod"
+                name="preferredContact"
                 value="SMS"
-                checked={formData.contactMethod === "SMS"}
+                checked={formData.preferredContact === "SMS"}
                 onChange={handleChange}
               />
               SMS
@@ -271,9 +342,9 @@ const LeadForm: React.FC<LeadFormProps> = ({ onClose }) => {
             <label>
               <input
                 type="radio"
-                name="contactMethod"
-                value="WhatsApp"
-                checked={formData.contactMethod === "WhatsApp"}
+                name="preferredContact"
+                value="WHATSAPP"
+                checked={formData.preferredContact === "WHATSAPP"}
                 onChange={handleChange}
               />
               WhatsApp
@@ -281,39 +352,39 @@ const LeadForm: React.FC<LeadFormProps> = ({ onClose }) => {
             <label>
               <input
                 type="radio"
-                name="contactMethod"
-                value="Email"
-                checked={formData.contactMethod === "Email"}
+                name="preferredContact"
+                value="EMAIL"
+                checked={formData.preferredContact === "EMAIL"}
                 onChange={handleChange}
               />
               Email
             </label>
           </div>
-          {errors.contactMethod && (
-            <span className="lead-form-error">{errors.contactMethod}</span>
+          {errors.preferredContact && (
+            <span className="lead-form-error">{errors.preferredContact}</span>
           )}
         </div>
         <div className="lead-form-group text-left">
-          <label htmlFor="location">Location</label>
+          <label htmlFor="locationType">Location</label>
           <select
-            id="location"
-            name="location"
-            value={formData.location}
+            id="locationType"
+            name="locationType"
+            value={formData.locationType}
             onChange={handleChange}
           >
-            <option value="Kenya">Kenya</option>
-            <option value="Diaspora">Diaspora</option>
+            <option value="KENYA">Kenya</option>
+            <option value="INTERNATIONAL">International</option>
           </select>
         </div>
-        {formData.location === "Kenya" && (
+        {formData.locationType === "KENYA" && (
           <div className="lead-form-group text-left">
-            <label htmlFor="kenyaCounty">County</label>
+            <label htmlFor="county">County</label>
             <select
-              id="kenyaCounty"
-              name="kenyaCounty"
-              value={formData.kenyaCounty}
+              id="county"
+              name="county"
+              value={formData.county}
               onChange={handleChange}
-              className={errors.kenyaCounty ? "lead-form-error-input" : ""}
+              className={errors.county ? "lead-form-error-input" : ""}
               aria-required="true"
             >
               {kenyaCounties.map((county) => (
@@ -322,20 +393,20 @@ const LeadForm: React.FC<LeadFormProps> = ({ onClose }) => {
                 </option>
               ))}
             </select>
-            {errors.kenyaCounty && (
-              <span className="lead-form-error">{errors.kenyaCounty}</span>
+            {errors.county && (
+              <span className="lead-form-error">{errors.county}</span>
             )}
           </div>
         )}
-        {formData.location === "Diaspora" && (
+        {formData.locationType === "INTERNATIONAL" && (
           <div className="lead-form-group text-left">
-            <label htmlFor="diasporaCountry">Country</label>
+            <label htmlFor="country">Country</label>
             <select
-              id="diasporaCountry"
-              name="diasporaCountry"
-              value={formData.diasporaCountry}
+              id="country"
+              name="country"
+              value={formData.country}
               onChange={handleChange}
-              className={errors.diasporaCountry ? "lead-form-error-input" : ""}
+              className={errors.country ? "lead-form-error-input" : ""}
               aria-required="true"
             >
               {countries.map((country) => (
@@ -344,8 +415,8 @@ const LeadForm: React.FC<LeadFormProps> = ({ onClose }) => {
                 </option>
               ))}
             </select>
-            {errors.diasporaCountry && (
-              <span className="lead-form-error">{errors.diasporaCountry}</span>
+            {errors.country && (
+              <span className="lead-form-error">{errors.country}</span>
             )}
           </div>
         )}

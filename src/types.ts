@@ -99,8 +99,8 @@ export interface MapSectionProps {
 export interface OurPromiseItem {
   title: string;
   description: string;
-  values?: string[]; // Optional core values
-  icon?: string; // If you want to add icons later
+  values?: string[];
+  icon?: string;
 }
 
 export interface OurApproachStep {
@@ -117,18 +117,17 @@ export interface OurApproachData {
 
 export interface IAboutUs {
   title: string;
-  description: string[]; // Description is now an array of strings
+  description: string[];
   videoUrl: string;
   thumbnailUrl: string;
 }
 
-// Define and export the ITestimonial interface
 export interface ITestimonial {
-  videoId: string; // YouTube video ID
-  title: string; // Video title from YouTube
-  description?: string; // Optional description from YouTube
-  thumbnail?: string; // Thumbnail URL for potential future use
-  publishedAt?: string; // Publication date
+  videoId: string;
+  title: string;
+  description?: string;
+  thumbnail?: string;
+  publishedAt?: string;
 }
 
 export interface Product {
@@ -148,6 +147,7 @@ export interface Product {
   productHook: string;
   videoUrl: string;
 }
+
 export interface Project {
   id: number;
   title: string;
@@ -190,12 +190,25 @@ import { Country, KenyaCounty } from "@/data/location";
 export interface LeadFormData {
   firstName: string;
   secondName: string;
-  gender: string;
+  surName?: string;
+  gender: "MALE" | "FEMALE" | "RATHER_NOT_SAY" | "";
+  dob?: string;
+  idNumber?: string;
+  projectName?: string;
   email: string;
-  phone: string;
-  contactMethod: string;
-  location: "Kenya" | "Diaspora";
-  diasporaCountry: Country;
-  kenyaCounty: KenyaCounty;
+  countryCode?: string;
+  phoneNumber: string;
+  preferredContact: "CALL" | "SMS" | "WHATSAPP" | "EMAIL" | "";
+  clientSource?: string;
+  locationType: "KENYA" | "INTERNATIONAL" | "";
+  county?: KenyaCounty;
+  country?: Country;
+  productOffering: string;
+  productTag?: string;
+  bankName?: string;
+  bankBranch?: string;
+  consultancySubtags?: string[];
+  followUpDate?: string;
+  notes?: string;
   consent: boolean;
 }
