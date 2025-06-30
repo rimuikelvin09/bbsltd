@@ -141,11 +141,15 @@ const LeadForm: React.FC<LeadFormProps> = ({ onClose }) => {
       }
       await response.json();
       setSubmitStatus("success");
-    } catch (error: any) {
-      console.error("Submission error:", error.message);
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : "Submission failed. Please try again.";
+      console.error("Submission error:", errorMessage);
       setSubmitStatus("error");
       setErrors({
-        api: error.message || "Submission failed. Please try again.",
+        api: errorMessage,
       });
     } finally {
       setIsSubmitting(false);
@@ -189,7 +193,7 @@ const LeadForm: React.FC<LeadFormProps> = ({ onClose }) => {
             Details Successfully Submitted!
           </h2>
           <p className="font-sans text-base text-gray-600 mb-6">
-            Thank you for your submission. We'll be in touch soon!
+            We'll be in touch soon!
           </p>
           <button
             type="button"
