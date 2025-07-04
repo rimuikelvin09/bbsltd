@@ -7,6 +7,10 @@ import Image from "next/image";
 import Container from "@/components/Container";
 import { motion, Variants, AnimatePresence } from "framer-motion";
 import clsx from "clsx";
+import CtaButton from "@/components/CtaButton";
+import LeadForm from "@/components/LeadForm";
+
+//-- Lead form --
 
 // --- Animation Variants ---
 const imageVariants: Variants = {
@@ -30,6 +34,12 @@ const contentVariants: Variants = {
 };
 
 const ProductPage = () => {
+  // -- Lead Form State --
+  const [isFormOpen, setIsFormOpen] = useState(false);
+  const toggleForm = () => {
+    setIsFormOpen((prev) => !prev);
+  };
+
   const router = useRouter();
   const { slug } = useParams();
   const [products, setProducts] = useState<Product[]>([]);
@@ -236,6 +246,9 @@ const ProductPage = () => {
                           ])}
                         </motion.ul>
                       )}
+                    <div className="mt-6 flex flex-col sm:flex-row items-start gap-4">
+                      <CtaButton onClick={toggleForm} />
+                    </div>
                   </div>
                   <motion.div
                     className="md:w-1/2 flex justify-center mt-12 md:mt-0"
@@ -271,6 +284,7 @@ const ProductPage = () => {
           </AnimatePresence>
         </main>
       </section>
+      {isFormOpen && <LeadForm onClose={toggleForm} />}
     </>
   );
 };
