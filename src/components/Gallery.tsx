@@ -13,7 +13,7 @@ interface GalleryProps {
   images: GalleryImage[];
 }
 
-const ITEMS_PER_PAGE = 10;
+const ITEMS_PER_PAGE = 12;
 
 const Gallery: React.FC<GalleryProps> = ({ images = [] }) => {
   const categories = [

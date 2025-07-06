@@ -24,7 +24,7 @@ const AboutUsPage = () => {
           <Section
             id="technicalteam"
             title="Technical Team"
-            description="The Muscle Behind Our Operations"
+            description="The Team Leads Behind Our Operations"
           ></Section>
           <Technicalteam />
         </Section>
