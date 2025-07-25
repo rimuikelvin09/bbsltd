@@ -115,14 +115,16 @@ const Footer: React.FC = () => {
                   Email: {footerDetails.email}
                 </a>
               )}
-              {footerDetails.telephone && (
-                <a
-                  href={`tel:${footerDetails.telephone}`}
-                  className="block hover:text-[#991212] mb-2 transition-colors duration-200"
-                >
-                  Phone: {footerDetails.telephone}
-                </a>
-              )}
+              {footerDetails.telephones &&
+                footerDetails.telephones.map((phone, idx) => (
+                  <a
+                    key={phone}
+                    href={`tel:${phone}`}
+                    className="block hover:text-[#991212] mb-2 transition-colors duration-200"
+                  >
+                    Phone {idx === 0 ? "" : "(Alt)"}: {phone}
+                  </a>
+                ))}
               {footerDetails.socials && (
                 <div className="mt-5 flex items-center gap-5 flex-wrap">
                   {Object.keys(footerDetails.socials).map((platformName) => {

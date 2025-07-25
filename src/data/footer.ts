@@ -3,7 +3,7 @@ import { IMenuItem, ISocials } from "@/types";
 export const footerDetails: {
   quickLinks: IMenuItem[];
   email: string;
-  telephone: string;
+  telephones: string[];
   socials: ISocials;
   address: string;
 } = {
@@ -26,7 +26,7 @@ export const footerDetails: {
     },
   ],
   email: "info@bbsltd.co.ke",
-  telephone: "+254 722 333324",
+  telephones: ["+254 722 333324", "+254 114 400596"],
   socials: {
     x: "https://x.com/BenchmarkBuild4",
     facebook: "https://www.facebook.com/bbsltdke",
