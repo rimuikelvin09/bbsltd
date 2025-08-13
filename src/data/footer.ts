@@ -25,7 +25,7 @@ export const footerDetails: {
       url: "/portfolio",
     },
   ],
-  email: "info@bbsltd.co.ke",
+  email: "info@bbsltd.ke",
   telephones: ["+254 722 333324", "+254 114 400596"],
   socials: {
     x: "https://x.com/BenchmarkBuild4",
