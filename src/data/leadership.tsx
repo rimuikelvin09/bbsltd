@@ -12,32 +12,6 @@ import { ILeadership } from "@/types";
 
 export const leaders: ILeadership[] = [
   {
-    title: "Meet Joseph Gachinga",
-    description:
-      "Joseph Gachinga is the Technical Director at BBS, bringing over 30 years of certified experience in Building and Civil Engineering. He expertly oversees all technical aspects of construction processes, from initial architectural designs to stringent quality management and successful project execution.",
-    bullets: [
-      {
-        title: "Technical Expertise & Project Execution",
-        description:
-          "Mr. Gachinga's extensive experience ensures the seamless and successful execution of diverse construction projects from start to finish.",
-        icon: <FiTool size={26} />,
-      },
-      {
-        title: "Rigorous Quality Management",
-        description:
-          "He is dedicated to maintaining the highest standards of quality and precision throughout every phase of the construction process.",
-        icon: <FiCheckCircle size={26} />,
-      },
-      {
-        title: "Nationwide Project Supervision",
-        description:
-          "Mr. Gachinga has successfully supervised numerous large-scale private and government construction projects across the nation.",
-        icon: <FiEye size={26} />,
-      },
-    ],
-    imageSrc: "/images/jgachinga.jpg",
-  },
-  {
     title: "Meet Alice Karanja",
     description:
       "Alice Karanja is the Managing Director of BBS, providing strategic oversight for administration, financial operations, and crucial stakeholder engagement. With over 20 years of robust experience in sales and business management, she is a results-oriented leader who ensures precision and efficiency in all undertakings.",
@@ -63,6 +37,33 @@ export const leaders: ILeadership[] = [
     ],
     imageSrc: "/images/akaranja.jpg",
   },
+  {
+    title: "Meet Joseph Gachinga",
+    description:
+      "Joseph Gachinga is the Technical Director at BBS, bringing over 30 years of certified experience in Building and Civil Engineering. He expertly oversees all technical aspects of construction processes, from initial architectural designs to stringent quality management and successful project execution.",
+    bullets: [
+      {
+        title: "Technical Expertise & Project Execution",
+        description:
+          "Mr. Gachinga's extensive experience ensures the seamless and successful execution of diverse construction projects from start to finish.",
+        icon: <FiTool size={26} />,
+      },
+      {
+        title: "Rigorous Quality Management",
+        description:
+          "He is dedicated to maintaining the highest standards of quality and precision throughout every phase of the construction process.",
+        icon: <FiCheckCircle size={26} />,
+      },
+      {
+        title: "Nationwide Project Supervision",
+        description:
+          "Mr. Gachinga has successfully supervised numerous large-scale private and government construction projects across the nation.",
+        icon: <FiEye size={26} />,
+      },
+    ],
+    imageSrc: "/images/jgachinga.jpg",
+  },
+
   {
     title: "Meet Dobson Waweru",
     description:
