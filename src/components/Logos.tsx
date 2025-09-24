@@ -10,6 +10,7 @@ const logosData = [
   { src: "/images/alphalogo.png", alt: "Alpha Logo" },
   { src: "/images/kpra.png", alt: "Kpra Logo" },
   { src: "/images/kanamna.jpg", alt: "Kanamna Logo" },
+  { src: "/images/codisha.png", alt: "Codisha Logo" },
 ];
 
 const Logos: React.FC = () => {

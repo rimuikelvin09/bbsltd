@@ -86,13 +86,15 @@ const Footer: React.FC = () => {
 
           {/* Column 3: Quicklinks */}
           <div>
-            <h4 className="text-xl font-bold mb-2">Quicklinks</h4>
+            <h4 className="text-xl font-bold mb-2">Resources</h4>
             <hr className="border-[#991212] w-12 mb-4" />
             <ul className="text-primary-accent">
-              {footerDetails.quickLinks.map((link) => (
+              {footerDetails.resources.map((link) => (
                 <li key={link.text} className="mb-2 font-[350]">
                   <Link
                     href={link.url}
+                    target="_blank"
+                    rel="noopener"
                     className="hover:text-[#991212] transition-colors duration-200"
                   >
                     {link.text}
@@ -157,7 +159,7 @@ const Footer: React.FC = () => {
             rights reserved.
           </p>
           <p className="text-sm text-gray-600 font-semibold">
-            Made with ♥ by{" "}
+            Powered by{" "}
             <a
               href="https://alphainsights.co.ke/"
               target="_blank"

@@ -1,16 +1,24 @@
 import { IMenuItem, ISocials } from "@/types";
 
 export const footerDetails: {
-  quickLinks: IMenuItem[];
+  resources: IMenuItem[];
   email: string;
   telephones: string[];
   socials: ISocials;
   address: string;
 } = {
-  quickLinks: [
+  resources: [
     {
-      text: "About Us",
-      url: "/about",
+      text: "Jenga Kwako Ammortization Table",
+      url: "/documents/amortizationtable.pdf",
+    },
+    {
+      text: "Jenga Kwako Requirements",
+      url: "/documents/jkrequirements.pdf",
+    },
+    {
+      text: "Diaspora Payment Guide - USA",
+      url: "/documents/usapaymentguide.pdf",
     },
     {
       text: "Client Portal",
@@ -19,10 +27,6 @@ export const footerDetails: {
     {
       text: "Agent Portal",
       url: "http://bbsltd.ke/auth",
-    },
-    {
-      text: "Portfolio",
-      url: "/portfolio",
     },
   ],
   email: "info@bbsltd.ke",
