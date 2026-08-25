@@ -4,15 +4,17 @@ import Container from "@/components/Container";
 import Section from "@/components/Section";
 import ProjectsListing from "@/components/ProjectListing";
 import Gallery from "@/components/Gallery";
-import { getGalleryImages } from "@/data/gallery"; // ✅ Import dynamic function
+import { getGalleryImages } from "@/data/gallery";
+import { getProjects } from "@/lib/content";
 
-const PortfolioListingPage = () => {
-  const galleryImages = getGalleryImages(); // ✅ Auto-fetch images from folders
+const PortfolioListingPage = async () => {
+  const galleryImages = getGalleryImages();
+  const projects = await getProjects();
 
   return (
     <>
       <PortfolioHero />
-      <ProjectsListing />
+      <ProjectsListing projects={projects} />
       <Container>
         <Section
           id="gallery"

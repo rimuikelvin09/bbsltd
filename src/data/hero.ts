@@ -1,7 +1,15 @@
 export const heroDetails = {
-  heading: "We Build Your Legacy",
-  subheading: "TRIED - TESTED - TRUSTED.",
+  eyebrow: "NCA accredited · Building in Kenya since 2012",
+  heading: "Making Construction Accessible & Simple.",
   description:
-    "We are the company people turn to when they need more than just a builder—they need a reliable partner who values their investment. In a time when trust is hard to come by, we ensure that every project delivers lasting value—not just for our clients, but for the workers who build it and the communities it transforms.",
-  centerVideoSrc: "/videos/hero-bg.mp4",
+    "Design, approvals and construction under one contract — whether you are self-financing, using a mortgage, building from abroad, buying your own materials, or only need the drawings.",
+  /**
+   * A first-time visitor is top of funnel. Per Creative & Marketing SOP
+   * 1.2, "See how it works" outperforms a commitment CTA there. The
+   * page's one conversion action lives further down, in the CTA section.
+   */
+  ctaLabel: "See How It Works",
+  ctaHref: "#process",
+  /** Background video, as on the original hero. */
+  backgroundVideo: "/videos/hero-bg.mp4",
 };

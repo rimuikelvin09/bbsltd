@@ -21,7 +21,7 @@ const TechnicalTeam: React.FC = () => {
                 />
               </div>
               <div className="p-4 text-left">
-                <h3 className="text-xl font-semibold text-gray-800">
+                <h3 className="text-gray-800">
                   {member.name}
                 </h3>
                 <p className="text-gray-600 text-sm mb-2">{member.title}</p>

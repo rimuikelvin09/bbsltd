@@ -9,7 +9,7 @@ const OurPromise: React.FC = () => {
         {" "}
         {/* Replaced Container with Tailwind */}
         <div className="text-left lg:text-center  mb-8">
-          <h2 className="text-4xl font-black text-[#212466] mb-4">
+          <h2 className="text-[#212466] mb-4">
             Our Philosophy
           </h2>
           <p className="text-lg font-semibold text-gray-700 lg:mx-10 my-16">

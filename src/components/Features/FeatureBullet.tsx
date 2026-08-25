@@ -15,7 +15,7 @@ const FeatureBullet: React.FC<IFeatureBullet> = ({
     >
       <div className="flex justify-center flex-shrink-0 w-fit">{icon}</div>
       <div>
-        <h4 className="text-lg font-semibold">{title}</h4>
+        <h4 className="">{title}</h4>
         <p className="text-base text-foreground-accent">{description}</p>
       </div>
     </motion.div>

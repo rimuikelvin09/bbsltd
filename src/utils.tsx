@@ -38,10 +38,6 @@ export const getPlatformIconByName = (
       return <FaXTwitter size={24} className="min-w-fit" />;
     }
     default:
-      console.log(
-        "Platform name not supported, no icon is returned:",
-        platformName
-      );
       return null;
   }
 };

@@ -93,7 +93,7 @@ const LeadershipSection: React.FC<Props> = ({
               variants={childVariants}
             >
               <SectionTitle>
-                <h3 className="text-4xl md:text-5xl lg:text-6xl md:leading-tight font-black text-[#991212] max-w-lg md:max-w-2xl  lg:mx-0">
+                <h3 className="text-[#991212] max-w-lg md:max-w-2xl lg:mx-0">
                   {title}
                 </h3>
               </SectionTitle>

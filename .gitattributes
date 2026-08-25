@@ -1,0 +1,4 @@
+# The working tree had CRLF endings while every committed file uses LF,
+# which made all 85 files show as modified in `git status`. This keeps the
+# repository on LF so diffs only ever show real changes.
+* text=auto eol=lf

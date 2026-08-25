@@ -100,7 +100,7 @@ const MapSection: React.FC<MapSectionProps> = ({
               variants={childVariants}
             >
               <SectionTitle>
-                <h2 className="text-3xl lg:text-5xl lg:leading-tight font-black text-[#212466] text-left">
+                <h2 className="text-[#212466] text-left">
                   {title}
                 </h2>
               </SectionTitle>

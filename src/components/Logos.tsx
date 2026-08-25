@@ -5,6 +5,8 @@ import { motion, useAnimation } from "framer-motion";
 
 const logosData = [
   { src: "/images/Jengalogo.png", alt: "Jenga Logo" },
+  { src: "/images/bsh.png", alt: "Bsh Logo" },
+  { src: "/images/legacy.png", alt: "Legacy Logo" },
   { src: "/images/cmaxlogo.png", alt: "Cmax Logo" },
   { src: "/images/Kmrclogo.png", alt: "Kmrc Logo" },
   { src: "/images/alphalogo.png", alt: "Alpha Logo" },
@@ -37,7 +39,7 @@ const Logos: React.FC = () => {
   }, [controls, effectiveLogoItemWidth]);
 
   return (
-    <section className="pb-32 px-5">
+    <section className="mt-6 px-5">
       <div className="ncaaccreditation flex flex-col items-center mb-12 justify-center">
         <Image
           src="/images/NCA.png"

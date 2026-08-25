@@ -31,10 +31,10 @@ const PortfolioHero: React.FC<PortfolioHeroProps> = ({
 
       <Container className="z-10">
         <div className="flex flex-col items-center text-center">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl md:leading-tight font-black text-shadow-md text-[#fefeff] max-w-lg md:max-w-2xl capitaliza">
+          <h1 className="text-shadow-md text-[#fefeff] max-w-lg md:max-w-2xl capitaliza">
             {heading}
           </h1>
-          <p className="mt-4 text-md text-white uppercase">Featured Projects</p>
+          <p className="eyebrow eyebrow-muted mt-4">Featured Projects</p>
         </div>
       </Container>
     </section>

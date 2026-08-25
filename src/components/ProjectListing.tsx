@@ -67,35 +67,35 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
   const TextSection = () => (
     <div className="flex flex-col justify-center text-left w-full lg:w-1/2 space-y-4">
       <div>
-        <p className="text-sm font-medium text-red-700 uppercase tracking-wider">
+        <p className="eyebrow">
           {typeOfContract}
         </p>
       </div>
       <div className="w-24 h-0.5 bg-red-700 my-1"></div>
       <div>
-        <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+        <span className="eyebrow eyebrow-muted">
           Project Title
         </span>
-        <h2 className="text-2xl lg:text-3xl font-bold text-[#212466] capitalize">
+        <h2 className="text-[#212466] capitalize">
           {title}
         </h2>
       </div>
       <div className="flex flex-col sm:flex-row sm:gap-8">
         <div className="flex-1">
-          <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+          <span className="eyebrow eyebrow-muted">
             Client Name
           </span>
           <p className="text-sm font-medium text-[#212466]">{client}</p>
         </div>
         <div className="flex-1">
-          <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+          <span className="eyebrow eyebrow-muted">
             Location
           </span>
           <p className="text-sm font-medium text-[#212466]">{location}</p>
         </div>
       </div>
       <div>
-        <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+        <span className="eyebrow eyebrow-muted">
           Scope of Work
         </span>
         <p className="text-base text-gray-700 leading-relaxed">{description}</p>
@@ -337,58 +337,28 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
   );
 };
 
-const ProjectListing: React.FC = () => {
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+interface ProjectListingProps {
+  /** Supplied by the page, which reads them on the server. */
+  projects: Project[];
+}
 
-  useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        setLoading(true);
-        const response = await fetch("/api/portfolio-items");
-        if (!response.ok) {
-          throw new Error("Failed to fetch portfolio items");
-        }
-        const data = await response.json();
-        setProjects(data);
-      } catch (err: unknown) {
-        setError(
-          err instanceof Error ? err.message : "An unknown error occurred"
-        );
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProjects();
-  }, []);
-
-  if (loading) {
-    return (
-      <div className="min-h-screen w-full flex items-center justify-center text-white">
-        Loading...
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="min-h-screen w-full flex items-center justify-center text-white">
-        Error: {error}
-      </div>
-    );
-  }
-
+const ProjectListing: React.FC<ProjectListingProps> = ({ projects }) => {
   return (
     <section id="project-listings" className="py-4 bg-gray-50">
       <Container>
         <div className="relative z-10 container py-16">
-          <div className="flex flex-col items-center gap-6">
-            {projects.map((project, index) => (
-              <ProjectCard key={project.id} project={project} index={index} />
-            ))}
-          </div>
+          {projects.length > 0 ? (
+            <div className="flex flex-col items-center gap-6">
+              {projects.map((project, index) => (
+                <ProjectCard key={project.id} project={project} index={index} />
+              ))}
+            </div>
+          ) : (
+            <p className="text-center text-gray-600 max-w-xl mx-auto">
+              We are rebuilding our project archive. In the meantime, browse
+              the gallery below or get in touch to see recent work.
+            </p>
+          )}
         </div>
       </Container>
     </section>

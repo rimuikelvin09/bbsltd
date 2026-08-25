@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import React, { useState, useEffect } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Transition } from "@headlessui/react";
 import {
   HiOutlineXMark,
@@ -16,22 +16,70 @@ import Container from "./Container";
 import { siteDetails } from "@/data/siteDetails";
 import { menuItems } from "@/data/menuItems";
 
-const Header: React.FC = () => {
+/**
+ * AUTO-HIDING HEADER
+ * At the top of the page the header is always visible. Scrolling down
+ * hides it, scrolling up brings it back, and once back it hides itself
+ * again after a pause — so the header is only present while it is
+ * actually being used, and the content gets the whole viewport.
+ *
+ * This is the number worth tuning. Too short and the header disappears
+ * while someone is still reading the menu they scrolled up to reach.
+ */
+const HIDE_AFTER_IDLE_MS = 2500;
+/** Ignore scroll jitter below this, so a trackpad twitch cannot toggle it. */
+const SCROLL_DEADZONE = 6;
+/** Anything within this of the top counts as "at the top". */
+const TOP_THRESHOLD = 12;
+
+interface HeaderProps {
+  /** Supplied by the root layout, which reads them on the server. */
+  products: Product[];
+}
+
+const Header: React.FC<HeaderProps> = ({ products }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [products, setProducts] = useState<Product[]>([]);
   const [showProductsSubmenu, setShowProductsSubmenu] = useState(false);
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
+  const [isHidden, setIsHidden] = useState(false);
+
+  const lastScrollY = useRef(0);
+  const idleTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  /** True while the pointer or keyboard focus is inside the header. */
+  const holdOpen = useRef(false);
+  /** Mirrors menu state so the scroll listener sees it without rebinding. */
+  const menuOpen = useRef(false);
+
+  const clearIdleTimer = useCallback(() => {
+    if (idleTimer.current) {
+      clearTimeout(idleTimer.current);
+      idleTimer.current = null;
+    }
+  }, []);
+
+  const armIdleTimer = useCallback(() => {
+    clearIdleTimer();
+    idleTimer.current = setTimeout(() => {
+      idleTimer.current = null;
+      if (
+        window.scrollY > TOP_THRESHOLD &&
+        !holdOpen.current &&
+        !menuOpen.current
+      ) {
+        setIsHidden(true);
+      }
+    }, HIDE_AFTER_IDLE_MS);
+  }, [clearIdleTimer]);
+
+  const revealHeader = useCallback(() => {
+    setIsHidden(false);
+    clearIdleTimer();
+  }, [clearIdleTimer]);
 
   // Toggle mobile menu
   const toggleMenu = () => {
     setIsOpen((prev) => {
-      console.log(
-        "Mobile menu toggled, isOpen:",
-        !prev,
-        "isScrolled:",
-        isScrolled
-      );
       return !prev;
     });
     if (isOpen) {
@@ -42,7 +90,6 @@ const Header: React.FC = () => {
   // Toggle products submenu
   const toggleProductsSubmenu = () => {
     setShowProductsSubmenu((prev) => {
-      console.log("Products submenu toggled, showProductsSubmenu:", !prev);
       return !prev;
     });
   };
@@ -59,31 +106,59 @@ const Header: React.FC = () => {
     }
   };
 
-  // Fetch products and handle scroll
+  // Direction-aware scroll handling, batched into an animation frame so a
+  // fast scroll does not run this on every event.
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await fetch("/api/products");
-        if (!response.ok) throw new Error("Failed to fetch products");
-        const data = await response.json();
-        setProducts(data);
-        console.log("Products fetched:", data);
-      } catch (err) {
-        console.error("Error fetching products:", err);
+    lastScrollY.current = window.scrollY;
+    let frame = 0;
+
+    const evaluate = () => {
+      frame = 0;
+      const y = window.scrollY;
+      const delta = y - lastScrollY.current;
+
+      setIsScrolled(y > 0);
+
+      if (y <= TOP_THRESHOLD) {
+        setIsHidden(false);
+        clearIdleTimer();
+      } else if (menuOpen.current || holdOpen.current) {
+        setIsHidden(false);
+      } else if (delta > SCROLL_DEADZONE) {
+        setIsHidden(true);
+        clearIdleTimer();
+      } else if (delta < -SCROLL_DEADZONE) {
+        setIsHidden(false);
+        armIdleTimer();
       }
+
+      if (Math.abs(delta) > SCROLL_DEADZONE) lastScrollY.current = y;
     };
 
-    fetchProducts();
-
-    const handleScroll = () => {
-      const scrolled = window.scrollY > 0;
-      setIsScrolled(scrolled);
-      console.log("Scroll detected, isScrolled:", scrolled);
+    const onScroll = () => {
+      if (!frame) frame = window.requestAnimationFrame(evaluate);
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    evaluate();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (frame) window.cancelAnimationFrame(frame);
+      clearIdleTimer();
+    };
+  }, [armIdleTimer, clearIdleTimer]);
+
+  // A header that slid away with its own menu open would be a trap.
+  useEffect(() => {
+    const open = isOpen || showProductsSubmenu || activeMenu !== null;
+    menuOpen.current = open;
+
+    if (open) {
+      revealHeader();
+    } else if (window.scrollY > TOP_THRESHOLD && !holdOpen.current) {
+      armIdleTimer();
+    }
+  }, [isOpen, showProductsSubmenu, activeMenu, revealHeader, armIdleTimer]);
 
   // Prevent body scrolling when mobile menu is open
   useEffect(() => {
@@ -94,10 +169,27 @@ const Header: React.FC = () => {
   }, [isOpen]);
 
   return (
+    <>
     <header
-      className={`fixed top-0 left-0 right-0 z-[50] w-full transition-colors duration-300 ${
+      onMouseEnter={() => {
+        holdOpen.current = true;
+        revealHeader();
+      }}
+      onMouseLeave={() => {
+        holdOpen.current = false;
+        if (window.scrollY > TOP_THRESHOLD) armIdleTimer();
+      }}
+      onFocusCapture={() => {
+        holdOpen.current = true;
+        revealHeader();
+      }}
+      onBlurCapture={() => {
+        holdOpen.current = false;
+        if (window.scrollY > TOP_THRESHOLD) armIdleTimer();
+      }}
+      className={`fixed top-0 left-0 right-0 z-[50] w-full transition-[transform,background-color,box-shadow] duration-300 ease-out motion-reduce:transition-none ${
         isScrolled ? "bg-white shadow-md" : "bg-transparent"
-      }`}
+      } ${isHidden ? "-translate-y-full" : "translate-y-0"}`}
     >
       <Container className="!px-0">
         <nav className="shadow-md md:shadow-none bg-white md:bg-transparent mx-auto flex items-end py-2 px-5 md:py-10">
@@ -165,7 +257,7 @@ const Header: React.FC = () => {
                   onMouseEnter={() => handleMouseEnter(item.text)}
                   onMouseLeave={() => handleMouseLeave(item.text)}
                 >
-                  {item.text === "Products" ? (
+                  {item.text === "Products" && products.length > 0 ? (
                     <>
                       <button
                         className={`nav-link ${
@@ -226,8 +318,12 @@ const Header: React.FC = () => {
           </div>
         </nav>
       </Container>
+    </header>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Menu Overlay. Deliberately a sibling of <header>, not a
+          child: the header is transformed when it hides, and a transformed
+          ancestor would make these fixed elements size to the header bar
+          rather than the viewport. */}
       <Transition
         show={isOpen}
         enter="transition-opacity duration-300"
@@ -274,7 +370,7 @@ const Header: React.FC = () => {
               <ul key="main-menu" className="flex flex-col space-y-6 text-left">
                 {menuItems.map((item) => (
                   <li key={item.text}>
-                    {item.text === "Products" ? (
+                    {item.text === "Products" && products.length > 0 ? (
                       <button
                         className="text-[#212466] hover:text-secondary text-xl font-medium flex items-center justify-between w-full pr-4"
                         onClick={toggleProductsSubmenu}
@@ -340,7 +436,7 @@ const Header: React.FC = () => {
           </div>
         </div>
       </Transition>
-    </header>
+    </>
   );
 };
 

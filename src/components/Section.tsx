@@ -13,13 +13,11 @@ const Section: React.FC<React.PropsWithChildren<Props>> = ({
   children,
 }: React.PropsWithChildren<Props>) => {
   return (
-    <section id={id} className="py-10 text-left sm:text-center  ">
-      <p className="mt-4 text-sm uppercase text-[#191b4d]">{title}</p>
-      <div className="w-32 h-[2px] bg-[#991212] my-2 sm:mx-auto mx-0"></div>
+    <section id={id} className="py-10 text-left sm:text-center">
+      <p className="eyebrow mt-4">{title}</p>
+      <div className="eyebrow-rule mx-0 sm:mx-auto"></div>
       <SectionTitle>
-        <h2 className="text-4xl font-black text-[#212466] text-left sm:text-center">
-          {description}
-        </h2>
+        <h2 className="text-left sm:text-center">{description}</h2>
       </SectionTitle>
 
       {children}

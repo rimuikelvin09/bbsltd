@@ -72,13 +72,11 @@ const PortalBanner: React.FC = () => {
         <div className="lg:w-7/12 text-left">
           <motion.div className="flex flex-col gap-4" variants={childVariants}>
             <div>
-              <p className="mt-4 max-w-lg md:max-w-xl text-sm text-[#991212] uppercase mx-auto md:mx-0">
+              <p className="eyebrow mt-4">
                 {subheading}
               </p>
-              <div className="w-32 h-[2px] bg-[#991212] my-2"></div>
-              <h2 className="text-4xl text-left font-semibold capitalize text-[#212466]">
-                {title}
-              </h2>
+              <div className="eyebrow-rule"></div>
+              <h2 className="text-left capitalize text-[#212466]">{title}</h2>
             </div>
             <ul className="space-y-4">
               {features.map((feature, index) => {
@@ -88,10 +86,10 @@ const PortalBanner: React.FC = () => {
                   <li key={index} className="flex items-start gap-3">
                     <IconComponent className="text-[#991212] mt-1" size={24} />
                     <div>
-                      <h3 className="font-semibold text-foreground-accent">
+                      <h3 className="t-label text-[color:var(--text)]">
                         {feature.title}
                       </h3>
-                      <p className="text-sm text-gray-500">
+                      <p className="meta mt-1">
                         {feature.description}
                       </p>
                     </div>
@@ -102,14 +100,14 @@ const PortalBanner: React.FC = () => {
             <Link href="/portal">
               <button
                 type="button"
-                className="bg-[#212466] text-white flex items-center justify-center min-w-[205px] mt-3 px-6 h-14 rounded-full w-full sm:w-fit shadow-md transition-all duration-300 ease-in-out hover:text-[#212466] hover:bg-[#fffffffd]"
+                className="btn-pill btn-pill-dark mt-3 w-full sm:w-fit"
               >
                 Learn more
               </button>
             </Link>
           </motion.div>
         </div>
-        <div className="lg:w-6/12 flex justify-end relative bg-white/10 backdrop-blur-md h-auto p-4 border-2 border-white">
+        <div className="w-full lg:w-6/12 flex justify-end relative bg-white/10 backdrop-blur-md h-auto p-4 border-2 border-white">
           <div className="w-full max-w-[1088px] aspect-[6/6] lg:w-fit flex justify-center lg:justify-end order-first lg:order-none">
             <Image
               src={imageSrc}

@@ -2,30 +2,21 @@ import React from "react";
 import clsx from "clsx";
 
 interface CtaButtonProps {
+  /** Inverted styling, for use on light surfaces. */
   dark?: boolean;
   onClick: () => void;
+  /** Overrides the default wording. One CTA per asset (SOP 1.2). */
+  label?: string;
 }
 
-const CtaButton: React.FC<CtaButtonProps> = ({ dark, onClick }) => {
+const CtaButton: React.FC<CtaButtonProps> = ({ dark, onClick, label }) => {
   return (
     <button
       type="button"
       onClick={onClick}
-      className={clsx(
-        "flex items-center justify-center min-w-[205px] mt-3 px-6 h-14 rounded-full w-full sm:w-fit shadow-md transition-all duration-300 ease-in-out",
-        {
-          "text-white bg-[#212466] hover:text-[#212466] hover:bg-[#fffffffd]":
-            dark,
-          "text-[#212466] bg-[#fffffffd] hover:text-white hover:bg-[#212466]":
-            !dark,
-        }
-      )}
+      className={clsx("btn-pill mt-3 w-full sm:w-fit", dark && "btn-pill-dark")}
     >
-      <div>
-        <div className="-mt-1 font-sans text-sm font-semibold">
-          Start Your Legacy
-        </div>
-      </div>
+      {label || "Start Your Legacy"}
     </button>
   );
 };

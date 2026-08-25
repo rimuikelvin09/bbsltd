@@ -49,7 +49,7 @@ const PromiseCard: React.FC<Props> = ({ promise }) => {
       onMouseLeave={handleMouseLeave}
     >
       {getIcon(title)}
-      <h3 className="promise-card-title text-xl font-bold mb-2 text-left text-[#212466]">
+      <h3 className="promise-card-title mb-2 text-left text-[#212466]">
         {title}
       </h3>
       <p className="promise-card-description text-gray-700 text-left mb-4">

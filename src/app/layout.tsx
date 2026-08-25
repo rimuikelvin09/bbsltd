@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { GoogleAnalytics } from "@next/third-parties/google";
-import { Source_Sans_3, Manrope } from "next/font/google";
+import { Source_Sans_3, Source_Serif_4 } from "next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
 import Header from "@/components/Header";
@@ -10,11 +10,24 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 import CustomCursor from "@/components/CustomCursor";
 import BackToTop from "@/components/BackToTop";
 import { siteDetails } from "@/data/siteDetails";
+import { getProducts } from "@/lib/content";
 
 import "./globals.css";
 
-const manrope = Manrope({ subsets: ["latin"] });
-const sourceSans = Source_Sans_3({ subsets: ["latin"] });
+// Exposed as CSS variables and wired into tailwind.config.ts, so
+// `font-sans` and `font-serif` resolve to these rather than to
+// Tailwind's defaults. Manrope was dropped: it was downloaded on every
+// page load and then overridden to Inter by globals.css.
+const sourceSans = Source_Sans_3({
+  subsets: ["latin"],
+  variable: "--font-sans",
+  display: "swap",
+});
+const sourceSerif = Source_Serif_4({
+  subsets: ["latin"],
+  variable: "--font-serif",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: siteDetails.metadata.title,
@@ -35,15 +48,19 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  // Read once here on the server. Header stays a client component for its
+  // menu and scroll behaviour, so it receives the list as a prop.
+  const products = await getProducts();
+
   return (
     <html lang="en">
       <body
-        className={`${manrope.className} ${sourceSans.className} antialiased`}
+        className={`${sourceSans.variable} ${sourceSerif.variable} font-sans antialiased`}
       >
         {siteDetails.googleAnalyticsId && (
           <GoogleAnalytics gaId={siteDetails.googleAnalyticsId} />
@@ -51,12 +68,12 @@ export default function RootLayout({
         {/** */}
         <Preloader />
         <CustomCursor />
-        <Header />
+        <Header products={products} />
         <WhatsAppButton />
         <BackToTop />
 
         <main>{children}</main>
-        <Footer />
+        <Footer products={products} />
         <SpeedInsights />
       </body>
     </html>

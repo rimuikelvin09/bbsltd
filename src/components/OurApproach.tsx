@@ -120,7 +120,7 @@ const OurApproach: React.FC<Props> = ({ approach }) => {
                 >
                   {getIcon(step.title)}
                   <div>
-                    <h4 className="font-semibold text-secondary">
+                    <h4 className="text-secondary">
                       {step.title}
                     </h4>
                     <p className="text-sm mt-1 text-gray-500">

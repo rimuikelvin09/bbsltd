@@ -52,7 +52,7 @@ const PortalHero: React.FC<PortalHeroProps> = ({
       <Container className="z-10">
         <div className="mx-auto py-16 flex flex-col-reverse lg:flex-row items-center justify-between gap-4">
           <div className="text-left md:w-1/2 md:pr-8">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl md:leading-tight font-bold text-shadow-md text-[#fefeff] max-w-lg md:max-w-2xl mx-auto md:mx-0 capitalize">
+            <h1 className="text-shadow-md text-[#fefeff] max-w-lg md:max-w-2xl mx-auto md:mx-0 capitalize">
               {heading}
             </h1>
             {subheading && (

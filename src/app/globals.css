@@ -1,7 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 
 :root {
   --background: #FBFBFB;
@@ -14,27 +13,316 @@
   --footer-background: #212466;
 }
 
+/* ==========================================================================
+   TYPOGRAPHY & SURFACE TOKENS  —  the single control point for the site
+   --------------------------------------------------------------------------
+   Every size on the site resolves to one of the eight --type-* tokens below.
+   Change a value here and the whole site follows; components no longer carry
+   `text-4xl sm:text-5xl lg:text-[68px]` chains.
+
+   Sizes are clamp()-based, so type scales continuously with the viewport
+   rather than stepping at breakpoints. That is what makes the process
+   section comfortable to read at every width.
+
+   COLOUR: components never name a colour. A section declares .surface-dark
+   or .surface-light and the text tokens resolve from it, which is what makes
+   white-on-white structurally impossible rather than a thing to remember.
+   ========================================================================== */
+:root {
+  /* Type scale: min → max */
+  --type-hero: clamp(2.125rem, 1.4rem + 3.2vw, 4.25rem);
+  /* 34 → 68 */
+  --type-section: clamp(1.75rem, 1.35rem + 1.8vw, 2.875rem);
+  /* 28 → 46 */
+  --type-sub: clamp(1.375rem, 1.2rem + 0.8vw, 2.125rem);
+  /* 22 → 34 */
+  --type-card: clamp(1.25rem, 1.15rem + 0.45vw, 1.625rem);
+  /* 20 → 26 */
+  --type-lede: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
+  /* 17 → 20 */
+  --type-body: clamp(1rem, 0.97rem + 0.15vw, 1.0625rem);
+  /* 16 → 17 */
+  --type-label: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
+  /* 16 → 18 */
+  --type-meta: clamp(0.8125rem, 0.79rem + 0.1vw, 0.875rem);
+  /* 13 → 14 */
+  --type-eyebrow: clamp(0.6875rem, 0.67rem + 0.08vw, 0.75rem);
+  /* 11 → 12 */
+
+  --leading-tight: 1.07;
+  --leading-snug: 1.2;
+  --leading-normal: 1.62;
+  --tracking-tight: -0.018em;
+  --tracking-eyebrow: 0.19em;
+
+  /* Brand */
+  --navy: #212466;
+  --crimson: #991212;
+  --paper: #FBFBFB;
+  --ink: #171717;
+
+  /* Crimson measures 1.62:1 on navy — unreadable. This is crimson lifted
+     55% toward white: 5.6:1 on navy, so the accent survives on dark
+     surfaces without leaving the palette. Never use raw crimson on navy. */
+  --crimson-on-dark: #ffeded;
+
+  /* Text tokens default to a light surface. */
+  --text: #171717;
+  --text-soft: #333338;
+  --text-faint: #55555f;
+  --text-muted: #6b6b76;
+  --accent: var(--crimson);
+  --rule: #dedee4;
+}
+
+/* A section declares its surface; everything inside inherits from it. */
+.surface-dark {
+  background-color: var(--navy);
+  --text: #ffffff;
+  --text-soft: rgba(255, 255, 255, 0.85);
+  /* 10.4:1 */
+  --text-faint: rgba(255, 255, 255, 0.78);
+  /*  8.4:1 */
+  --text-muted: rgba(255, 255, 255, 0.7);
+  /*  7.5:1 */
+  --accent: var(--crimson-on-dark);
+  /*  5.6:1 */
+  --rule: rgba(255, 255, 255, 0.16);
+  color: var(--text);
+}
+
+.surface-light {
+  background-color: var(--paper);
+  --text: var(--ink);
+  --text-soft: #333338;
+  --text-faint: #55555f;
+  --text-muted: #6b6b76;
+  --accent: var(--crimson);
+  --rule: #dedee4;
+  color: var(--text);
+}
+
+@layer base {
+
+  /* Family, size, rhythm only. Colour is deliberately left to inherit from
+     the surface, so adding a base rule can never darken text sitting on a
+     dark background. */
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    text-wrap: pretty;
+  }
+
+  h1 {
+    font-size: var(--type-hero);
+    line-height: var(--leading-tight);
+    letter-spacing: var(--tracking-tight);
+  }
+
+  h2 {
+    font-size: var(--type-section);
+    line-height: 1.13;
+    letter-spacing: -0.015em;
+  }
+
+  /* h3 and h4 in this codebase are mostly item titles and small labels
+     rather than sub-sections, so the defaults serve that. A genuine
+     sub-heading opts back up with .t-sub. */
+  h3 {
+    font-size: var(--type-card);
+    line-height: 1.24;
+  }
+
+  h4 {
+    font-size: var(--type-label);
+    line-height: 1.35;
+    font-weight: 600;
+  }
+
+  p {
+    font-size: var(--type-body);
+    line-height: var(--leading-normal);
+    text-wrap: pretty;
+  }
+}
+
+@layer components {
+
+  /* The small label above a headline. */
+  .eyebrow {
+    font-family: var(--font-text);
+    font-size: var(--type-eyebrow);
+    font-weight: 600;
+    letter-spacing: var(--tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .eyebrow-muted {
+    color: var(--text-muted);
+  }
+
+  /* The short accent mark under an eyebrow. Previously a 128px bar pressed
+     straight against the text, which read as a broken underline. */
+  .eyebrow-rule {
+    width: 3rem;
+    height: 2px;
+    margin-top: 0.75rem;
+    margin-bottom: 1.25rem;
+    background-color: var(--accent);
+  }
+
+  /* One step above body: the opening paragraph under a headline. */
+  .lede {
+    font-size: var(--type-lede);
+    line-height: var(--leading-normal);
+    color: var(--text-soft);
+  }
+
+  .body-text {
+    font-size: var(--type-body);
+    line-height: var(--leading-normal);
+    color: var(--text-faint);
+  }
+
+  .meta {
+    font-size: var(--type-meta);
+    line-height: 1.5;
+    color: var(--text-muted);
+  }
+
+  /* Size levels, for when the right size and the right tag disagree —
+     a card title that should not be an <h2>, for instance. */
+  .t-hero {
+    font-family: var(--font-display);
+    font-size: var(--type-hero);
+    line-height: var(--leading-tight);
+    letter-spacing: var(--tracking-tight);
+  }
+
+  .t-section {
+    font-family: var(--font-display);
+    font-size: var(--type-section);
+    line-height: 1.13;
+    letter-spacing: -0.015em;
+  }
+
+  .t-sub {
+    font-family: var(--font-display);
+    font-size: var(--type-sub);
+    line-height: var(--leading-snug);
+  }
+
+  .t-label {
+    font-family: var(--font-display);
+    font-size: var(--type-label);
+    line-height: 1.35;
+  }
+
+  .t-card {
+    font-family: var(--font-display);
+    font-size: var(--type-card);
+    line-height: 1.24;
+  }
+
+  /* Numerals are set in the display face wherever they carry weight. */
+  .numeral {
+    font-family: var(--font-display);
+    font-variant-numeric: lining-nums;
+  }
+
+  /* Display type sitting over photography or video needs a little help. */
+  .display-shadow {
+    text-shadow: 0 2px 14px rgba(10, 11, 40, 0.55);
+  }
+
+  /* The one button shape on the site. */
+  .btn-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 205px;
+    height: 3.5rem;
+    padding: 0 2rem;
+    border-radius: 9999px;
+    font-family: var(--font-text);
+    font-size: var(--type-meta);
+    font-weight: 600;
+    background-color: var(--paper);
+    color: var(--navy);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+    transition: background-color 300ms ease, color 300ms ease,
+      box-shadow 300ms ease;
+  }
+
+  .btn-pill:hover,
+  .btn-pill:focus-visible {
+    background-color: var(--navy);
+    color: #ffffff;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.45);
+  }
+
+  /* Inverted pill, for use on light surfaces. */
+  .btn-pill-dark {
+    background-color: var(--navy);
+    color: #ffffff;
+  }
+
+  .btn-pill-dark:hover,
+  .btn-pill-dark:focus-visible {
+    background-color: var(--paper);
+    color: var(--navy);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+  }
+
+  /* Standard link: contrast RISES on hover and an underline wipes in from
+     the left. It is drawn as a background gradient rather than a border, so
+     it occupies no layout space and nothing reflows. */
+  .link {
+    color: var(--text-faint);
+    text-decoration: none;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    background-size: 0% 1px;
+    padding-bottom: 2px;
+    transition: color 250ms ease,
+      background-size 300ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+
+  .link:hover,
+  .link:focus-visible {
+    color: var(--text);
+    background-size: 100% 1px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .link {
+    transition: color 250ms ease;
+  }
+}
+
 html {
   @apply scroll-smooth;
 }
 
 body {
-  @apply text-lg;
+  /* Declared here, not on :root: --font-sans and --font-serif are set by
+     next/font on this element, so anything referencing them must resolve
+     in this scope. */
+  --font-display: var(--font-serif), Georgia, serif;
+  --font-text: var(--font-sans), system-ui, sans-serif;
+  font-size: var(--type-body);
   color: var(--foreground);
   background: var(--background);
-  font-family: "Inter", sans-serif;
-  font-optical-sizing: auto;
-  font-style: normal;
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-}
-
-.manrope {
-  font-family: "Inter", sans-serif;
+  /* Loaded by next/font in layout.tsx. Previously this file imported
+     Inter and overrode everything, so the fonts layout.tsx downloaded
+     were never actually rendered. */
+  font-family: var(--font-sans), system-ui, sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
 }
@@ -45,7 +333,6 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Inter", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
 }
@@ -118,24 +405,8 @@ h6 {
   }
 }
 
-.benefit-section:last-of-type>div {
-  @apply mb-10;
-}
-
 .text-shadow-md {
   text-shadow: 1px 1px 2px rgba(0, 29, 14, 0.2);
-}
-
-.text-shadow-lg {
-  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
-}
-
-.text-shadow-xl {
-  text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4);
-}
-
-.text-shadow-subtle {
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.15);
 }
 
 #daily-tips {
@@ -463,17 +734,6 @@ h6 {
   height: 100%;
 }
 
-.our-approach-background {
-  background-size: cover;
-  background-position: center;
-  min-height: 400px;
-}
-
-
-.logos-container img {
-  object-fit: contain;
-}
-
 /* PromiseCard Styles */
 .promise-card {
   background: white;
@@ -535,41 +795,13 @@ h6 {
 */
 
 
-
 /* Product Listings Styles*/
+/* The background image was removed here: the product listing now sits on
+   the antique-white page background, set on the component itself. */
 #product-listings {
-  background-image: url('/images/product-bg.jpg');
-  background-position: center center;
-  background-size: cover;
-  background-repeat: no-repeat;
   position: relative;
 }
 
-
-#product-listings-title {
-  color: #F3F3F5;
-}
-
-
-
-.product-card-hover::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: radial-gradient(circle at var(--mouse-x, 0px) var(--mouse-y, 0px),
-      rgba(153, 18, 18, 0.33) 0%,
-      rgba(33, 36, 102, 0.433) 60%);
-  z-index: -10;
-  opacity: 0;
-  transition: opacity 0.1s ease;
-}
-
-.product-card-hover:hover::before {
-  opacity: 1;
-}
 
 /* Testimonials Carousel Styles */
 .testimonial-slide {

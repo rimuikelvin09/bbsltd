@@ -130,59 +130,73 @@ export interface ITestimonial {
   publishedAt?: string;
 }
 
+/** One supporting point on a product page. */
+export interface ProductPoint {
+  /** Two to five words. Rendered as a heading beside a numeral. */
+  title: string;
+  /** One sentence. */
+  body: string;
+}
+
 export interface Product {
   id: number;
   productTitle: string;
-  description: {
-    a: string;
-    b: string;
-    c: string;
-  }[];
-  fileType: string;
-  fileName: string;
-  objectKey: string;
-  fileUrl: string;
-  createdAt: string;
+  /** Short line shown on the product card in the grid. */
   productVp: string;
+  /** Large headline at the top of the product's own page. */
   productHook: string;
-  videoUrl: string;
+  /**
+   * The single call to action on this product's page. Verb-first, one per
+   * page (Creative & Marketing SOP 1.2). Falls back to "Start Your Legacy"
+   * when omitted, which suits a full-build product but reads oddly on a
+   * renovation or a consultancy engagement.
+   */
+  ctaLabel?: string;
+  /**
+   * The points a visitor must not miss, shown below the fold. Cap at
+   * three: if everything is emphasised, nothing is. Replaces the old
+   * {a, b, c} grouping, which was an artefact of the droplet API.
+   */
+  points: ProductPoint[];
+  fileType: string;
+  /** Path under /public, e.g. "/images/products/jenga-kwako.jpg". */
+  fileUrl: string;
+  /**
+   * Leftovers from the old DigitalOcean Spaces backend. Optional so new
+   * content does not have to supply them; safe to delete once nothing
+   * in the codebase reads them.
+   */
+  fileName?: string;
+  objectKey?: string;
+  createdAt?: string;
+  videoUrl?: string;
+}
+
+/** One build-stage image belonging to a project. */
+export interface ProjectFile {
+  fileType: string;
+  /** Path under /public, e.g. "/images/projects/foo-roofing.jpg". */
+  fileUrl: string;
+  fileName?: string;
+  objectKey?: string;
 }
 
 export interface Project {
   id: number;
   title: string;
   description: string;
-  createdAt: string;
   client: string;
   typeOfContract: string;
   location: string;
+  /** Optional. Leave "" to hide the "Watch Now" button. */
   videoUrl: string;
   files: {
-    foundation: {
-      fileName: string;
-      objectKey: string;
-      fileUrl: string;
-      fileType: string;
-    };
-    walling: {
-      fileName: string;
-      objectKey: string;
-      fileUrl: string;
-      fileType: string;
-    };
-    roofing: {
-      fileName: string;
-      objectKey: string;
-      fileUrl: string;
-      fileType: string;
-    };
-    finishing: {
-      fileName: string;
-      objectKey: string;
-      fileUrl: string;
-      fileType: string;
-    };
+    foundation: ProjectFile;
+    walling: ProjectFile;
+    roofing: ProjectFile;
+    finishing: ProjectFile;
   };
+  createdAt?: string;
 }
 
 import { Country, KenyaCounty } from "@/data/location";

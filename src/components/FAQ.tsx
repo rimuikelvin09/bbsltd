@@ -16,7 +16,7 @@ const FAQ: React.FC = () => {
         <div className="">
           <p className="hidden lg:block text-foreground-accent">FAQ&apos;S</p>
           <SectionTitle>
-            <h2 className="my-3 !leading-snug lg:max-w-sm text-left">
+            <h2 className="my-3 ! lg:max-w-sm text-left">
               Frequently Asked Questions
             </h2>
           </SectionTitle>

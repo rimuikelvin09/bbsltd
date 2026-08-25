@@ -91,7 +91,7 @@ const FeatureSection: React.FC<Props> = ({
               className="flex flex-col w-full"
               variants={childVariants}
             >
-              <h3 className=" mt-10 text-3xl text-left font-bold capitalize text-[#991212]">
+              <h3 className="mt-10 text-left capitalize text-[#991212]">
                 {title}
               </h3>
               <div className="w-32 h-[2px] bg-[#991212] my-2"></div>

@@ -1,78 +1,77 @@
-"use client";
-
-import React, { useState } from "react";
-import { heroDetails } from "@/data/hero";
-import CtaButton from "./CtaButton";
+import React from "react";
+import Link from "next/link";
 import Container from "./Container";
-import LeadForm from "./LeadForm";
+import { heroDetails } from "@/data/hero";
 
+/**
+ * Home banner. A visitor should know what this company does inside the
+ * first thirty words, so the paragraph names all six routes rather than
+ * describing values. Eyebrow, headline, paragraph, one button.
+ *
+ * No type sizes here: `surface-dark` supplies the colour tokens and the
+ * base rules in globals.css supply the scale.
+ */
 const Hero: React.FC = () => {
-  const [isFormOpen, setIsFormOpen] = useState(false);
-
-  const toggleForm = () => {
-    setIsFormOpen((prev) => !prev);
-  };
-
   return (
     <section
       id="hero"
-      className="relative flex items-center justify-center py-16 md:py-24 px-5 min-h-screen"
+      className="surface-dark relative flex min-h-screen w-full items-center overflow-hidden"
     >
-      {/* Background Video with Preload */}
-      <div className="absolute inset-0 -z-10 w-full h-full overflow-hidden">
+      <div className="absolute inset-0 z-0 h-full w-full overflow-hidden">
         <video
-          className="w-full h-full object-cover"
+          className="h-full w-full object-cover"
           autoPlay
           loop
           muted
           playsInline
           preload="auto"
         >
-          <source src={heroDetails.centerVideoSrc} type="video/mp4" />
+          <source src={heroDetails.backgroundVideo} type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-[rgba(33,36,102,0.75)]" />
+        {/* Radial rather than a flat wash: heavier behind the type on the
+            left, lighter on the right so the footage still reads. */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_72%_45%,rgba(33,36,102,0.42)_0%,rgba(33,36,102,0.80)_34%,rgba(33,36,102,0.96)_70%)]" />
       </div>
 
-      {/* Content Container - Visible Once Preloader Completes */}
-      <Container>
-        <div className="max-w-7xl container mx-auto mt-16 flex flex-col-reverse lg:flex-row items-center justify-between gap-4">
-          {/* Text Content */}
-          <div className="lg:w-7/12 text-left">
-            <p className="mt-4 max-w-lg md:max-w-xl text-white mx-auto md:mx-0">
-              {heroDetails.subheading}
-            </p>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl md:leading-tight font-bold text-shadow-md text-[#fefeff] max-w-lg md:max-w-2xl mx-auto md:mx-0 capitalize">
-              {heroDetails.heading}
-            </h1>
-            <p className="mt-4 max-w-lg md:max-w-xl text-white mx-auto md:mx-0">
-              {heroDetails.description}
-            </p>
-
-            <div className="mt-6 flex flex-col sm:flex-row items-start gap-4">
-              <CtaButton onClick={toggleForm} />
-            </div>
-          </div>
-
-          {/* Foreground Video - Preloaded & Autoplaying */}
-          <div className="md:w-1/2 flex justify-center mt-12 md:mt-0">
-            <div className="w-[min(554px,100%)] product-card-hover bg-white/10 backdrop-blur-md h-auto relative p-4 border-2 border-white">
-              <video
-                className="w-full max-w-lg filter object-cover saturate-150 shadow-[0_4px_6px_rgba(0,0,0,0.5)]"
-                width={554}
-                height={510}
-                autoPlay
-                loop
-                muted
-                playsInline
-                preload="auto"
-              >
-                <source src={heroDetails.centerVideoSrc} type="video/mp4" />
-              </video>
-            </div>
-          </div>
+      <Container className="relative z-10 pt-28 pb-24">
+        <div className="max-w-3xl">
+          <p className="eyebrow eyebrow-muted display-shadow">
+            {heroDetails.eyebrow}
+          </p>
+          <h1 className="mt-6 display-shadow">{heroDetails.heading}</h1>
+          <p className="lede display-shadow mt-7 max-w-[600px]">
+            {heroDetails.description}
+          </p>
+          <Link href={heroDetails.ctaHref} className="btn-pill mt-10">
+            {heroDetails.ctaLabel}
+          </Link>
         </div>
       </Container>
-      {isFormOpen && <LeadForm onClose={toggleForm} />}
+
+      <div className="absolute bottom-8 left-0 right-0 z-10">
+        <Container>
+          <div className="flex items-center gap-3">
+            <span className="eyebrow eyebrow-muted display-shadow tracking-[0.2em]">
+              Our products
+            </span>
+            <svg
+              width="15"
+              height="15"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="text-[color:var(--text-muted)]"
+              aria-hidden="true"
+            >
+              <path d="M12 5v14" />
+              <path d="m19 12-7 7-7-7" />
+            </svg>
+          </div>
+        </Container>
+      </div>
     </section>
   );
 };

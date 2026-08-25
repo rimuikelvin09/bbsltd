@@ -30,7 +30,7 @@ const CTA: React.FC = () => {
       <div className="relative h-full w-full z-10 mx-auto py-12 sm:py-20 px-5">
         <div className="h-full w-full">
           <div className="h-full flex flex-col items-center justify-center text-white text-center">
-            <h2 className="text-2xl sm:text-3xl md:text-5xl md:leading-tight font-semibold mb-4 max-w-2xl">
+            <h2 className="mb-4 max-w-2xl">
               {ctaDetails.heading}
             </h2>
             <div className="mt-4 flex flex-col sm:flex-row items-center sm:gap-4">

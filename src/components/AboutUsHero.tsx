@@ -32,7 +32,7 @@ const AboutUsHero: React.FC<AboutUsHeroProps> = ({
       <Container className=" z-10">
         <div className="flex flex-col md:flex-row items-center md:justify-between">
           <div className="text-left md:w-1/2 md:pr-8">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl md:leading-tight font-bold text-shadow-md text-[#fefeff] max-w-lg md:max-w-2xl mx-auto md:mx-0 capitalize">
+            <h1 className="text-shadow-md text-[#fefeff] max-w-lg md:max-w-2xl mx-auto md:mx-0 capitalize">
               {heading}
             </h1>
             {subheading && (
@@ -54,7 +54,7 @@ const AboutUsHero: React.FC<AboutUsHeroProps> = ({
                 priority={true}
                 unoptimized={true}
                 alt={aboutUsHeroDetails.centerImageAlt}
-                className="object-contain relative z-10"
+                className="h-auto w-full object-contain relative z-10"
               />
             </div>
           </div>
