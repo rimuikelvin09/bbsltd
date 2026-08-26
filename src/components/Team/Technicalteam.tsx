@@ -1,5 +1,5 @@
 import React from "react";
-import Image from "next/image";
+import TeamPortrait from "./TeamPortrait";
 import { technicalTeam } from "@/data/technicalTeam"; // Adjust the import path as needed
 
 const TechnicalTeam: React.FC = () => {
@@ -13,11 +13,12 @@ const TechnicalTeam: React.FC = () => {
               className="bg-white rounded-md shadow-md overflow-hidden"
             >
               <div className="relative h-64 w-full">
-                <Image
+                <TeamPortrait
                   src={member.imageSrc}
+                  hoverSrc={member.imageHoverSrc}
                   alt={member.name}
-                  layout="fill"
-                  className="object-cover"
+                  aspect="aspect-auto h-full"
+                  sizes="(max-width: 1024px) 50vw, 25vw"
                 />
               </div>
               <div className="p-4 text-left">

@@ -7,6 +7,7 @@ import clsx from "clsx";
 import { Product } from "@/types";
 import { generateSlug } from "@/utils";
 import Container from "@/components/Container";
+import Reveal from "@/components/Reveal";
 import CtaButton from "@/components/CtaButton";
 import LeadForm from "@/components/LeadForm";
 
@@ -17,10 +18,12 @@ interface ProductDetailProps {
   products: Product[];
 }
 
+// Capabilities and accreditation only -- never named clients or projects.
 const CREDENTIALS = [
   "NCA accredited",
   "Building since 2012",
   "300+ personnel on site",
+  "Architectural · structural · MEP in-house",
 ];
 
 /**
@@ -162,7 +165,11 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, products }) => {
 
             <div className="mt-10 grid grid-cols-1 gap-x-16 gap-y-10 sm:mt-14 md:grid-cols-3">
               {product.points.map((point, i) => (
-                <div key={point.title} className="flex flex-col gap-4">
+                <Reveal
+                  key={point.title}
+                  delay={i * 0.08}
+                  className="flex flex-col gap-4"
+                >
                   <span
                     aria-hidden="true"
                     className="numeral text-[3rem] leading-none text-[#E3E3E9]"
@@ -173,7 +180,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, products }) => {
                     {point.title}
                   </h3>
                   <p className="body-text">{point.body}</p>
-                </div>
+                </Reveal>
               ))}
             </div>
 

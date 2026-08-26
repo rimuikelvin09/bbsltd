@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Product } from "@/types";
 import { generateSlug } from "@/utils";
 import Container from "./Container";
+import Reveal from "@/components/Reveal";
 
 interface ProductsListingProps {
   /** Supplied by the page, which reads them on the server. */
@@ -52,12 +53,12 @@ const ProductsListing: React.FC<ProductsListingProps> = ({ products }) => {
 
         {products.length > 0 ? (
           <div className="grid grid-cols-1 gap-x-11 gap-y-12 sm:gap-y-14 md:grid-cols-2 lg:grid-cols-3">
-            {products.map((product) => (
-              <Link
-                key={product.id}
-                href={`/products/${generateSlug(product.productTitle)}`}
-                className="group flex flex-col"
-              >
+            {products.map((product, i) => (
+              <Reveal key={product.id} delay={Math.min(i, 5) * 0.06}>
+                <Link
+                  href={`/products/${generateSlug(product.productTitle)}`}
+                  className="group flex h-full flex-col"
+                >
                 <div className="relative h-[190px] w-full overflow-hidden bg-[#1B1E58] sm:h-[212px]">
                   {product.fileType === "IMAGE" && product.fileUrl ? (
                     <Image
@@ -84,7 +85,8 @@ const ProductsListing: React.FC<ProductsListingProps> = ({ products }) => {
                   Learn more
                   <Arrow />
                 </span>
-              </Link>
+                </Link>
+              </Reveal>
             ))}
           </div>
         ) : (

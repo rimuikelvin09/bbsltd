@@ -33,7 +33,7 @@ const ProcessSection: React.FC = () => {
       const progress = Math.min(Math.max(travelled / scrollable, 0), 1);
       const index = Math.min(
         processStages.length - 1,
-        Math.floor(progress * processStages.length)
+        Math.floor(progress * processStages.length),
       );
       setActive((prev) => (prev === index ? prev : index));
     };
@@ -76,7 +76,7 @@ const ProcessSection: React.FC = () => {
         <Container className="py-20 sm:py-24">
           <div className="max-w-2xl">
             <p className="eyebrow eyebrow-muted">The process</p>
-            <h2 className="mt-5">Seven stages. You see every one of them coming.</h2>
+            <h2 className="mt-5">Your construction roadmap</h2>
           </div>
 
           {/* Stepper rail, with a bar showing how far through you are */}
@@ -87,7 +87,7 @@ const ProcessSection: React.FC = () => {
                 style={{ width: `${progress}%` }}
               />
             </div>
-            <div className="mt-4 grid grid-cols-2 gap-x-5 gap-y-5 sm:grid-cols-4 lg:grid-cols-7">
+            <div className="mt-4 grid grid-cols-2 gap-x-5 gap-y-5 sm:grid-cols-3 lg:grid-cols-6">
               {processStages.map((s, i) => {
                 const on = i === active;
                 return (

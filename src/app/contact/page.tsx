@@ -1,5 +1,6 @@
 import FAQ from "@/components/FAQ";
 import Container from "@/components/Container";
+import Reveal from "@/components/Reveal";
 import ContactHero from "@/components/ContactHero";
 import MapSection from "@/components/Maps";
 import { footerDetails } from "@/data/footer";
@@ -9,15 +10,19 @@ const ContactPage = () => {
     <>
       <ContactHero />
       <Container className="py-16">
-        <FAQ />
+        <Reveal>
+          <FAQ />
+        </Reveal>
 
-        <MapSection
+        <Reveal>
+          <MapSection
           title="Office Location"
           description="Find us at our office in Kiambu, Kenya."
           address="Room F10, 1st Floor, Residential Wing, K-Unity Building - Kiambu Town"
           phone={footerDetails.telephones.join(" / ")}
-          email="info@bbsltd.ke"
-        />
+            email="info@bbsltd.ke"
+          />
+        </Reveal>
       </Container>
     </>
   );

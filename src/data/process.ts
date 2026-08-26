@@ -6,15 +6,14 @@ export interface ProcessStage {
 /**
  * THE PROCESS
  * -----------
- * Seven stages, taken from the company profile. Note the profile itself
- * prints them as 1, 2, 3, 4, 6, 7, 8 -- the numbering skips 5 and no
- * fifth stage exists anywhere on the page. Confirmed as a numbering
- * error, so they run 1-7 here. The profile document still needs fixing.
+ * Six stages. Presentation drawings and working drawings used to be listed
+ * separately, but from the client's side they are one commitment — you
+ * approve what you can see, and that approval becomes the technical set.
+ * Splitting them made the journey look longer than it feels.
  *
- * This section carries the transparency argument on the home page, and
- * it is also where the page does its Costly Signaling: seven documented
- * stages is visible effort, which is what makes "we are transparent"
- * credible rather than merely claimed.
+ * Taken from the company profile, which prints them as 1, 2, 3, 4, 6, 7, 8:
+ * the numbering there skips 5 and no fifth stage exists on the page. Treated
+ * as a numbering error. The profile document still needs correcting.
  */
 export const processStages: ProcessStage[] = [
   {
@@ -26,12 +25,8 @@ export const processStages: ProcessStage[] = [
     body: "Our technical team visits your site to assess its potential and determine what is feasible. You receive a detailed site visit report setting out exactly what can be achieved on your piece of land.",
   },
   {
-    name: "Presentation Drawings",
-    body: "Our architect translates your vision into clear, detailed 3D drawings. You see the project come to life — and make any adjustments — before a single brick is laid.",
-  },
-  {
-    name: "Working Drawings",
-    body: "Once you are satisfied with the design, we produce the full set of technical drawings your project needs: architectural, structural, mechanical and electrical.",
+    name: "Drawings",
+    body: "Your architect turns the brief into 3D presentation drawings first, so you can see the project and change your mind while changing your mind is still free. Once you are satisfied, that approved design becomes the full technical set — architectural, structural, mechanical and electrical — which is what the approvals and the build then run on.",
   },
   {
     name: "Compliance & Approvals",

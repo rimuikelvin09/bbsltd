@@ -44,6 +44,7 @@ const Header: React.FC<HeaderProps> = ({ products }) => {
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const [isHidden, setIsHidden] = useState(false);
 
+  const headerRef = useRef<HTMLElement>(null);
   const lastScrollY = useRef(0);
   const idleTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   /** True while the pointer or keyboard focus is inside the header. */
@@ -105,6 +106,26 @@ const Header: React.FC<HeaderProps> = ({ products }) => {
       setActiveMenu(null);
     }
   };
+
+  // Publish the header's height as --header-h so pinned sections can clear
+  // it exactly. It is fixed-position, so nothing else knows how tall it is.
+  useEffect(() => {
+    const el = headerRef.current;
+    if (!el) return;
+    const publish = () =>
+      document.documentElement.style.setProperty(
+        "--header-h",
+        `${Math.round(el.getBoundingClientRect().height)}px`
+      );
+    publish();
+    const ro = new ResizeObserver(publish);
+    ro.observe(el);
+    window.addEventListener("resize", publish);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", publish);
+    };
+  }, []);
 
   // Direction-aware scroll handling, batched into an animation frame so a
   // fast scroll does not run this on every event.
@@ -171,6 +192,7 @@ const Header: React.FC<HeaderProps> = ({ products }) => {
   return (
     <>
     <header
+      ref={headerRef}
       onMouseEnter={() => {
         holdOpen.current = true;
         revealHeader();
@@ -187,7 +209,7 @@ const Header: React.FC<HeaderProps> = ({ products }) => {
         holdOpen.current = false;
         if (window.scrollY > TOP_THRESHOLD) armIdleTimer();
       }}
-      className={`fixed top-0 left-0 right-0 z-[50] w-full transition-[transform,background-color,box-shadow] duration-300 ease-out motion-reduce:transition-none ${
+      className={`fixed top-0 left-0 right-0 z-[50] w-full transition-[transform,opacity,background-color,box-shadow] duration-500 ease-out motion-reduce:transition-none ${
         isScrolled ? "bg-white shadow-md" : "bg-transparent"
       } ${isHidden ? "-translate-y-full" : "translate-y-0"}`}
     >

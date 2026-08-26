@@ -1,9 +1,9 @@
 import React from "react";
 import AboutUsHero from "@/components/AboutUsHero";
-import OurPromise from "@/components/Promise/OurPromise";
 import OurApproach from "@/components/OurApproach";
 import Leaders from "@/components/Team/Leaders";
 import Container from "@/components/Container";
+import Reveal from "@/components/Reveal";
 import Section from "@/components/Section";
 import Technicalteam from "@/components/Team/Technicalteam";
 import { ourApproachData } from "@/data/ourapproach";
@@ -13,8 +13,9 @@ const AboutUsPage = () => {
     <>
       <AboutUsHero />
       <Container className="py-16">
-        <OurPromise />
-        <OurApproach approach={ourApproachData} />
+        <Reveal>
+          <OurApproach approach={ourApproachData} />
+        </Reveal>
         <Section
           id="leadership"
           title="Leadership"

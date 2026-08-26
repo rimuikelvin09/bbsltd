@@ -7,6 +7,7 @@ import CTA from "@/components/CTA";
 import Testimonials from "@/components/Testimonials";
 import Container from "@/components/Container";
 import Section from "@/components/Section";
+import Reveal from "@/components/Reveal";
 import { getProducts } from "@/lib/content";
 
 /**
@@ -32,16 +33,26 @@ const HomePage = async () => {
       <ProductsListing products={products} />
       <ProcessSection />
       <Container>
-        <PortalBanner />
-        <Logos />
-        <CTA />
-        <Section
-          id="testimonials"
-          title="Testimonials"
-          description="What Our Clients Say."
-        ></Section>
+        <Reveal>
+          <PortalBanner />
+        </Reveal>
+        <Reveal>
+          <Logos />
+        </Reveal>
+        <Reveal>
+          <CTA />
+        </Reveal>
+        <Reveal>
+          <Section
+            id="testimonials"
+            title="Testimonials"
+            description="What Our Clients Say."
+          ></Section>
+        </Reveal>
       </Container>
-      <Testimonials />
+      <Reveal>
+        <Testimonials />
+      </Reveal>
     </>
   );
 };

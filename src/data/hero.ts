@@ -1,5 +1,5 @@
 export const heroDetails = {
-  eyebrow: "NCA accredited · Building in Kenya since 2012",
+  eyebrow: "Building in Kenya since 2012",
   heading: "Making Construction Accessible & Simple.",
   description:
     "Design, approvals and construction under one contract — whether you are self-financing, using a mortgage, building from abroad, buying your own materials, or only need the drawings.",

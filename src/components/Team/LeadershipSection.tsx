@@ -1,5 +1,5 @@
 "use client";
-import Image from "next/image";
+import TeamPortrait from "./TeamPortrait";
 import clsx from "clsx";
 import { motion, Variants } from "framer-motion";
 
@@ -50,7 +50,7 @@ const LeadershipSection: React.FC<Props> = ({
   leadership,
   imageAtRight,
 }: Props) => {
-  const { title, description, imageSrc, bullets } = leadership;
+  const { title, description, imageSrc, imageHoverSrc, bullets } = leadership;
 
   return (
     <section className="leadership-section">
@@ -62,20 +62,20 @@ const LeadershipSection: React.FC<Props> = ({
         viewport={{ once: true }}
       >
         <div
-          className={clsx("w-full lg:w-fit flex", {
+          className={clsx("w-full lg:w-[544px] flex", {
             "justify-center lg:justify-start": imageAtRight,
             "justify-center lg:justify-end": !imageAtRight,
             "order-first lg:order-2": imageAtRight,
             "order-first lg:order-none": !imageAtRight,
           })}
         >
-          <Image
+          <TeamPortrait
             src={imageSrc}
+            hoverSrc={imageHoverSrc}
             alt={title}
-            width={544}
-            height={722}
-            quality={100}
-            className="lg:ml-0 shadow-xl/20 rounded-lg max-w-full"
+            aspect="aspect-[3/4]"
+            sizes="(max-width: 1024px) 90vw, 544px"
+            className="w-full max-w-[544px] rounded-lg shadow-xl/20 lg:ml-0"
           />
         </div>
 

@@ -12,7 +12,6 @@ interface FooterProps {
 }
 
 const Footer: React.FC<FooterProps> = ({ products }) => {
-
   return (
     <footer className="surface-dark relative">
       {/* Main Section with Background Image and Gradient Overlay */}
@@ -46,7 +45,7 @@ const Footer: React.FC<FooterProps> = ({ products }) => {
               </div>
             </Link>
             <h4 className="mb-2 text-[color:var(--text)]">Head Office</h4>
-            <hr className="border-[#991212] w-12 mb-4" />
+            <hr className="border-[#ffeded] w-12 mb-4" />
             <div className="text-primary-accent">
               <p className="mb-2 font-[350]">{footerDetails.address}</p>
             </div>
@@ -57,7 +56,7 @@ const Footer: React.FC<FooterProps> = ({ products }) => {
           {products.length > 0 && (
             <div>
               <h4 className="mb-2 text-[color:var(--text)]">Products</h4>
-              <hr className="border-[#991212] w-12 mb-4" />
+              <hr className="border-[#ffeded] w-12 mb-4" />
               <ul className="text-primary-accent">
                 {products.map((product) => (
                   <li key={product.id} className="mb-2 font-[350]">
@@ -76,7 +75,7 @@ const Footer: React.FC<FooterProps> = ({ products }) => {
           {/* Column 3: Quicklinks */}
           <div>
             <h4 className="mb-2 text-[color:var(--text)]">Resources</h4>
-            <hr className="border-[#991212] w-12 mb-4" />
+            <hr className="border-[#ffeded] w-12 mb-4" />
             <ul className="text-primary-accent">
               {footerDetails.resources.map((link) => (
                 <li key={link.text} className="mb-2 font-[350]">
@@ -96,7 +95,7 @@ const Footer: React.FC<FooterProps> = ({ products }) => {
           {/* Column 4: Contact Details and Socials */}
           <div>
             <h4 className="mb-2 text-[color:var(--text)]">Contact Us</h4>
-            <hr className="border-[#991212] w-12 mb-4" />
+            <hr className="border-[#ffeded] w-12 mb-4" />
             <div className="text-primary-accent font-[350]">
               {footerDetails.email && (
                 <a

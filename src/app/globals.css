@@ -300,7 +300,22 @@
   }
 }
 
+/* The home hero runs an opening sequence and holds the navigation back
+   until it has landed. The attribute is set by the Hero component and
+   cleared when it unmounts, so no other page is affected. */
+html[data-hero-intro="active"] header {
+  opacity: 0;
+  transform: translateY(-100%);
+  pointer-events: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
+  html[data-hero-intro="active"] header {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+
   .link {
     transition: color 250ms ease;
   }

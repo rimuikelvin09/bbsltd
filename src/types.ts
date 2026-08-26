@@ -8,6 +8,8 @@ export interface ILeadership {
   title: string;
   description: string;
   imageSrc: string;
+  /** Shown on hover. Falls back to imageSrc where a second frame does not exist. */
+  imageHoverSrc?: string;
   bullets: ILeadershipBullet[];
 }
 

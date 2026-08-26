@@ -35,7 +35,8 @@ export const leaders: ILeadership[] = [
         icon: <FiUsers size={26} />,
       },
     ],
-    imageSrc: "/images/akaranja.jpg",
+    imageSrc: "/images/team/akaranja.jpg",
+    imageHoverSrc: "/images/team/akaranja2.jpg",
   },
   {
     title: "Meet Joseph Gachinga",
@@ -61,7 +62,8 @@ export const leaders: ILeadership[] = [
         icon: <FiEye size={26} />,
       },
     ],
-    imageSrc: "/images/jgachinga.jpg",
+    imageSrc: "/images/team/jgachinga.jpg",
+    imageHoverSrc: "/images/team/jgachinga2.jpg",
   },
 
   {
@@ -88,6 +90,7 @@ export const leaders: ILeadership[] = [
         icon: <FiBook size={26} />,
       },
     ],
-    imageSrc: "/images/dwaweru.jpg",
+    imageSrc: "/images/team/dwaweru.jpg",
+    imageHoverSrc: "/images/team/dwaweru2.jpg",
   },
 ];
