@@ -196,7 +196,9 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, products }) => {
         </section>
       )}
 
-      {isFormOpen && <LeadForm onClose={toggleForm} />}
+      {isFormOpen && (
+        <LeadForm onClose={toggleForm} product={product.productTitle} />
+      )}
     </>
   );
 };

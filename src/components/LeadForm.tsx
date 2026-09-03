@@ -1,14 +1,24 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { LeadFormData } from "@/types";
 import { countries, kenyaCounties } from "@/data/location";
 
 interface LeadFormProps {
   onClose: () => void;
+  /**
+   * Which product page the form was opened from. Previously every lead was
+   * hardcoded as JENGA_KWAKO, so a Labour Only enquiry arrived tagged as a
+   * mortgage lead and the data could not answer which product sells.
+   */
+  product?: string;
 }
 
-const LeadForm: React.FC<LeadFormProps> = ({ onClose }) => {
+const LeadForm: React.FC<LeadFormProps> = ({ onClose, product }) => {
+  /** Used to reject submissions that arrive faster than a human can type. */
+  const openedAt = useRef<number>(Date.now());
+  /** Honeypot. Hidden from people, irresistible to bots. */
+  const [website, setWebsite] = useState("");
   const [formData, setFormData] = useState<LeadFormData>({
     firstName: "",
     secondName: "",
@@ -25,7 +35,7 @@ const LeadForm: React.FC<LeadFormProps> = ({ onClose }) => {
     locationType: "KENYA",
     county: "",
     country: "",
-    productOffering: "JENGA_KWAKO",
+    productOffering: product || "UNSPECIFIED",
     productTag: "",
     bankName: "",
     bankBranch: "",
@@ -97,46 +107,48 @@ const LeadForm: React.FC<LeadFormProps> = ({ onClose }) => {
 
     setIsSubmitting(true);
     try {
+      const params =
+        typeof window !== "undefined"
+          ? new URLSearchParams(window.location.search)
+          : new URLSearchParams();
+
       const apiData = {
         firstName: formData.firstName,
         secondName: formData.secondName,
-        surName: formData.surName || "",
-        gender: formData.gender || "",
-        dob: formData.dob || "",
-        idNumber: formData.idNumber || "",
-        projectName: formData.projectName || "",
         email: formData.email,
-        countryCode: formData.phoneNumber.startsWith("+")
-          ? formData.phoneNumber.match(/^\+\d{1,4}/)?.[0] || ""
-          : "",
         phoneNumber: formData.phoneNumber,
+        gender: formData.gender || "",
         preferredContact: formData.preferredContact || "",
-        clientSource: "website",
         locationType: formData.locationType,
-        county: formData.county || null,
-        country: formData.country || null,
-        productOffering: "JENGA_KWAKO",
-        productTag: formData.productTag || "",
-        bankName: formData.bankName || "",
-        bankBranch: formData.bankBranch || "",
-        consultancySubtags: formData.consultancySubtags || [],
-        followUpDate: formData.followUpDate || "",
+        county: formData.county || "",
+        country: formData.country || "",
         notes: formData.notes || "",
+        consent: Boolean(formData.consent),
+
+        productOffering: product || formData.productOffering || "UNSPECIFIED",
+
+        // Attribution, captured silently. Costs nothing now; it is the only
+        // way to answer "which page or campaign produced this" later.
+        pageUrl: typeof window !== "undefined" ? window.location.href : "",
+        utmSource: params.get("utm_source") || "",
+        utmMedium: params.get("utm_medium") || "",
+        utmCampaign: params.get("utm_campaign") || "",
+
+        website,
+        elapsedMs: Date.now() - openedAt.current,
       };
-      console.log("Submitting API payload:", JSON.stringify(apiData, null, 2));
-      const response = await fetch(
-        "https://bbsltd.ke/api/api/clients/register",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(apiData),
-        }
-      );
+
+      const response = await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(apiData),
+      });
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        console.error("API error response:", errorData);
         throw new Error(
-          `Failed to submit: ${errorData.message || response.statusText}`
+          errorData.message ||
+            (Array.isArray(errorData.errors) && errorData.errors[0]) ||
+            "We could not send your enquiry. Please try again."
         );
       }
       await response.json();
@@ -146,7 +158,6 @@ const LeadForm: React.FC<LeadFormProps> = ({ onClose }) => {
         error instanceof Error
           ? error.message
           : "Submission failed. Please try again.";
-      console.error("Submission error:", errorMessage);
       setSubmitStatus("error");
       setErrors({
         api: errorMessage,
@@ -218,6 +229,21 @@ const LeadForm: React.FC<LeadFormProps> = ({ onClose }) => {
       aria-modal="true"
     >
       <form className="lead-form" onSubmit={handleSubmit}>
+          {/* Honeypot. Hidden from people and from screen readers; bots fill
+              it in, and the server discards anything that arrives with it set. */}
+          <div aria-hidden="true" className="absolute left-[-9999px] top-auto h-px w-px overflow-hidden">
+            <label htmlFor="website">Website</label>
+            <input
+              id="website"
+              name="website"
+              type="text"
+              tabIndex={-1}
+              autoComplete="off"
+              value={website}
+              onChange={(e) => setWebsite(e.target.value)}
+            />
+          </div>
+
         <button
           type="button"
           className="lead-form-close-button"

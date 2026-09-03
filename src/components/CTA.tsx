@@ -39,7 +39,7 @@ const CTA: React.FC = () => {
           </div>
         </div>
       </div>
-      {isFormOpen && <LeadForm onClose={toggleForm} />}
+      {isFormOpen && <LeadForm onClose={toggleForm} product="General enquiry" />}
     </section>
   );
 };
