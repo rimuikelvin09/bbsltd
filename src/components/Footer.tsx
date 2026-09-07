@@ -146,7 +146,7 @@ const Footer: React.FC<FooterProps> = ({ products }) => {
             Copyright © {new Date().getFullYear()} {siteDetails.siteName}. All
             rights reserved.
           </p>
-          <p className="meta font-semibold">
+          <p className="meta font-semibold text-gray-800 ">
             Powered by{" "}
             <a
               href="https://alphainsights.co.ke/"

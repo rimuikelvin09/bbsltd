@@ -13,6 +13,7 @@ export const technicalTeam = [
     description:
       "Naomi provides meticulous oversight of project finances. Her efficient cost management and precise planning ensure financial reliability and optimal resource utilization, reflecting profound competence in quantity surveying.",
     imageSrc: "/images/team/naomi.jpg",
+    imageHoverSrc: "/images/team/naomi2.jpg",
   },
   {
     name: "Kelvin Rimui",

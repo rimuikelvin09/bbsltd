@@ -30,8 +30,9 @@ const HomePage = async () => {
   return (
     <>
       <Hero />
-      <ProductsListing products={products} />
       <ProcessSection />
+      <ProductsListing products={products} />
+
       <Container>
         <Reveal>
           <PortalBanner />
