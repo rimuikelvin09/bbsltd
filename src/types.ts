@@ -155,6 +155,13 @@ export interface Product {
    */
   ctaLabel?: string;
   /**
+   * Optional anchor for the hero button. When set, the button scrolls to
+   * this target instead of opening the enquiry form -- used where the page
+   * carries a tool the visitor should reach first, such as the Jenga Kwako
+   * affordability calculator.
+   */
+  ctaHref?: string;
+  /**
    * The points a visitor must not miss, shown below the fold. Cap at
    * three: if everything is emphasised, nothing is. Replaces the old
    * {a, b, c} grouping, which was an artefact of the droplet API.

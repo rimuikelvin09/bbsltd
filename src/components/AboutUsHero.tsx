@@ -1,171 +1,84 @@
-"use client";
-
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import Container from "./Container";
 import IntroVideo from "./IntroVideo";
+import Reveal from "./Reveal";
 import { aboutUsHeroDetails } from "@/data/aboutushero";
 import { philosophyPanels, PhilosophyPanel } from "@/data/philosophy";
 
 /**
  * WHO WE ARE
  * ----------
- * The video and the navy field are fixed for the length of this section;
- * only the words move. Scrolling walks through the opening statement, then
- * the philosophy, the mission, the vision and the values, each one drifting
- * up and dissolving into the next while the right-hand side never moves.
+ * Navy hero, then a paper band carrying what the company stands for.
  *
- * Same pinning technique as the process rail on the home page: a tall
- * section with a full-viewport pane stuck inside it. With
- * prefers-reduced-motion the panels are simply stacked and read normally.
+ * The band went through a stacked-paragraph version and a definition-list
+ * version before this one. Both were tidy and neither was read: four blocks
+ * of similar-looking text in a column give a skimming eye nothing to catch
+ * on, so people scrolled past the part the page exists to communicate.
+ *
+ * So the band now does two different jobs with two different shapes. The
+ * philosophy is the thesis: centred, set large, with four phrases marked so
+ * that someone who reads only the marks still collects the argument - what
+ * we build, who it starts with, what it is built on, what it is for. The
+ * mission, the vision and the values are the supporting facts: three cards
+ * in a row, equal weight, scannable side by side rather than one after
+ * another.
+ *
+ * THE WORDING IS THE BRAND'S OWN AND IS NOT EDITED HERE. The marks are
+ * declared as substrings in data/philosophy.ts precisely so that nobody has
+ * to put tags inside the sentence to emphasise part of it.
  */
 
-/** Scroll length per panel. Lower it to move through the section faster. */
-const VH_PER_PANEL = 100;
-
-const clamp = (v: number, a = 0, b = 1) => Math.min(Math.max(v, a), b);
+/**
+ * Splits a statement on its highlight phrases and wraps each one. The swash
+ * is a background gradient rather than a border or an underline: it sits
+ * behind the words at x-height, survives a line break with
+ * box-decoration-break, and occupies no layout space, so marking a phrase
+ * never reflows the paragraph.
+ */
+const marked = (body: string, highlights: string[] = []) => {
+  if (!highlights.length) return body;
+  const pattern = highlights
+    .map((h) => h.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"))
+    .join("|");
+  return body.split(new RegExp(`(${pattern})`, "g")).map((part, i) =>
+    highlights.includes(part) ? (
+      <mark
+        key={`${part}-${i}`}
+        className="bg-[linear-gradient(transparent_56%,rgba(153,18,18,0.18)_56%,rgba(153,18,18,0.18)_93%,transparent_93%)] px-[0.1em] text-[color:var(--text)] [-webkit-box-decoration-break:clone] [background-color:transparent] [box-decoration-break:clone]"
+      >
+        {part}
+      </mark>
+    ) : (
+      <React.Fragment key={`t-${i}`}>{part}</React.Fragment>
+    ),
+  );
+};
 
 const AboutUsHero: React.FC = () => {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [progress, setProgress] = useState(0);
-  const [reduced, setReduced] = useState(false);
-
-  const opening: PhilosophyPanel = {
-    eyebrow: aboutUsHeroDetails.eyebrow,
-    title: aboutUsHeroDetails.heading,
-    body: aboutUsHeroDetails.subheading,
-  };
-  const panels = [opening, ...philosophyPanels];
-
-  useEffect(() => {
-    const q = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const apply = () => setReduced(q.matches);
-    apply();
-    q.addEventListener("change", apply);
-    return () => q.removeEventListener("change", apply);
-  }, []);
-
-  useEffect(() => {
-    if (reduced) return;
-    const el = sectionRef.current;
-    if (!el) return;
-    let frame = 0;
-    const update = () => {
-      frame = 0;
-      const scrollable = el.offsetHeight - window.innerHeight;
-      if (scrollable <= 0) return;
-      setProgress(clamp(-el.getBoundingClientRect().top / scrollable));
-    };
-    const onScroll = () => {
-      if (!frame) frame = window.requestAnimationFrame(update);
-    };
-    update();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      if (frame) window.cancelAnimationFrame(frame);
-    };
-  }, [reduced]);
-
-  const steps = Math.max(panels.length - 1, 1);
-  const raw = progress * steps;
-  const active = Math.min(panels.length - 1, Math.round(raw));
-
-  const goTo = (i: number) => {
-    const el = sectionRef.current;
-    if (!el) return;
-    const scrollable = el.offsetHeight - window.innerHeight;
-    window.scrollTo({
-      top: el.offsetTop + (scrollable * i) / steps,
-      behavior: "smooth",
-    });
-  };
-
-  const renderPanel = (panel: PhilosophyPanel) => (
-    <>
-      {panel.eyebrow ? (
-        <p className="eyebrow eyebrow-muted">{panel.eyebrow}</p>
-      ) : null}
-      <h2 className={panel.eyebrow ? "mt-4" : undefined}>{panel.title}</h2>
-      {panel.body ? <p className="lede mt-5 max-w-xl">{panel.body}</p> : null}
-      {panel.items ? (
-        <ul className="mt-6 flex flex-wrap gap-x-8 gap-y-3">
-          {panel.items.map((item) => (
-            <li
-              key={item}
-              className="t-card flex items-center gap-3 text-[color:var(--text)]"
-            >
-              <span
-                aria-hidden="true"
-                className="h-1.5 w-1.5 rounded-full bg-[color:var(--accent)]"
-              />
-              {item}
-            </li>
-          ))}
-        </ul>
-      ) : null}
-    </>
+  const philosophy = philosophyPanels.find((p) => p.title === "Our Philosophy");
+  const cards: PhilosophyPanel[] = philosophyPanels.filter(
+    (p) => p.title !== "Our Philosophy",
   );
 
-  // Reduced motion: no pinning, no cross-fading — just read it.
-  if (reduced) {
-    return (
-      <section id="about-us-hero" className="surface-dark w-full py-24">
-        <Container>
-          <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-[1fr_minmax(0,560px)] lg:gap-14">
-            <div className="flex flex-col gap-16">
-              {panels.map((panel) => (
-                <div key={panel.eyebrow}>{renderPanel(panel)}</div>
-              ))}
-            </div>
-            <IntroVideo
-              src={aboutUsHeroDetails.videoSrc}
-              captionsSrc={aboutUsHeroDetails.captionsSrc}
-              label={aboutUsHeroDetails.videoLabel}
-            />
-          </div>
-        </Container>
-      </section>
-    );
-  }
-
   return (
-    <section
-      id="about-us-hero"
-      ref={sectionRef}
-      className="surface-dark relative w-full"
-      style={{ height: `${panels.length * VH_PER_PANEL}vh` }}
-    >
-      <div className="sticky top-0 flex h-[100svh] w-full items-center overflow-hidden">
+    <>
+      {/* The opening statement and the film. */}
+      <section id="about-us-hero" className="surface-dark w-full">
         <Container
-          className="pb-10 lg:pb-20"
-          style={{ paddingTop: "calc(var(--header-h, 5rem) + 2rem)" }}
+          className="pb-16 lg:pb-24"
+          style={{ paddingTop: "calc(var(--header-h, 5rem) + 3rem)" }}
         >
-          <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-[1fr_minmax(0,560px)] lg:gap-14">
-            {/* The words. Absolutely stacked so they cross-fade in place. */}
-            <div className="relative order-2 min-h-[50svh] lg:order-1 lg:min-h-[440px]">
-              {panels.map((panel, i) => {
-                const d = raw - i;
-                const opacity = clamp(1 - (Math.abs(d) - 0.22) / 0.34);
-                return (
-                  <div
-                    key={panel.eyebrow}
-                    aria-hidden={i !== active}
-                    className="absolute inset-0 will-change-transform"
-                    style={{
-                      opacity,
-                      transform: `translateY(${d * -56}px)`,
-                      pointerEvents: i === active ? "auto" : "none",
-                    }}
-                  >
-                    {renderPanel(panel)}
-                  </div>
-                );
-              })}
+          <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-[1fr_minmax(0,560px)] lg:gap-14">
+            <div className="order-2 lg:order-1">
+              <p className="eyebrow eyebrow-muted">
+                {aboutUsHeroDetails.eyebrow}
+              </p>
+              <h1 className="mt-4">{aboutUsHeroDetails.heading}</h1>
+              <p className="lede mt-6 max-w-xl">
+                {aboutUsHeroDetails.subheading}
+              </p>
             </div>
 
-            {/* Fixed for the whole section. */}
             <div className="order-1 lg:order-2">
               <IntroVideo
                 src={aboutUsHeroDetails.videoSrc}
@@ -174,31 +87,70 @@ const AboutUsHero: React.FC = () => {
               />
             </div>
           </div>
+        </Container>
+      </section>
 
-          {/* Where you are in the sequence, and a way to skip about. */}
-          <div className="order-3 mt-6 flex items-center gap-2 lg:mt-10">
-            {panels.map((panel, i) => (
-              <button
-                key={panel.eyebrow}
-                type="button"
-                onClick={() => goTo(i)}
-                aria-label={`Go to ${panel.eyebrow}`}
-                aria-current={i === active ? "true" : undefined}
-                className="group flex h-6 items-center"
-              >
+      <section
+        id="what-we-stand-for"
+        className="surface-light w-full py-16 sm:py-20 lg:py-28"
+      >
+        <Container>
+          {/* The thesis. */}
+          {philosophy ? (
+            <Reveal>
+              <div className="mx-auto max-w-4xl text-center">
+                <p className="eyebrow">{philosophy.title}</p>
                 <span
-                  className={`block h-[3px] rounded-full transition-all duration-300 ${
-                    i === active
-                      ? "w-10 bg-[color:var(--accent)]"
-                      : "w-5 bg-white/25 group-hover:bg-white/50"
-                  }`}
+                  aria-hidden="true"
+                  className="mx-auto mt-6 block h-px w-12 bg-[color:var(--accent)]"
                 />
-              </button>
+                <p className="t-sub mt-8 leading-[1.5] text-[color:var(--text)]">
+                  {marked(philosophy.body ?? "", philosophy.highlights)}
+                </p>
+              </div>
+            </Reveal>
+          ) : null}
+
+          {/* The supporting facts, side by side. */}
+          <div className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-3 lg:mt-24 lg:gap-8">
+            {cards.map((panel, i) => (
+              <Reveal key={panel.title} delay={Math.min(i, 2) * 0.08}>
+                <article className="flex h-full flex-col border-t-2 border-[color:var(--accent)] bg-white p-7 shadow-[0_1px_0_0_rgba(23,23,23,0.06)] lg:p-9">
+                  <span
+                    aria-hidden="true"
+                    className="numeral text-[length:var(--type-eyebrow)] text-[color:var(--text-muted)]"
+                  >
+                    {(i + 1).toString().padStart(2, "0")}
+                  </span>
+                  <h3 className="t-card mt-3 text-[#212466]">{panel.title}</h3>
+
+                  {panel.body ? (
+                    <p className="body-text mt-4">{panel.body}</p>
+                  ) : null}
+
+                  {panel.items?.length ? (
+                    <ul className="mt-5 flex flex-col gap-3">
+                      {panel.items.map((item) => (
+                        <li
+                          key={item}
+                          className="body-text flex items-baseline gap-3 font-medium text-[color:var(--text)]"
+                        >
+                          <span
+                            aria-hidden="true"
+                            className="h-1.5 w-1.5 shrink-0 translate-y-[-0.2em] rounded-full bg-[color:var(--accent)]"
+                          />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  ) : null}
+                </article>
+              </Reveal>
             ))}
           </div>
         </Container>
-      </div>
-    </section>
+      </section>
+    </>
   );
 };
 

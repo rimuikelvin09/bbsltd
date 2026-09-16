@@ -10,6 +10,7 @@ import Container from "@/components/Container";
 import Reveal from "@/components/Reveal";
 import CtaButton from "@/components/CtaButton";
 import LeadForm from "@/components/LeadForm";
+import MortgageCalculator from "@/components/MortgageCalculator";
 
 interface ProductDetailProps {
   /** The product this route is for. */
@@ -87,14 +88,32 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, products }) => {
               </span>
             </div>
 
-            <h2 className="display-shadow mt-6">{product.productHook}</h2>
+            {/* h1, not h2: this is the page's heading and it was silently
+                    absent before. .t-section holds it at the size it has
+                    always been drawn at. */}
+                <h1 className="t-section display-shadow mt-6">
+                  {product.productHook}
+                </h1>
 
             <p className="lede display-shadow mt-7 max-w-[560px]">
               {product.productVp}
             </p>
 
             <div className="mt-8">
-              <CtaButton onClick={toggleForm} label={product.ctaLabel} />
+              {/* A product with a tool on its page sends people to the tool
+                  first. Someone who has worked out their own monthly figure
+                  arrives at the form already qualified, and the form is one
+                  click further on rather than the only thing to do here. */}
+              {product.ctaHref ? (
+                <Link
+                  href={product.ctaHref}
+                  className="btn-pill mt-3 w-full text-center sm:w-fit"
+                >
+                  {product.ctaLabel || "Start Your Legacy"}
+                </Link>
+              ) : (
+                <CtaButton onClick={toggleForm} label={product.ctaLabel} />
+              )}
             </div>
           </div>
         </Container>
@@ -195,6 +214,10 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, products }) => {
           </Container>
         </section>
       )}
+
+      {/* The calculator is the whole argument on this page, so it sits
+          immediately after the supporting points rather than at the bottom. */}
+      {product.productTitle === "Jenga Kwako" && <MortgageCalculator />}
 
       {isFormOpen && (
         <LeadForm onClose={toggleForm} product={product.productTitle} />

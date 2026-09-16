@@ -5,6 +5,14 @@ export interface PhilosophyPanel {
   body?: string;
   /** Core values: names only, exactly as the brand states them. */
   items?: string[];
+  /**
+   * Exact substrings of `body` to mark up as the eye travels. Presentation
+   * only - the wording in `body` is the brand's and is never edited, so the
+   * phrases to emphasise are declared here rather than by rewriting the
+   * sentence with tags inside it. Each must appear in `body` verbatim or it
+   * is simply not marked.
+   */
+  highlights?: string[];
 }
 
 /**
@@ -20,6 +28,15 @@ export const philosophyPanels: PhilosophyPanel[] = [
   {
     title: "Our Philosophy",
     body: "At Benchmark Building Solutions, we believe in building more than just structures; we build solutions, relationships, and futures. Our customer-first approach drives us to understand your unique needs and deliver versatile, high-quality construction. Rooted in integrity and ethical practices, we are committed to transforming lives by creating homes and communities that empower and endure.",
+    // Four marks, spaced through the paragraph, so a reader who is skimming
+    // still collects the argument: what we build, who it starts with, what it
+    // is built on, and what it is for.
+    highlights: [
+      "solutions, relationships, and futures",
+      "customer-first",
+      "integrity and ethical practices",
+      "transforming lives",
+    ],
   },
   {
     title: "Our Mission",

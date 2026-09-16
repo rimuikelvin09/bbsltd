@@ -12,9 +12,19 @@ interface LeadFormProps {
    * mortgage lead and the data could not answer which product sells.
    */
   product?: string;
+  /**
+   * Text dropped into the notes field when the form opens. The
+   * affordability calculator uses it to carry the figures the visitor was
+   * looking at into the enquiry, so the first reply can be specific.
+   */
+  prefillNotes?: string;
 }
 
-const LeadForm: React.FC<LeadFormProps> = ({ onClose, product }) => {
+const LeadForm: React.FC<LeadFormProps> = ({
+  onClose,
+  product,
+  prefillNotes,
+}) => {
   /** Used to reject submissions that arrive faster than a human can type. */
   const openedAt = useRef<number>(Date.now());
   /** Honeypot. Hidden from people, irresistible to bots. */
@@ -41,7 +51,7 @@ const LeadForm: React.FC<LeadFormProps> = ({ onClose, product }) => {
     bankBranch: "",
     consultancySubtags: [],
     followUpDate: "",
-    notes: "",
+    notes: prefillNotes || "",
     consent: false,
   });
   const [errors, setErrors] = useState<
