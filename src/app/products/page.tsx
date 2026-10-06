@@ -13,6 +13,7 @@ import { siteDetails } from "@/data/siteDetails";
 export const metadata: Metadata = {
   title: "Products",
   description: `Explore the building solutions and services offered by ${siteDetails.siteName}.`,
+  alternates: { canonical: "/products" },
 };
 
 export default async function ProductsPage() {

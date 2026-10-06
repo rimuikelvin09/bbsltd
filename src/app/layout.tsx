@@ -10,6 +10,11 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 import CustomCursor from "@/components/CustomCursor";
 import BackToTop from "@/components/BackToTop";
 import { siteDetails } from "@/data/siteDetails";
+import {
+  JsonLd,
+  organizationJsonLd,
+  websiteJsonLd,
+} from "@/lib/seo/jsonLd";
 import { getProducts } from "@/lib/content";
 
 import "./globals.css";
@@ -30,12 +35,30 @@ const sourceSerif = Source_Serif_4({
 });
 
 export const metadata: Metadata = {
-  title: siteDetails.metadata.title,
+  /**
+   * Without metadataBase every relative URL in metadata - the OG image, every
+   * canonical - resolves against localhost at build time. Next warns about it
+   * on every build; this is the fix.
+   */
+  metadataBase: new URL(siteDetails.siteUrl),
+  title: {
+    default: siteDetails.metadata.title,
+    /** A page sets title: "About" and gets "About · Benchmark...". */
+    template: `%s · ${siteDetails.siteName}`,
+  },
   description: siteDetails.metadata.description,
+  alternates: { canonical: "/" },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large" },
+  },
   openGraph: {
     title: siteDetails.metadata.title,
     description: siteDetails.metadata.description,
     url: siteDetails.siteUrl,
+    siteName: siteDetails.siteName,
+    locale: "en_KE",
     type: "website",
     images: [
       {
@@ -45,6 +68,12 @@ export const metadata: Metadata = {
         alt: siteDetails.siteName,
       },
     ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: siteDetails.metadata.title,
+    description: siteDetails.metadata.description,
+    images: ["/images/seoimage.jpg"],
   },
 };
 
@@ -62,6 +91,8 @@ export default async function RootLayout({
       <body
         className={`${sourceSans.variable} ${sourceSerif.variable} font-sans antialiased`}
       >
+        <JsonLd data={organizationJsonLd()} />
+        <JsonLd data={websiteJsonLd()} />
         {siteDetails.googleAnalyticsId && (
           <GoogleAnalytics gaId={siteDetails.googleAnalyticsId} />
         )}

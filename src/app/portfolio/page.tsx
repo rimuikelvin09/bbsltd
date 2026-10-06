@@ -7,6 +7,16 @@ import Gallery from "@/components/Gallery";
 import { getGalleryImages } from "@/data/gallery";
 import { getProjects } from "@/lib/content";
 
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Our work",
+  description:
+    "Homes, commercial buildings and refurbishments delivered across Kenya by Benchmark Building Solutions.",
+  alternates: { canonical: "/portfolio" },
+};
+
+
 const PortfolioListingPage = async () => {
   const galleryImages = getGalleryImages();
   const projects = await getProjects();

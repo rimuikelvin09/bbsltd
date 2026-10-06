@@ -8,6 +8,16 @@ import Section from "@/components/Section";
 import Technicalteam from "@/components/Team/Technicalteam";
 import { ourApproachData } from "@/data/ourapproach";
 
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "About us",
+  description:
+    "Who we are: a Kenyan building contractor since 2012, with architectural, structural and MEP work in house, and the values the team is held to.",
+  alternates: { canonical: "/about" },
+};
+
+
 const AboutUsPage = () => {
   return (
     <>

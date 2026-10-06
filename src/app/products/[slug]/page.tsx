@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import ProductDetail from "@/components/ProductDetail";
 import { getProducts, getProductBySlug } from "@/lib/content";
 import { generateSlug } from "@/utils";
+import { JsonLd, serviceJsonLd } from "@/lib/seo/jsonLd";
 
 interface ProductPageProps {
   params: { slug: string };
@@ -34,6 +35,10 @@ export async function generateMetadata({
   return {
     title: product.productTitle,
     description: product.productVp,
+    // Six products, six URLs, six canonicals. Without these, a crawler that
+    // reaches the page with a tracking parameter appended treats it as a
+    // separate page and splits the ranking between them.
+    alternates: { canonical: `/products/${params.slug}` },
     openGraph: {
       title: product.productTitle,
       description: product.productVp,
@@ -53,5 +58,18 @@ export default async function ProductPage({ params }: ProductPageProps) {
   // needs the whole catalogue as well as the product this URL is for.
   const products = await getProducts();
 
-  return <ProductDetail product={product} products={products} />;
+  return (
+    <>
+      {/* Tells Google this page is a service offered by the business in the
+          site-wide block, rather than a page that merely mentions one. */}
+      <JsonLd
+        data={serviceJsonLd({
+          name: product.productTitle,
+          description: product.productVp,
+          slug: params.slug,
+        })}
+      />
+      <ProductDetail product={product} products={products} />
+    </>
+  );
 }
