@@ -6,11 +6,14 @@
  * CRM later means adding a destination, not changing this shape.
  */
 export interface LeadPayload {
-  firstName: string;
-  secondName: string;
+  /**
+   * One name field, not three. The old form made first and second name
+   * separately mandatory, which is friction for nothing - nobody searches a
+   * lead list by surname before they have even spoken to the person.
+   */
+  fullName: string;
   email: string;
   phoneNumber: string;
-  gender?: string;
   preferredContact?: string;
   locationType?: string;
   county?: string;
@@ -23,6 +26,8 @@ export interface LeadPayload {
 
   /** Attribution, captured silently. Worth nothing today, everything later. */
   pageUrl?: string;
+  /** Where they were before they arrived. Answers "is SEO working". */
+  referrer?: string;
   utmSource?: string;
   utmMedium?: string;
   utmCampaign?: string;
@@ -57,19 +62,17 @@ export function validateLead(input: unknown): {
   const b = input as Record<string, unknown>;
   const str = (k: string) => (typeof b[k] === "string" ? (b[k] as string).trim() : "");
 
-  const firstName = str("firstName");
-  const secondName = str("secondName");
+  const fullName = str("fullName");
   const email = str("email");
   const phoneNumber = str("phoneNumber");
 
-  if (!firstName) errors.push("First name is required.");
-  if (!secondName) errors.push("Second name is required.");
+  if (!fullName) errors.push("Your name is required.");
   if (!EMAIL.test(email)) errors.push("A valid email address is required.");
   if (!PHONE.test(phoneNumber)) errors.push("A valid phone number is required.");
   if (b.consent !== true) errors.push("Consent is required.");
 
   // Cheap sanity caps so a bot cannot post a novel into the list.
-  if (firstName.length > 80 || secondName.length > 80) errors.push("Name too long.");
+  if (fullName.length > 120) errors.push("Name too long.");
   if (str("notes").length > 2000) errors.push("Notes too long.");
 
   if (errors.length) return { errors };
@@ -77,11 +80,9 @@ export function validateLead(input: unknown): {
   return {
     errors: [],
     data: {
-      firstName,
-      secondName,
+      fullName,
       email,
       phoneNumber,
-      gender: str("gender"),
       preferredContact: str("preferredContact"),
       locationType: str("locationType"),
       county: str("county"),
@@ -90,6 +91,7 @@ export function validateLead(input: unknown): {
       consent: true,
       productOffering: str("productOffering") || "UNSPECIFIED",
       pageUrl: str("pageUrl"),
+      referrer: str("referrer"),
       utmSource: str("utmSource"),
       utmMedium: str("utmMedium"),
       utmCampaign: str("utmCampaign"),

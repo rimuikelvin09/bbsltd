@@ -3,7 +3,13 @@
 import React, { useId, useMemo, useState } from "react";
 import Link from "next/link";
 import Container from "./Container";
-import LeadForm from "./LeadForm";
+import dynamic from "next/dynamic";
+// The enquiry modal and its country and county lists are ~500 lines that
+// nobody loads unless they open the form. Keeping it out of the initial
+// bundle costs nothing and is the single biggest win available here.
+const LeadForm = dynamic(() => import("@/components/LeadForm"), {
+  ssr: false,
+});
 
 /**
  * JENGA KWAKO AFFORDABILITY

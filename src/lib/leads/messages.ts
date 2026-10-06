@@ -18,13 +18,13 @@ export function teamNotification(lead: LeadPayload) {
       : lead.country || "Outside Kenya";
 
   return {
-    subject: `New lead · ${lead.productOffering} · ${lead.firstName} ${lead.secondName}`,
+    subject: `New lead · ${lead.productOffering} · ${lead.fullName}`,
     html: `
       <div style="font:14px system-ui;color:#171717">
         <p style="margin:0 0 4px;font:600 12px system-ui;letter-spacing:.12em;text-transform:uppercase;color:#991212">New website lead</p>
         <h2 style="margin:0 0 16px;font:400 22px Georgia,serif;color:#212466">${esc(
-          lead.firstName
-        )} ${esc(lead.secondName)}</h2>
+          lead.fullName
+        )}</h2>
         <table style="border-collapse:collapse">
           ${row("Product", lead.productOffering)}
           ${row("Email", lead.email)}
@@ -33,6 +33,7 @@ export function teamNotification(lead: LeadPayload) {
           ${row("Location", where)}
           ${row("Notes", lead.notes)}
           ${row("Page", lead.pageUrl)}
+          ${row("Came from", lead.referrer)}
           ${row("Campaign", [lead.utmSource, lead.utmMedium, lead.utmCampaign].filter(Boolean).join(" / "))}
         </table>
         <p style="margin:18px 0 0;color:#6b6b76;font:13px system-ui">
@@ -48,7 +49,7 @@ export function acknowledgement(lead: LeadPayload) {
     subject: "We have your enquiry — Benchmark Building Solutions",
     html: `
       <div style="font:15px/1.6 system-ui;color:#171717;max-width:520px">
-        <p style="margin:0 0 16px">Hi ${esc(lead.firstName)},</p>
+        <p style="margin:0 0 16px">Hi ${esc(lead.fullName.split(" ")[0])},</p>
         <p style="margin:0 0 16px">
           Thank you for getting in touch about
           <strong>${esc(lead.productOffering)}</strong>. Your enquiry has

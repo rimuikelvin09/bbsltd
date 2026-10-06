@@ -61,7 +61,7 @@ async function getToken(): Promise<string> {
 export async function createLeadItem(lead: LeadPayload): Promise<void> {
   const token = await getToken();
   const fields = {
-    Title: `${lead.firstName} ${lead.secondName}`.trim(),
+    Title: lead.fullName,
     Email: lead.email,
     Phone: lead.phoneNumber,
     Product: lead.productOffering,
@@ -74,6 +74,7 @@ export async function createLeadItem(lead: LeadPayload): Promise<void> {
     UtmSource: lead.utmSource || "",
     UtmMedium: lead.utmMedium || "",
     UtmCampaign: lead.utmCampaign || "",
+    Referrer: lead.referrer || "",
     Status: "New",
   };
 

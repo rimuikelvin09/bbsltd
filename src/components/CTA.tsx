@@ -3,7 +3,13 @@
 import React, { useState } from "react";
 import { ctaDetails } from "@/data/cta";
 import CtaButton from "./CtaButton";
-import LeadForm from "./LeadForm";
+import dynamic from "next/dynamic";
+// The enquiry modal and its country and county lists are ~500 lines that
+// nobody loads unless they open the form. Keeping it out of the initial
+// bundle costs nothing and is the single biggest win available here.
+const LeadForm = dynamic(() => import("@/components/LeadForm"), {
+  ssr: false,
+});
 
 const CTA: React.FC = () => {
   const [isFormOpen, setIsFormOpen] = useState(false);

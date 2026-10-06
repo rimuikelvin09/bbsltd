@@ -9,7 +9,13 @@ import { generateSlug } from "@/utils";
 import Container from "@/components/Container";
 import Reveal from "@/components/Reveal";
 import CtaButton from "@/components/CtaButton";
-import LeadForm from "@/components/LeadForm";
+import dynamic from "next/dynamic";
+// The enquiry modal and its country and county lists are ~500 lines that
+// nobody loads unless they open the form. Keeping it out of the initial
+// bundle costs nothing and is the single biggest win available here.
+const LeadForm = dynamic(() => import("@/components/LeadForm"), {
+  ssr: false,
+});
 import MortgageCalculator from "@/components/MortgageCalculator";
 
 interface ProductDetailProps {

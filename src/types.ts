@@ -210,6 +210,11 @@ export interface Project {
 
 import { Country, KenyaCounty } from "@/data/location";
 
+/**
+ * DEPRECATED. The enquiry form no longer uses this shape - it posts the
+ * LeadPayload in lib/leads/types.ts directly. Left here only because other
+ * code may still import it; delete once nothing does.
+ */
 export interface LeadFormData {
   firstName: string;
   secondName: string;
