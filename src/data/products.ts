@@ -52,6 +52,7 @@ export const products: Product[] = [
   {
     id: 1,
     productTitle: "Jenga Stress Free",
+    financing: true,
     productHook: "You should not have to project-manage your own house.",
     productVp:
       "Architect, engineer, quantity surveyor and site team on one contract with us — so drawings, county approvals and the build are one job with one person answerable, instead of four you have to hold together yourself.",
@@ -84,6 +85,7 @@ export const products: Product[] = [
   {
     id: 2,
     productTitle: "Jenga Kwako",
+    badge: "9.5% fixed \u00b7 up to 25 years",
     productHook:
       "9.5% on reducing balance. Up to KES 10.5M. Twenty-five years to pay.",
     productVp:
@@ -117,6 +119,7 @@ export const products: Product[] = [
   {
     id: 3,
     productTitle: "Diaspora Building Solutions",
+    financing: true,
     productHook: "Send money, then hope. That is the usual arrangement.",
     productVp:
       "Every stage photographed and dated, every shilling logged against the bill of quantities, on a portal you open from wherever you are — so checking your site is something you do, not something you ask for.",

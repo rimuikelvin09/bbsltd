@@ -9,8 +9,19 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
+        hostname: "i.ytimg.com",
+        // What the YouTube Data API actually returns. Every thumbnail URL in
+        // a playlistItems response is served from this host, so this is the
+        // one that matters now the fetch is server-side and we use the real
+        // URLs instead of building them by hand.
+        pathname: "/vi/**",
+      },
+      {
+        protocol: "https",
         hostname: "img.youtube.com",
-        pathname: "/vi/**", // YouTube thumbnails
+        // The same images under an older hostname. Kept because anything
+        // that still constructs a thumbnail URL by hand will use this form.
+        pathname: "/vi/**",
       },
       // The bbspaces.blr1.digitaloceanspaces.com bucket was deleted along
       // with the droplet. Product and project images now live in /public.

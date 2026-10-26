@@ -239,14 +239,22 @@
     text-shadow: 0 2px 14px rgba(10, 11, 40, 0.55);
   }
 
-  /* The one button shape on the site. */
-  .btn-pill {
+  /* The one button shape on the site. BOTH variants carry the shape, not
+     just .btn-pill: five call sites use .btn-pill-dark on its own and were
+     getting the navy fill with no pill around it at all.
+
+     min-height rather than height, so a label that wraps on a phone grows
+     the button instead of spilling out of the top and bottom of it. A
+     single-line label still measures exactly 3.5rem. */
+  .btn-pill,
+  .btn-pill-dark {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    text-align: center;
     min-width: 205px;
-    height: 3.5rem;
-    padding: 0 2rem;
+    min-height: 3.5rem;
+    padding: 0.85rem 2rem;
     border-radius: 9999px;
     font-family: var(--font-text);
     font-size: var(--type-meta);
@@ -1122,4 +1130,234 @@ body.form-open {
   100% {
     stroke-dashoffset: 0;
   }
+}
+/* ===================================================================
+   LIGHT / DARK = A BAND INVERSION, NOT A DARK PAGE
+
+   The page ground stays paper in BOTH states. What flips is the brand
+   band - every surface that is navy today:
+
+     DARK  (default, the site exactly as it is)  navy band,  white text,
+                                                 white buttons
+     LIGHT                                       blush band, NAVY text,
+                                                 navy buttons
+
+   .surface-dark is the only hook needed: the home hero, the process
+   section, the CTA bands and the footer all already declare it. Flipping
+   that one rule flips all of them, which is what the surface system was
+   built for.
+
+   DEFAULT IS DARK, and deliberately ignores the OS setting. A visitor with
+   a light OS is not asking for blush bands, and defaulting to the system
+   would change the look of the site for most people who never touch the
+   toggle. Light is opt-in.
+
+   CONTRAST, measured:
+     white on navy #212466 ............. 13.92:1  AAA
+     #ffeded on navy ................... 12.32:1  AAA
+     navy on blush #FFEDED ............. 12.32:1  AAA
+     crimson #991212 on blush ..........  7.59:1  AAA
+   =================================================================== */
+
+:root,
+:root[data-theme="dark"] {
+  --band: var(--navy);
+  --band-text: #ffffff;
+  --band-text-soft: rgba(255, 255, 255, 0.85);
+  --band-text-faint: rgba(255, 255, 255, 0.78);
+  --band-text-muted: rgba(255, 255, 255, 0.7);
+  --band-accent: var(--crimson-on-dark);
+  --band-rule: rgba(255, 255, 255, 0.16);
+  --band-btn-bg: #ffffff;
+  --band-btn-text: var(--navy);
+
+  /* Veils. Four components lay a band over a photograph or video: the
+     home hero, the process section, the contact hero and the footer. Hue
+     AND opacity are both tokens - a pale veil must hold the image back far
+     harder than a navy one before navy text can sit on it. */
+  --band-rgb: 33, 36, 102;
+  --band-rgb-deep: 27, 30, 88;
+  --veil-in: 0.42;
+  --veil-mid: 0.8;
+  --veil-out: 0.96;
+  --contact-veil: 0.75;
+  --footer-veil: 0.41;
+  --process-veil-sm: radial-gradient(ellipse 130% 70% at 86% 20%, rgba(var(--band-rgb), 0.9) 0%, rgba(var(--band-rgb), 0.96) 34%, rgba(var(--band-rgb), 1) 66%);
+  --process-veil-lg: radial-gradient(ellipse 55% 95% at 95% 26%, rgba(var(--band-rgb), 0.28) 0%, rgba(var(--band-rgb), 0.58) 35%, rgba(var(--band-rgb), 0.95) 65%, rgba(var(--band-rgb), 1) 85%);
+  --process-veil-left: linear-gradient(to left, rgba(var(--band-rgb), 0) 0%, rgba(var(--band-rgb), 0) 18%, rgba(var(--band-rgb), 0.55) 26%, rgba(var(--band-rgb), 0.92) 36%, rgba(var(--band-rgb), 1) 48%);
+  --product-veil: radial-gradient(circle at 70% 50%, rgba(var(--band-rgb), 0.25) 0%, rgba(var(--band-rgb), 0.62) 32%, rgba(var(--band-rgb), 0.93) 68%);
+  --card-foot-veil: linear-gradient(to top, rgba(var(--band-rgb-deep), 0.55), rgba(var(--band-rgb-deep), 0));
+  --tile-veil: rgba(var(--band-rgb), 0.22);
+}
+
+:root[data-theme="light"] {
+  --band: var(--primary-accent);
+  /* Navy, not black. The band keeps the brand in its type. */
+  --band-text: var(--navy);
+  --band-text-soft: rgba(33, 36, 102, 0.84);
+  --band-text-faint: rgba(33, 36, 102, 0.74);
+  --band-text-muted: rgba(33, 36, 102, 0.64);
+  --band-accent: var(--crimson);
+  --band-rule: rgba(33, 36, 102, 0.18);
+  --band-btn-bg: var(--navy);
+  --band-btn-text: #ffffff;
+
+  --band-rgb: 255, 237, 237;
+  --band-rgb-deep: 255, 222, 222;
+  /* Every stop raised. Navy text on a 28%-opaque blush wash over a
+     photograph is unreadable; on an 80% wash it is fine. */
+  --veil-in: 0.82;
+  --veil-mid: 0.93;
+  --veil-out: 0.99;
+  --contact-veil: 0.92;
+  --footer-veil: 0.78;
+  --process-veil-sm: radial-gradient(ellipse 130% 70% at 86% 20%, rgba(var(--band-rgb), 0.94) 0%, rgba(var(--band-rgb), 0.98) 34%, rgba(var(--band-rgb), 1) 66%);
+  --process-veil-lg: radial-gradient(ellipse 55% 95% at 95% 26%, rgba(var(--band-rgb), 0.74) 0%, rgba(var(--band-rgb), 0.88) 35%, rgba(var(--band-rgb), 0.98) 65%, rgba(var(--band-rgb), 1) 85%);
+  --process-veil-left: linear-gradient(to left, rgba(var(--band-rgb), 0) 0%, rgba(var(--band-rgb), 0) 18%, rgba(var(--band-rgb), 0.72) 26%, rgba(var(--band-rgb), 0.95) 36%, rgba(var(--band-rgb), 1) 48%);
+  /* 0.25 of blush over a photograph is nothing. Navy type needs 0.78. */
+  --product-veil: radial-gradient(circle at 70% 50%, rgba(var(--band-rgb), 0.78) 0%, rgba(var(--band-rgb), 0.9) 32%, rgba(var(--band-rgb), 0.97) 68%);
+  --card-foot-veil: linear-gradient(to top, rgba(var(--band-rgb), 0.88), rgba(var(--band-rgb), 0));
+  --tile-veil: rgba(var(--band-rgb), 0.5);
+}
+
+/* THE ONE RULE. Redefines .surface-dark through the band tokens; appearing
+   later in the file than the original, at equal specificity, it wins. */
+.surface-dark,
+.learn-hero {
+  background-color: var(--band);
+  --text: var(--band-text);
+  --text-soft: var(--band-text-soft);
+  --text-faint: var(--band-text-faint);
+  --text-muted: var(--band-text-muted);
+  --accent: var(--band-accent);
+  --rule: var(--band-rule);
+  color: var(--text);
+}
+
+/* Utilities that name white directly inside a band. Attribute matching
+   catches the slash variants (text-white/85, border-white/45) too. */
+:root[data-theme="light"] :is(.surface-dark, .learn-hero) [class*="text-white"] {
+  color: var(--navy) !important;
+}
+:root[data-theme="light"] :is(.surface-dark, .learn-hero) [class*="border-white"] {
+  border-color: rgba(33, 36, 102, 0.3) !important;
+}
+
+/* Buttons sitting ON a band invert with it: white on navy, navy on blush.
+   The literal-navy CTA counts as a band here too: it turns blush in light
+   mode, and a white pill on blush measures about 1.1:1 and vanishes. */
+:root[data-theme="light"]
+  :is(.surface-dark, .learn-hero, [class*="bg-[#212466]"])
+  :is(.btn-pill, .btn-pill-dark, [class*="bg-white"]) {
+  background-color: var(--band-btn-bg) !important;
+  color: var(--band-btn-text) !important;
+}
+
+/* That rule is !important, so it was also beating .btn-pill:hover and
+   leaving every button on a band with no hover feedback whatsoever in
+   light mode. Hover performs the same flip it does in dark mode, in the
+   opposite direction, with a ring to hold the edge against the band. */
+:root[data-theme="light"]
+  :is(.surface-dark, .learn-hero, [class*="bg-[#212466]"])
+  :is(.btn-pill, .btn-pill-dark):is(:hover, :focus-visible) {
+  background-color: var(--band) !important;
+  color: var(--band-text) !important;
+  box-shadow: inset 0 0 0 1px rgba(33, 36, 102, 0.45) !important;
+}
+
+/* Literal navy fills that never got tokenised - my own Learn CTA among
+   them. Until they are converted, catch them by the class they carry. */
+:root[data-theme="light"] main [class*="bg-[#212466]"] {
+  background-color: var(--band) !important;
+  color: var(--navy) !important;
+}
+:root[data-theme="light"] main [class*="bg-[#212466]"] [class*="text-white"],
+:root[data-theme="light"] main [class*="bg-[#212466]"] h1,
+:root[data-theme="light"] main [class*="bg-[#212466]"] h2 {
+  color: var(--navy) !important;
+}
+
+/* The crimson rule above the Learn eyebrow follows the band accent. */
+.learn-hero .hero-rule {
+  background-color: var(--accent);
+}
+
+/* display-shadow lifts white off a dark ground; on a blush band it has to
+   work the other way. */
+:root[data-theme="light"] :is(.surface-dark, .learn-hero) .display-shadow {
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.65);
+}
+
+/* Alpha-hex navy tiles (bg-[#21246638]) used as hover washes on gallery
+   images. Substring matching is safe here: "bg-[#212466]" with its closing
+   bracket does not match "bg-[#21246638]". */
+:root[data-theme="light"] main [class*="bg-[#21246638]"] {
+  background-color: var(--tile-veil) !important;
+}
+
+/* A band whose colour arrives through a veil rather than background-color
+   still needs its white utilities flipped. These four carry .surface-dark
+   already, so the rule above covers them - but product and project cards
+   sit on a light page, so they are named here. */
+:root[data-theme="light"] main :is([class*="--card-foot-veil"], [class*="--product-veil"]) [class*="text-white"] {
+  color: var(--navy) !important;
+}
+
+/* ===================================================================
+   THE SWEEP
+
+   Component by component was losing: portal, portfolio, contact, product
+   and project pages each lay their own navy wash over a photograph with a
+   slightly different opacity, and each one missed meant navy text on a
+   navy ground. These rules catch them by the literal they carry, so a page
+   that was never touched still inverts.
+
+   Converting each to a token is still the right end state. Until then this
+   is the net underneath.
+   =================================================================== */
+
+/* Any alpha-navy wash over an image: portal, portfolio, contact heroes. */
+:root[data-theme="light"] main [class*="bg-[rgba(33,36,102"],
+:root[data-theme="light"] main [class*="bg-[rgba(27,30,88"] {
+  /* One value replaces several, and deliberately a high one: navy type
+     over a photograph needs the image held back much harder than white
+     type did. */
+  background-color: rgba(255, 237, 237, 0.93) !important;
+}
+
+/* On a light page every `text-white` is, by definition, sitting on
+   something dark. If that something flipped to blush, the text has to
+   flip with it. */
+:root[data-theme="light"] main [class*="text-white"] {
+  color: var(--navy) !important;
+}
+:root[data-theme="light"] main [class*="border-white"] {
+  border-color: rgba(33, 36, 102, 0.3) !important;
+}
+
+/* ...with one exception. A video poster is a photograph and stays dark in
+   both themes, so its duration chip and play label keep their white. */
+:root[data-theme="light"] main :is([class*="bg-[#1b1e58]"], .video-poster) [class*="text-white"] {
+  color: #ffffff !important;
+}
+:root[data-theme="light"] main :is([class*="bg-[#1b1e58]"], .video-poster) [class*="bg-white"] {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+}
+
+/* Solid navy panels on a light page - lead form header, product guide
+   bands, the Learn CTA, the video rail arrows. */
+:root[data-theme="light"] main [class*="bg-[#212466]"] {
+  background-color: var(--band) !important;
+  color: var(--navy) !important;
+}
+
+/* The header's own two tokens. White base in both themes - it is chrome,
+   not a band - with a wash from the right that follows the toggle. */
+:root {
+  --head-base: rgba(255, 255, 255, 0.78);
+  --head-wash: rgba(255, 237, 237, 0.92);
+}
+:root[data-theme="dark"] {
+  --head-base: rgba(255, 255, 255, 0.80);
+  --head-wash: rgba(33, 36, 102, 0.20);
 }

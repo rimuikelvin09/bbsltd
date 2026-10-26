@@ -12,6 +12,29 @@ export const metadata: Metadata = {
   description:
     "Track your build from anywhere: progress, records and your current cost position, updated as the work happens.",
   alternates: { canonical: "/portal" },
+
+  /**
+   * Next merges metadata SHALLOWLY - a page that defines `openGraph` replaces
+   * the layout's entirely rather than extending it. Without this block the
+   * page inherited the root object, so sharing any inner page showed the HOME
+   * page's title and description. Hence the repetition: images included on
+   * purpose, because they would otherwise be dropped.
+   */
+  openGraph: {
+    title: "Client portal",
+    description:
+      "Track your build from anywhere: progress, records and your current cost position, updated as the work happens.",
+    url: "/portal",
+    type: "website",
+    images: ["/images/seoimage.jpg"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Client portal",
+    description:
+      "Track your build from anywhere: progress, records and your current cost position, updated as the work happens.",
+    images: ["/images/seoimage.jpg"],
+  },
 };
 
 

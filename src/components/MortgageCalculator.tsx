@@ -50,12 +50,20 @@ const ANNUAL_RATE = 0.095;
  * printed on the page, so a stale figure here becomes visibly stale rather
  * than quietly wrong.
  */
-const MARKET_RATE = 0.1439;
-const MARKET_LABEL = "14.39%";
+const MARKET_RATE = 0.135;
+const MARKET_LABEL = "13.5%";
+/**
+ * The previous constant was 14.39%, the CBK's general COMMERCIAL BANK
+ * LENDING rate. That is the wrong series to hold a mortgage against - it
+ * covers all lending, sits higher, and overstated the saving. These are
+ * from the CBK Residential Mortgage Market Survey: the average residential
+ * mortgage rate, and the spread across individual loans.
+ */
+const MARKET_PRIOR_LABEL = "15.2%";
+const MARKET_RANGE_LABEL = "7.5% to 20.4%";
 
 const MAX_LOAN = 10_500_000;
 const MIN_LOAN = 1_000_000;
-const LOAN_STEP = 100_000;
 const MAX_YEARS = 25;
 
 const money = (n: number) => `KES ${Math.round(n).toLocaleString("en-US")}`;
@@ -66,11 +74,91 @@ const monthlyPayment = (principal: number, rate: number, years: number) => {
   return (principal * r) / (1 - Math.pow(1 + r, -n));
 };
 
+const AMOUNT_PRESETS = [2_000_000, 5_000_000, 7_500_000, MAX_LOAN];
+const YEAR_PRESETS = [10, 15, 20, 25];
+
+const clamp = (n: number, lo: number, hi: number) =>
+  Math.min(hi, Math.max(lo, n));
+
+/**
+ * Quick picks beside the field.
+ *
+ * A slider was here and a user took a while to work out it was draggable -
+ * a slider gives no affordance until you already know the convention, and
+ * on a phone it fights the page scroll. A typed field is unambiguous but
+ * slow; the chips make the common answers one tap. Together they cover both
+ * the person who knows their figure and the person who is only exploring.
+ */
+const Picks: React.FC<{
+  values: number[];
+  current: number;
+  format: (v: number) => string;
+  onPick: (v: number) => void;
+  label: string;
+}> = ({ values, current, format, onPick, label }) => (
+  <div className="mt-3 flex flex-wrap gap-2" role="group" aria-label={label}>
+    {values.map((v) => (
+      <button
+        key={v}
+        type="button"
+        onClick={() => onPick(v)}
+        aria-pressed={current === v}
+        className={`rounded-full border px-3 py-1.5 text-[0.8125rem] font-semibold transition-colors ${
+          current === v
+            ? "border-[#212466] bg-[#212466] text-white"
+            : "border-[color:var(--rule)] bg-white text-[color:var(--text-faint)] hover:border-[#991212] hover:text-[#991212]"
+        }`}
+      >
+        {format(v)}
+      </button>
+    ))}
+  </div>
+);
+
 const MortgageCalculator: React.FC = () => {
   const [loan, setLoan] = useState(5_000_000);
   const [years, setYears] = useState(25);
+  // The field keeps its own text so someone typing "1" on the way to
+  // "10500000" is not yanked to the minimum between keystrokes. Clamping
+  // happens on blur, when they have finished saying what they mean.
+  const [loanText, setLoanText] = useState((5_000_000).toLocaleString("en-US"));
+  const [yearsText, setYearsText] = useState("25");
+  // Midpoint of the 25-45k band our own Kiambu project found for two-beds.
+  const [rent, setRent] = useState(35_000);
+  const [rentText, setRentText] = useState((35_000).toLocaleString("en-US"));
   const [isFormOpen, setIsFormOpen] = useState(false);
   const uid = useId();
+
+  const onLoanChange = (raw: string) => {
+    const digits = raw.replace(/[^\d]/g, "");
+    setLoanText(digits ? Number(digits).toLocaleString("en-US") : "");
+    const n = Number(digits);
+    if (digits && n >= MIN_LOAN && n <= MAX_LOAN) setLoan(n);
+  };
+  const commitLoan = () => {
+    const digits = loanText.replace(/[^\d]/g, "");
+    const n = clamp(Number(digits) || MIN_LOAN, MIN_LOAN, MAX_LOAN);
+    setLoan(n);
+    setLoanText(n.toLocaleString("en-US"));
+  };
+
+  const onYearsChange = (raw: string) => {
+    const digits = raw.replace(/[^\d]/g, "").slice(0, 2);
+    setYearsText(digits);
+    const n = Number(digits);
+    if (digits && n >= 1 && n <= MAX_YEARS) setYears(n);
+  };
+  const onRentChange = (raw: string) => {
+    const digits = raw.replace(/[^\d]/g, "").slice(0, 7);
+    setRentText(digits ? Number(digits).toLocaleString("en-US") : "");
+    setRent(Number(digits) || 0);
+  };
+
+  const commitYears = () => {
+    const n = clamp(Number(yearsText) || 1, 1, MAX_YEARS);
+    setYears(n);
+    setYearsText(String(n));
+  };
 
   const { monthly, extraInterestAtMarket } = useMemo(() => {
     const months = years * 12;
@@ -91,6 +179,14 @@ const MortgageCalculator: React.FC = () => {
 
   const term = `${years} ${years === 1 ? "year" : "years"}`;
 
+  // Rent assumed FLAT for the whole term, which understates what renting
+  // actually costs. Deliberately conservative: the comparison should be
+  // one nobody can accuse us of loading.
+  const rentTotal = rent * 12 * years;
+  const gap = monthly - rent;
+  // What one percentage point of movement does, on a loan where it can.
+  const onePointMore = monthlyPayment(loan, ANNUAL_RATE + 0.01, years) - monthly;
+
   const prefill = [
     "Jenga Kwako application started from the calculator.",
     `Amount: ${money(loan)}`,
@@ -98,8 +194,6 @@ const MortgageCalculator: React.FC = () => {
     `Indicative monthly repayment at 9.5% fixed: ${money(monthly)}`,
   ].join("\n");
 
-  const slider =
-    "mt-4 h-1.5 w-full cursor-pointer appearance-none rounded-full bg-[#E3E3E9] accent-[#991212]";
 
   return (
     <>
@@ -124,73 +218,88 @@ const MortgageCalculator: React.FC = () => {
               </p>
 
               <div className="mt-10">
-                <div className="flex flex-wrap items-baseline justify-between gap-3">
-                  <label
-                    htmlFor={`${uid}-amount`}
-                    className="meta font-semibold uppercase tracking-[0.16em]"
-                  >
-                    How much you need
-                  </label>
-                  <output
-                    htmlFor={`${uid}-amount`}
-                    className="numeral text-[length:var(--type-card)] font-semibold text-[#212466]"
-                  >
-                    {money(loan)}
-                  </output>
+                <label
+                  htmlFor={`${uid}-amount`}
+                  className="meta font-semibold uppercase tracking-[0.16em]"
+                >
+                  How much you need
+                </label>
+                <div className="mt-3 flex items-center gap-3 rounded-xl border border-[color:var(--rule)] bg-white px-4 py-3 focus-within:border-[#991212]">
+                  <span className="meta font-bold text-[color:var(--text-muted)]">
+                    KES
+                  </span>
+                  <input
+                    id={`${uid}-amount`}
+                    type="text"
+                    inputMode="numeric"
+                    autoComplete="off"
+                    value={loanText}
+                    onChange={(e) => onLoanChange(e.target.value)}
+                    onBlur={commitLoan}
+                    aria-describedby={`${uid}-amount-help`}
+                    className="numeral w-full border-0 bg-transparent p-0 text-[length:var(--type-sub)] font-semibold text-[#212466] outline-none"
+                  />
                 </div>
-                <input
-                  id={`${uid}-amount`}
-                  type="range"
-                  min={MIN_LOAN}
-                  max={MAX_LOAN}
-                  step={LOAN_STEP}
-                  value={loan}
-                  onChange={(e) => setLoan(Number(e.target.value))}
-                  className={slider}
+                <Picks
+                  values={AMOUNT_PRESETS}
+                  current={loan}
+                  format={(v) => `${v / 1_000_000}M`}
+                  onPick={(v) => {
+                    setLoan(v);
+                    setLoanText(v.toLocaleString("en-US"));
+                  }}
+                  label="Common amounts"
                 />
-                <div className="mt-2 flex justify-between">
-                  <span className="meta">{money(MIN_LOAN)}</span>
-                  <span className="meta">{money(MAX_LOAN)}</span>
-                </div>
+                <p id={`${uid}-amount-help`} className="meta mt-2">
+                  {money(MIN_LOAN)} to {money(MAX_LOAN)}
+                </p>
               </div>
 
               <div className="mt-9">
-                <div className="flex flex-wrap items-baseline justify-between gap-3">
-                  <label
-                    htmlFor={`${uid}-years`}
-                    className="meta font-semibold uppercase tracking-[0.16em]"
-                  >
-                    How long to pay it back
-                  </label>
-                  <output
-                    htmlFor={`${uid}-years`}
-                    className="numeral text-[length:var(--type-card)] font-semibold text-[#212466]"
-                  >
-                    {term}
-                  </output>
+                <label
+                  htmlFor={`${uid}-years`}
+                  className="meta font-semibold uppercase tracking-[0.16em]"
+                >
+                  How long to pay it back
+                </label>
+                <div className="mt-3 flex items-center gap-3 rounded-xl border border-[color:var(--rule)] bg-white px-4 py-3 focus-within:border-[#991212]">
+                  <input
+                    id={`${uid}-years`}
+                    type="text"
+                    inputMode="numeric"
+                    autoComplete="off"
+                    value={yearsText}
+                    onChange={(e) => onYearsChange(e.target.value)}
+                    onBlur={commitYears}
+                    aria-describedby={`${uid}-years-help`}
+                    className="numeral w-16 border-0 bg-transparent p-0 text-[length:var(--type-sub)] font-semibold text-[#212466] outline-none"
+                  />
+                  <span className="meta font-bold text-[color:var(--text-muted)]">
+                    {years === 1 ? "year" : "years"}
+                  </span>
                 </div>
-                <input
-                  id={`${uid}-years`}
-                  type="range"
-                  min={1}
-                  max={MAX_YEARS}
-                  step={1}
-                  value={years}
-                  onChange={(e) => setYears(Number(e.target.value))}
-                  className={slider}
+                <Picks
+                  values={YEAR_PRESETS}
+                  current={years}
+                  format={(v) => `${v} yrs`}
+                  onPick={(v) => {
+                    setYears(v);
+                    setYearsText(String(v));
+                  }}
+                  label="Common terms"
                 />
-                <div className="mt-2 flex justify-between">
-                  <span className="meta">1 year</span>
-                  <span className="meta">25 years</span>
-                </div>
+                <p id={`${uid}-years-help`} className="meta mt-2">
+                  1 to {MAX_YEARS} years
+                </p>
               </div>
 
               <p className="meta mt-10 leading-relaxed lg:max-w-lg">
                 Indicative only. Excludes arrangement fees, valuation, legal
                 costs and insurance, and lending is at the sole discretion of
-                the bank. Market average is the Central Bank of
-                Kenya&rsquo;s published commercial bank lending rate, July
-                2026. Every figure for every combination is in the{" "}
+                the bank. Market average is the average residential mortgage
+                rate in the Central Bank of Kenya&rsquo;s Residential
+                Mortgage Market Survey, 2025. Nothing here is financial
+                advice. Every figure for every combination is in the{" "}
                 <Link
                   href="/documents/amortizationtable.pdf"
                   className="link font-semibold"
@@ -239,6 +348,122 @@ const MortgageCalculator: React.FC = () => {
                 <p className="meta mt-4">
                   Two minutes, and no documents yet. We come back with what
                   you qualify for.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/*
+            WHAT YOU GET FOR IT.
+
+            A rate comparison only says "this is less bad". These three
+            panels say what the money buys, and NONE of them needs a
+            forecast - which matters, because the honest position is
+            awkward. HassConsult has satellite-town prices up 3.10x since
+            2007, but Kiambu DOWN 4.8% in the year to June 2026. A tool
+            projecting smooth appreciation would be contradicted by one
+            search, on the site whose whole argument is that we say the
+            uncomfortable part. So: rent is a known cash flow, rate
+            certainty is a published fact, and the appreciation figure is
+            presented as history with its source and its recent decline
+            stated beside it.
+          */}
+          <div className="mt-16 border-t border-[color:var(--rule)] pt-12 sm:mt-20">
+            <p className="eyebrow">What you get for it</p>
+            <h3 className="t-sub mt-4 max-w-[28ch]">
+              The rate is the headline. The ownership is the point.
+            </h3>
+
+            <div className="mt-9 grid grid-cols-1 gap-6 lg:grid-cols-3 lg:gap-8">
+              <div className="flex flex-col rounded-xl border border-[color:var(--rule)] bg-white p-6 lg:p-7">
+                <p className="meta font-bold uppercase tracking-[0.16em]">
+                  Against rent
+                </p>
+                <label htmlFor={`${uid}-rent`} className="meta mt-4 block">
+                  What do you pay in rent now?
+                </label>
+                <div className="mt-2 flex items-center gap-2 rounded-lg border border-[color:var(--rule)] px-3 py-2 focus-within:border-[#991212]">
+                  <span className="meta font-bold text-[color:var(--text-muted)]">
+                    KES
+                  </span>
+                  <input
+                    id={`${uid}-rent`}
+                    type="text"
+                    inputMode="numeric"
+                    autoComplete="off"
+                    value={rentText}
+                    onChange={(e) => onRentChange(e.target.value)}
+                    className="numeral w-full border-0 bg-transparent p-0 text-[length:var(--type-card)] font-semibold text-[#212466] outline-none"
+                  />
+                </div>
+                <p className="body-text mt-4">
+                  Over {term} that is{" "}
+                  <strong className="numeral">{money(rentTotal)}</strong> paid
+                  out, and none of it is yours at the end &mdash; and that
+                  assumes your rent never goes up.
+                </p>
+                <p className="body-text mt-3">
+                  {gap >= 0 ? (
+                    <>
+                      The repayment above is{" "}
+                      <strong className="numeral">{money(gap)}</strong> a month
+                      more than that, for a house you own.
+                    </>
+                  ) : (
+                    <>
+                      The repayment above is{" "}
+                      <strong className="numeral">{money(-gap)}</strong> a
+                      month <em>less</em> than that, for a house you own.
+                    </>
+                  )}
+                </p>
+              </div>
+
+              <div className="flex flex-col rounded-xl border border-[color:var(--rule)] bg-white p-6 lg:p-7">
+                <p className="meta font-bold uppercase tracking-[0.16em]">
+                  A rate that cannot move
+                </p>
+                <p className="numeral mt-4 text-[length:var(--type-sub)] font-semibold leading-none text-[#212466]">
+                  9.5%
+                </p>
+                <p className="meta mt-2">fixed, for the whole term</p>
+                <p className="body-text mt-4">
+                  A variable rate is a different promise. The Central
+                  Bank&rsquo;s mortgage survey put the market average at{" "}
+                  {MARKET_PRIOR_LABEL} in 2024 and {MARKET_LABEL} in 2025,
+                  with individual loans ranging from {MARKET_RANGE_LABEL}.
+                </p>
+                <p className="body-text mt-3">
+                  On a loan where the rate can move, one percentage point
+                  changes this monthly by about{" "}
+                  <strong className="numeral">{money(onePointMore)}</strong>.
+                  Yours cannot move.
+                </p>
+              </div>
+
+              <div className="flex flex-col rounded-xl border border-[color:var(--rule)] bg-white p-6 lg:p-7">
+                <p className="meta font-bold uppercase tracking-[0.16em]">
+                  What the asset has done
+                </p>
+                <p className="numeral mt-4 text-[length:var(--type-sub)] font-semibold leading-none text-[#212466]">
+                  3.10&times;
+                </p>
+                <p className="meta mt-2">
+                  satellite-town house prices since December 2007
+                </p>
+                <p className="body-text mt-4">
+                  That is roughly 6.3% a year over eighteen years, and ahead
+                  of the Nairobi suburbs over the same period.
+                </p>
+                <p className="body-text mt-3">
+                  It is not a straight line. Kiambu prices fell 4.8% in the
+                  year to June 2026. A rate fixed for {term} is how you sit
+                  out a year like that rather than being forced to sell into
+                  it.
+                </p>
+                <p className="meta mt-4">
+                  HassConsult Property Price Index, Q2 2026. Past movement is
+                  not a forecast.
                 </p>
               </div>
             </div>

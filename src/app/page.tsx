@@ -6,8 +6,8 @@ import Logos from "@/components/Logos";
 import PortalBanner from "@/components/PortalBanner";
 import CTA from "@/components/CTA";
 import Testimonials from "@/components/Testimonials";
+import LearnBand from "@/components/LearnBand";
 import Container from "@/components/Container";
-import Section from "@/components/Section";
 import Reveal from "@/components/Reveal";
 import { getProducts } from "@/lib/content";
 
@@ -38,30 +38,45 @@ const HomePage = async () => {
     <>
       <Hero />
       <ProcessSection />
-      <ProductsListing products={products} />
-      <FinancingNudge />
 
-      <Container>
-        <Reveal>
-          <PortalBanner />
-        </Reveal>
+      {/*
+        CREDIBILITY BEFORE CHOICE.
+
+        Logos and testimonials used to sit BELOW the product list, which
+        meant a visitor was asked to choose a product before being given any
+        reason to believe us - and anyone who clicked a product (the intended
+        action) never saw either. Accreditations do their work before the
+        decision; testimonials do theirs immediately after the money
+        objection is answered, which is where doubt actually peaks.
+      */}
+      <Container className="pt-12 sm:pt-14">
         <Reveal>
           <Logos />
         </Reveal>
-        <Reveal>
-          <CTA />
-        </Reveal>
-        <Reveal>
-          <Section
-            id="testimonials"
-            title="Testimonials"
-            description="What Our Clients Say."
-          ></Section>
-        </Reveal>
       </Container>
+
+      <ProductsListing products={products} />
+      <FinancingNudge />
+
       <Reveal>
         <Testimonials />
       </Reveal>
+
+      {/* White between the coloured bands so the page breathes instead of
+          stacking two heavy blocks against each other. */}
+      <Container className="py-16 sm:py-20">
+        <Reveal>
+          <PortalBanner />
+        </Reveal>
+      </Container>
+
+      <LearnBand />
+
+      <Container>
+        <Reveal>
+          <CTA />
+        </Reveal>
+      </Container>
     </>
   );
 };

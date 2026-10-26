@@ -219,16 +219,31 @@ const Hero: React.FC = () => {
             loop
             muted
             playsInline
-            preload="auto"
+            /* The poster paints immediately, so the hero is never empty
+               while the loop downloads. With it in place "auto" is waste:
+               "metadata" still autoplays, it just stops the browser
+               fetching the whole file before anything is on screen. */
+            poster="/images/hero-bg-poster.jpg"
+            preload="metadata"
           >
             <source src={heroDetails.backgroundVideo} type="video/mp4" />
           </video>
           {/* Resting treatment: heavier behind the type, lighter over the footage. */}
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_72%_45%,rgba(33,36,102,0.42)_0%,rgba(33,36,102,0.80)_34%,rgba(33,36,102,0.96)_70%)]" />
+          <div
+            // Hue and opacity both come from tokens so the veil joins the
+            // theme: navy wash with white text in dark, blush wash with ink
+            // text in light. The light stops are far more opaque, because
+            // dark text over moving footage needs the video held back.
+            className="absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(circle at 72% 45%, rgba(var(--band-rgb), var(--veil-in)) 0%, rgba(var(--band-rgb), var(--veil-mid)) 34%, rgba(var(--band-rgb), var(--veil-out)) 70%)",
+            }}
+          />
           {/* The opening veil, which thins as the sequence runs. */}
           <div
-            className="absolute inset-0 bg-[#1b1e58b0]"
-            style={{ opacity: veil }}
+            className="absolute inset-0"
+            style={{ opacity: veil, background: "rgba(var(--band-rgb-deep), 0.69)" }}
             aria-hidden="true"
           />
           {/* THE JOIN. The hero's radial closes to 96% navy, not 100%, so the
@@ -239,7 +254,11 @@ const Hero: React.FC = () => {
               flat navy before they meet, so there is nothing to see. */}
           <div
             aria-hidden="true"
-            className="absolute inset-x-0 bottom-0 h-[24%] bg-[linear-gradient(to_bottom,rgba(33,36,102,0)_0%,rgba(33,36,102,0.75)_55%,rgba(33,36,102,1)_100%)]"
+            className="absolute inset-x-0 bottom-0 h-[24%]"
+            style={{
+              background:
+                "linear-gradient(to bottom, rgba(var(--band-rgb), 0) 0%, rgba(var(--band-rgb), 0.75) 55%, rgba(var(--band-rgb), 1) 100%)",
+            }}
           />
         </div>
 

@@ -4,6 +4,7 @@ import { Source_Sans_3, Source_Serif_4 } from "next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
 import Header from "@/components/Header";
+import ThemeScript from "@/components/ThemeScript";
 import Footer from "@/components/Footer";
 import Preloader from "@/components/Preloader";
 import WhatsAppButton from "@/components/WhatsAppButton";
@@ -87,7 +88,16 @@ export default async function RootLayout({
   const products = await getProducts();
 
   return (
-    <html lang="en">
+    // suppressHydrationWarning applies to this element's own attributes
+    // only. ThemeScript sets data-theme before React hydrates, so the server
+    // markup and the client disagree by design - this is the one place that
+    // warning is correct to silence.
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        {/* Must be the first thing in the document. Below a stylesheet and
+            the viewer gets a white flash on every navigation. */}
+        <ThemeScript />
+      </head>
       <body
         className={`${sourceSans.variable} ${sourceSerif.variable} font-sans antialiased`}
       >

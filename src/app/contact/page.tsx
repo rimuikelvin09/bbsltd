@@ -12,6 +12,29 @@ export const metadata: Metadata = {
   description:
     "Talk to Benchmark Building Solutions about your project. Room F10, K-Unity Building, Kiambu Town. Call +254 722 333324 or send an enquiry.",
   alternates: { canonical: "/contact" },
+
+  /**
+   * Next merges metadata SHALLOWLY - a page that defines `openGraph` replaces
+   * the layout's entirely rather than extending it. Without this block the
+   * page inherited the root object, so sharing any inner page showed the HOME
+   * page's title and description. Hence the repetition: images included on
+   * purpose, because they would otherwise be dropped.
+   */
+  openGraph: {
+    title: "Contact us",
+    description:
+      "Talk to Benchmark Building Solutions about your project. Room F10, K-Unity Building, Kiambu Town.",
+    url: "/contact",
+    type: "website",
+    images: ["/images/seoimage.jpg"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Contact us",
+    description:
+      "Talk to Benchmark Building Solutions about your project. Room F10, K-Unity Building, Kiambu Town.",
+    images: ["/images/seoimage.jpg"],
+  },
 };
 
 

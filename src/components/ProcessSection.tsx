@@ -191,16 +191,25 @@ const ProcessSection: React.FC = () => {
         </div>
 
         {/* 1. The shape: brightest at the top-right corner. */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_130%_70%_at_86%_20%,rgba(33,36,102,0.90)_0%,rgba(33,36,102,0.96)_34%,rgba(33,36,102,1)_66%)] lg:bg-[radial-gradient(ellipse_55%_95%_at_95%_26%,rgba(33,36,102,0.28)_0%,rgba(33,36,102,0.58)_35%,rgba(33,36,102,0.95)_65%,rgba(33,36,102,1)_85%)]" />
+        <div
+          // Hue from --band-rgb so the veil inverts with every other navy
+          // surface; the stops are tokens too, because a pale veil has to
+          // hold the photograph back much harder than a navy one before
+          // navy text can sit on it.
+          className="absolute inset-0 [background:var(--process-veil-sm)] lg:[background:var(--process-veil-lg)]"
+        />
 
         {/* 2. The join. Solid navy at the very top, clearing by about a
                sixth of the way down, so the photograph rises into the
                section instead of butting up against the hero at a hard
                line. The radial's centre sits below this band. */}
-        <div className="absolute inset-x-0 top-0 h-[22%] bg-[linear-gradient(to_bottom,rgba(33,36,102,1)_0%,rgba(33,36,102,0.86)_42%,rgba(33,36,102,0)_100%)]" />
+        <div
+          className="absolute inset-x-0 top-0 h-[22%]"
+          style={{ background: "linear-gradient(to bottom, rgba(var(--band-rgb),1) 0%, rgba(var(--band-rgb),0.86) 42%, rgba(var(--band-rgb),0) 100%)" }}
+        />
 
         {/* 3. The legibility floor across the text column. */}
-        <div className="absolute inset-0 lg:bg-[linear-gradient(to_left,rgba(33,36,102,0)_0%,rgba(33,36,102,0)_18%,rgba(33,36,102,0.55)_26%,rgba(33,36,102,0.92)_36%,rgba(33,36,102,1)_48%)]" />
+        <div className="absolute inset-0 lg:[background:var(--process-veil-left)]" />
       </div>
 
       <Container className="relative z-10">

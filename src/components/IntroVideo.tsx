@@ -6,6 +6,9 @@ interface IntroVideoProps {
   src: string;
   captionsSrc?: string;
   label: string;
+  /** Painted instantly while the file downloads. Without it the frame is
+   *  a flat navy block for however long the connection takes. */
+  poster?: string;
 }
 
 /**
@@ -14,7 +17,12 @@ interface IntroVideoProps {
  * turned on programmatically rather than trusting the `default` attribute,
  * which browsers honour inconsistently.
  */
-const IntroVideo: React.FC<IntroVideoProps> = ({ src, captionsSrc, label }) => {
+const IntroVideo: React.FC<IntroVideoProps> = ({
+  src,
+  captionsSrc,
+  label,
+  poster,
+}) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [muted, setMuted] = useState(true);
 
@@ -64,6 +72,7 @@ const IntroVideo: React.FC<IntroVideoProps> = ({ src, captionsSrc, label }) => {
         loop
         muted
         playsInline
+        poster={poster}
         preload="metadata"
         onClick={toggleSound}
         aria-label={label}

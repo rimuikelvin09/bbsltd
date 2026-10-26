@@ -4,6 +4,10 @@ import { notFound } from "next/navigation";
 import ProductDetail from "@/components/ProductDetail";
 import { getProducts, getProductBySlug } from "@/lib/content";
 import { generateSlug } from "@/utils";
+import Link from "next/link";
+import Container from "@/components/Container";
+import FinancingNudge from "@/components/FinancingNudge";
+import Testimonials from "@/components/Testimonials";
 import { JsonLd, serviceJsonLd } from "@/lib/seo/jsonLd";
 
 interface ProductPageProps {
@@ -70,6 +74,34 @@ export default async function ProductPage({ params }: ProductPageProps) {
         })}
       />
       <ProductDetail product={product} products={products} />
+
+      {/*
+        WHAT USED TO BE STRANDED ON THE HOME PAGE.
+
+        A visitor who scrolls the home page, picks a product and clicks has
+        behaved exactly as intended - and in doing so walked away from the
+        financing answer, the social proof and the reason to come back. None
+        of those blocks existed anywhere but page.tsx, which meant the whole
+        bottom of the funnel was only ever seen by people who did NOT
+        convert. They belong here, where the deciding happens.
+      */}
+      {product.financing && <FinancingNudge />}
+
+      <Testimonials />
+
+      <section className="surface-light w-full border-t border-[color:var(--rule)] py-12 sm:py-14">
+        <Container className="flex flex-wrap items-center justify-between gap-6">
+          <div className="min-w-0">
+            <p className="eyebrow">Not ready to talk yet</p>
+            <p className="t-card mt-3 max-w-[28ch]">
+              Read what this actually involves before you commit to anything.
+            </p>
+          </div>
+          <Link href="/learn" className="btn-pill btn-pill-dark">
+            Go to Learn
+          </Link>
+        </Container>
+      </section>
     </>
   );
 }

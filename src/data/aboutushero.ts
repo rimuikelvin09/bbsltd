@@ -10,5 +10,6 @@ export const aboutUsHeroDetails = {
    * is added at this path. Browsers ignore a missing track silently.
    */
   captionsSrc: "/videos/introvid.vtt",
+  videoPoster: "/images/introvid-poster.jpg",
   videoLabel: "Meet Benchmark Building Solutions",
 };

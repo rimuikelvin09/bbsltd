@@ -450,7 +450,7 @@ const LeadForm: React.FC<LeadFormProps> = ({
 
               <div>
                 <span className={label}>Best way to reach you</span>
-                <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+                <div role="group" aria-describedby={errors.preferredContact ? "preferredContact-error" : undefined} className="grid grid-cols-2 gap-2 sm:grid-cols-4">
                   {(
                     [
                       ["CALL", "Call"],
@@ -463,7 +463,6 @@ const LeadForm: React.FC<LeadFormProps> = ({
                       key={v}
                       type="button"
                       aria-pressed={form.preferredContact === v}
-                      aria-invalid={Boolean(errors.preferredContact)}
                       onClick={() => set("preferredContact", v)}
                       className={`rounded-lg border px-3 py-2.5 text-[length:var(--type-meta)] font-semibold transition-colors ${
                         form.preferredContact === v
@@ -476,7 +475,7 @@ const LeadForm: React.FC<LeadFormProps> = ({
                   ))}
                 </div>
                 {errors.preferredContact && (
-                  <span className={err}>{errors.preferredContact}</span>
+                  <span id="preferredContact-error" className={err}>{errors.preferredContact}</span>
                 )}
               </div>
 

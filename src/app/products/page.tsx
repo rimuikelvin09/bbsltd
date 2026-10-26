@@ -14,6 +14,29 @@ export const metadata: Metadata = {
   title: "Products",
   description: `Explore the building solutions and services offered by ${siteDetails.siteName}.`,
   alternates: { canonical: "/products" },
+
+  /**
+   * Next merges metadata SHALLOWLY - a page that defines `openGraph` replaces
+   * the layout's entirely rather than extending it. Without this block the
+   * page inherited the root object, so sharing any inner page showed the HOME
+   * page's title and description. Hence the repetition: images included on
+   * purpose, because they would otherwise be dropped.
+   */
+  openGraph: {
+    title: "Products",
+    description:
+      "Six routes to building in Kenya - from a full managed build to drawings only. Compare them side by side.",
+    url: "/products",
+    type: "website",
+    images: ["/images/seoimage.jpg"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Products",
+    description:
+      "Six routes to building in Kenya - from a full managed build to drawings only. Compare them side by side.",
+    images: ["/images/seoimage.jpg"],
+  },
 };
 
 export default async function ProductsPage() {

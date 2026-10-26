@@ -79,7 +79,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, products }) => {
               </span>
             </div>
           )}
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_50%,rgba(33,36,102,0.25)_0%,rgba(33,36,102,0.62)_32%,rgba(33,36,102,0.93)_68%)]" />
+          <div className="absolute inset-0 [background:var(--product-veil)]" />
         </div>
 
         <Container className="relative z-10 pt-28 pb-24">

@@ -84,6 +84,7 @@ const AboutUsHero: React.FC = () => {
                 src={aboutUsHeroDetails.videoSrc}
                 captionsSrc={aboutUsHeroDetails.captionsSrc}
                 label={aboutUsHeroDetails.videoLabel}
+                poster={aboutUsHeroDetails.videoPoster}
               />
             </div>
           </div>

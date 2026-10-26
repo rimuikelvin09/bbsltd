@@ -34,3 +34,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Pre-compression video masters and scratch frames - local only.
+# The compressed versions in public/videos are what ships.
+_video-originals/
+_contact-sheet.jpg
+
+# Damaged/superseded assets kept for comparison. Not deployed.
+_originals/

@@ -42,7 +42,7 @@ const PortalHero: React.FC<PortalHeroProps> = ({
           className="w-full h-full object-cover"
           priority
         />
-        <div className="absolute inset-0 bg-[rgba(33,36,102,0.83)]" />
+        <div className="absolute inset-0" style={{ background: "rgba(var(--band-rgb), var(--contact-veil))" }} />
         {/* Fallback background color for better contrast */}
       </div>
       <div className="absolute left-0 top-0 bottom-0 -z-10 w-full">

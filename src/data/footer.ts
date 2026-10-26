@@ -22,11 +22,11 @@ export const footerDetails: {
     },
     {
       text: "Client Portal",
-      url: "http://bbsltd.ke/auth",
+      url: "/portal",
     },
     {
       text: "Agent Portal",
-      url: "http://bbsltd.ke/auth",
+      url: "/portal",
     },
   ],
   email: "info@bbsltd.ke",

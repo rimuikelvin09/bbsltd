@@ -143,6 +143,20 @@ export interface ProductPoint {
 export interface Product {
   id: number;
   productTitle: string;
+  /**
+   * A short factual badge on the product card. Exists so the financing
+   * hook travels WITH the click instead of being stranded in a band
+   * further down the home page that a converting visitor never reaches.
+   * Keep it factual - a rate and a term, not a computed monthly figure,
+   * which would need an invented reference loan.
+   */
+  badge?: string;
+  /**
+   * True where Jenga Kwako financing is a sensible next step for someone
+   * reading this product. Drives the financing block on the product page.
+   * NOT set on Jenga Kwako itself - that page carries the calculator.
+   */
+  financing?: boolean;
   /** Short line shown on the product card in the grid. */
   productVp: string;
   /** Large headline at the top of the product's own page. */
@@ -239,4 +253,109 @@ export interface LeadFormData {
   followUpDate?: string;
   notes?: string;
   consent: boolean;
+}
+
+/* ------------------------------------------------------------------ */
+/* THE LEARN SECTION (/learn)                                          */
+/*                                                                     */
+/* Two axes, deliberately separate. `category` is where a thing lives  */
+/* - it decides the URL and which landing card it sits behind. `form`  */
+/* is how it is rendered. A legislation note and an article are two    */
+/* categories of the same written form, which is why adding a seventh  */
+/* category needs no new component.                                    */
+/* ------------------------------------------------------------------ */
+
+export type LearnCategory =
+  | "podcast"
+  | "3d-models"
+  | "articles"
+  | "guides"
+  | "legislation"
+  | "trends";
+
+export type LearnForm = "video" | "written" | "download";
+
+/** A paragraph, subheading or list inside a written piece. */
+export interface LearnBlock {
+  type: "p" | "h2" | "ul";
+  text?: string;
+  items?: string[];
+}
+
+/** One show-note row on an episode. Display only; mm:ss as written. */
+export interface LearnNote {
+  at: string;
+  text: string;
+}
+
+/** One of the six cards on /learn. Order in the array is order on screen. */
+export interface LearnCategoryDef {
+  slug: LearnCategory;
+  title: string;
+  /** One line on the card. */
+  blurb: string;
+  /** Longer, on the category page itself. */
+  intro: string;
+  form: LearnForm;
+  /** Default layout on desktop. Visitors can switch; this is the opener. */
+  defaultView: "list" | "grid";
+  /** Designed separately, so its card never links anywhere yet. */
+  parked?: boolean;
+  /**
+   * What the category page says while it is parked. Lives here rather than
+   * in the page so each one gives a real reason instead of a generic
+   * holding line - "coming soon" with no explanation reads as abandoned.
+   */
+  parkedNote?: string;
+}
+
+/** A category with the numbers filled in at build time. */
+export interface LearnCategorySummary extends LearnCategoryDef {
+  count: number;
+  image?: string;
+}
+
+export interface LearnItem {
+  slug: string;
+  category: LearnCategory;
+  form: LearnForm;
+  title: string;
+  /** One or two sentences. The card blurb AND the meta description. */
+  summary: string;
+  /** ISO yyyy-mm-dd. Sorts every list, newest first. */
+  publishedAt: string;
+  /** From the controlled vocabulary in data/learn.ts. Never free text. */
+  topics: string[];
+
+  /** form: "video" */
+  videoId?: string;
+  thumbnail?: string;
+  notes?: LearnNote[];
+  duration?: string;
+
+  /** form: "download" */
+  fileUrl?: string;
+  fileMeta?: string;
+
+  /** form: "written" */
+  blocks?: LearnBlock[];
+  readingMinutes?: number;
+
+  /** Visible in development, excluded from production builds. */
+  draft?: boolean;
+}
+
+/** One public question and, once answered, the team's reply. */
+export interface LearnQuestion {
+  id: string;
+  /** The publication it belongs to. Questions never float free of an item. */
+  slug: string;
+  question: string;
+  askerName: string;
+  askerPlace?: string;
+  askedAt: string;
+  answer?: string;
+  answeredBy?: string;
+  /** Podcast questions only, e.g. "22:30". */
+  timestamp?: string;
 }

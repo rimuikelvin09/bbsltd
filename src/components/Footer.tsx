@@ -24,7 +24,8 @@ const Footer: React.FC<FooterProps> = ({ products }) => {
             className="w-full h-full object-cover"
             priority
           />
-          <div className="footer-bg-filter absolute inset-0 bg-gradient-to-tr from-[#212466] to-[rgba(33,36,102,0.41)] backdrop-blur-md" />
+          <div className="footer-bg-filter absolute inset-0 backdrop-blur-md"
+            style={{ background: "linear-gradient(to top right, rgba(var(--band-rgb),1) 0%, rgba(var(--band-rgb), var(--footer-veil)) 100%)" }} />
         </div>
         <div
           className={`max-w-7xl w-full mx-auto px-6 grid grid-cols-1 gap-10 ${
