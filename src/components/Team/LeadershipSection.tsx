@@ -50,7 +50,8 @@ const LeadershipSection: React.FC<Props> = ({
   leadership,
   imageAtRight,
 }: Props) => {
-  const { title, description, imageSrc, imageHoverSrc, bullets } = leadership;
+  const { title, role, description, imageSrc, imageHoverSrc, bullets } =
+    leadership;
 
   return (
     <section className="leadership-section">
@@ -93,10 +94,15 @@ const LeadershipSection: React.FC<Props> = ({
               variants={childVariants}
             >
               <SectionTitle>
-                <h3 className="text-[#991212] max-w-lg md:max-w-2xl lg:mx-0">
+                <h3 className="max-w-lg text-[color:var(--text)] md:max-w-2xl lg:mx-0">
                   {title}
                 </h3>
               </SectionTitle>
+
+              {/* The role sits directly under the name, in the accent. The
+                  name itself moved off crimson onto the normal heading
+                  colour: with both in the accent neither one leads. */}
+              <p className="eyebrow mt-2 text-[#991212]">{role}</p>
 
               <p className="mt-1.5 leading-normal text-foreground-accent">
                 {description}

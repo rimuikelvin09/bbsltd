@@ -7,7 +7,7 @@ interface RevealProps {
   children: React.ReactNode;
   /** Seconds of delay, for staggering siblings. */
   delay?: number;
-  /** How far it travels, in px. Keep it small — this is punctuation. */
+  /** How far it travels, in px. Keep it small. This is punctuation. */
   distance?: number;
   className?: string;
   as?: "div" | "section" | "li";

@@ -46,15 +46,16 @@ export function teamNotification(lead: LeadPayload) {
 /** Sent to the enquirer so they know a person has it. */
 export function acknowledgement(lead: LeadPayload) {
   return {
-    subject: "We have your enquiry — Benchmark Building Solutions",
+    subject: "We have your enquiry | Benchmark Building Solutions",
     html: `
       <div style="font:15px/1.6 system-ui;color:#171717;max-width:520px">
         <p style="margin:0 0 16px">Hi ${esc(lead.fullName.split(" ")[0])},</p>
         <p style="margin:0 0 16px">
-          Thank you for getting in touch about
-          <strong>${esc(lead.productOffering)}</strong>. Your enquiry has
-          reached our team and someone will contact you
-          ${lead.preferredContact ? `by ${esc(lead.preferredContact.toLowerCase())}` : "shortly"}.
+          We&rsquo;ve got your enquiry about
+          <strong>${esc(lead.productOffering)}</strong>, and somebody will come
+          back to you
+          ${lead.preferredContact ? `by ${esc(lead.preferredContact.toLowerCase())} ` : ""}within
+          one working day.
         </p>
         <p style="margin:0 0 16px">
           If anything is urgent in the meantime, you can reach us on

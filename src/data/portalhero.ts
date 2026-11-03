@@ -1,7 +1,7 @@
 export const portalHeroDetails = {
-  heading: "Stress-Free Redefined",
+  heading: "Your project, in writing, as it happens.",
   subheading:
-    "Because construction shouldn’t feel like chaos. Monitor every stage, get live updates, and access invoices with ease. Whether you're on-site or miles away, your project remains at your fingertips.",
+    "Progress photographs, approvals, drawings and your cost position against the bill of quantities. One place, updated as the work is done, open at any hour.",
   centerImageSrc: "/images/features/hero-mockup.png",
   centerImageAlt: "A modern construction site",
   heroBgSrc: "/images/features/mockup5.png",

@@ -7,7 +7,7 @@ export interface ProcessStage {
  * THE PROCESS
  * -----------
  * Six stages. Presentation drawings and working drawings used to be listed
- * separately, but from the client's side they are one commitment — you
+ * separately, but from the client's side they are one commitment: you
  * approve what you can see, and that approval becomes the technical set.
  * Splitting them made the journey look longer than it feels.
  *
@@ -18,7 +18,7 @@ export interface ProcessStage {
 export const processStages: ProcessStage[] = [
   {
     name: "Consultation",
-    body: "Every project begins with a conversation. We sit down with you to understand your vision, your needs and your goals — then map out a clear path forward together.",
+    body: "Every project begins with a conversation. We sit down with you to understand your vision, your needs and your goals, then map out a clear path forward together.",
   },
   {
     name: "Site Visit",
@@ -26,11 +26,11 @@ export const processStages: ProcessStage[] = [
   },
   {
     name: "Drawings",
-    body: "Your architect turns the brief into 3D presentation drawings first, so you can see the project and change your mind while changing your mind is still free. Once you are satisfied, that approved design becomes the full technical set — architectural, structural, mechanical and electrical — which is what the approvals and the build then run on.",
+    body: "Your architect turns the brief into 3D presentation drawings first, so you can see the project and change your mind while changing your mind is still free. Once you are satisfied, that approved design becomes the full technical set: architectural, structural, mechanical and electrical. That is what the approvals and the build then run on.",
   },
   {
     name: "Compliance & Approvals",
-    body: "We handle the entire approvals process on your behalf — submitting drawings to the county government, managing NEMA approvals and responding to regulatory queries.",
+    body: "We handle the entire approvals process on your behalf: submitting drawings to the county government, managing NEMA approvals and responding to regulatory queries.",
   },
   {
     name: "Costing",

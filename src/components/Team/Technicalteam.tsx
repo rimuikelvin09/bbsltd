@@ -25,7 +25,7 @@ const TechnicalTeam: React.FC = () => {
                 <h3 className="text-gray-800">
                   {member.name}
                 </h3>
-                <p className="text-gray-600 text-sm mb-2">{member.title}</p>
+                <p className="eyebrow mb-2 text-[#991212]">{member.title}</p>
                 <p className="text-gray-500 text-xs">{member.description}</p>
               </div>
             </div>

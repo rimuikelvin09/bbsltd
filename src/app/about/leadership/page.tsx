@@ -19,7 +19,7 @@ import Technicalteam from "@/components/Team/Technicalteam";
 export const metadata: Metadata = {
   title: "The Team Behind the Vision",
   description:
-    "The directors and management of Benchmark Building Solutions - who runs the firm and who leads the work on site.",
+    "The directors and management of Benchmark Building Solutions: who runs the firm and who leads the work on site.",
   alternates: { canonical: "/about/leadership" },
 
   /**
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "The Team Behind the Vision",
     description:
-      "The directors and management of Benchmark Building Solutions - who runs the firm and who leads the work on site.",
+      "The directors and management of Benchmark Building Solutions: who runs the firm and who leads the work on site.",
     url: "/about/leadership",
     type: "website",
     images: ["/images/seoimage.jpg"],
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "The Team Behind the Vision",
     description:
-      "The directors and management of Benchmark Building Solutions - who runs the firm and who leads the work on site.",
+      "The directors and management of Benchmark Building Solutions: who runs the firm and who leads the work on site.",
     images: ["/images/seoimage.jpg"],
   },
 };
@@ -60,7 +60,7 @@ export default function LeadershipPage() {
         <Section
           id="directors"
           title="Directors"
-          description="Who runs the firm"
+          description="Accountable for strategy, technical delivery and every commitment the firm makes."
         >
           <Leaders />
         </Section>
@@ -68,7 +68,7 @@ export default function LeadershipPage() {
         <Section
           id="management"
           title="Management"
-          description="The team leads behind our operations"
+          description="The Minds behind our operations"
         >
           <Technicalteam />
         </Section>

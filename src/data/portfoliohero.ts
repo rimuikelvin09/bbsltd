@@ -1,4 +1,4 @@
 export const portfolioHeroDetails = {
-  heading: "Our Portfolio",
+  heading: "Our Work",
   heroBgSrc: "/images/portfolio-hero.jpg",
 };

@@ -1,5 +1,5 @@
 /**
- * CORPORATE PROFILE — CONTENT
+ * CORPORATE PROFILE: CONTENT
  * ---------------------------
  * Every word and every figure on /about/profile lives here, so the page
  * component stays structure and the copy can be edited without touching

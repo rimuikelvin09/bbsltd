@@ -21,8 +21,31 @@ import { generateSlug } from "@/utils";
  * renders as normal. A category missing its items beats a build that fails.
  */
 
-const PODCAST_PLAYLIST_ID =
-  process.env.YOUTUBE_PODCAST_PLAYLIST_ID || process.env.YOUTUBE_PLAYLIST_ID;
+/**
+ * NO FALLBACK. This used to read:
+ *
+ *   process.env.YOUTUBE_PODCAST_PLAYLIST_ID || process.env.YOUTUBE_PLAYLIST_ID
+ *
+ * and on 26 Oct that silently published the TESTIMONIALS playlist under the
+ * Podcast heading on production, because only the podcast variable was
+ * missing from Vercel. Eight client testimonials appeared as episodes and
+ * nothing anywhere said otherwise.
+ *
+ * A fallback that quietly serves the wrong content is worse than no content:
+ * an empty category is visibly empty and gets fixed, whereas wrong content
+ * looks fine and ships. On a site whose whole argument is that we tell
+ * people the truth, that is the failure we can least afford.
+ *
+ * Unset now means no episodes, and a warning in the build log.
+ */
+const PODCAST_PLAYLIST_ID = process.env.YOUTUBE_PODCAST_PLAYLIST_ID;
+
+if (!PODCAST_PLAYLIST_ID && process.env.NODE_ENV === "production") {
+  console.warn(
+    "[learn] YOUTUBE_PODCAST_PLAYLIST_ID is not set - the Podcast category " +
+      "will be empty. Set it in the Vercel project environment variables.",
+  );
+}
 
 /** Drafts are readable in `next dev` and dropped by `next build`. */
 const SHOW_DRAFTS = process.env.NODE_ENV !== "production";
@@ -38,7 +61,21 @@ function firstSentences(text: string | undefined, max = 180): string {
 }
 
 async function getPodcastItems(): Promise<LearnItem[]> {
-  const videos = await getPlaylistVideos(PODCAST_PLAYLIST_ID, 50);
+  /**
+   * GUARDED AT THE CALL SITE, and this matters more than it looks.
+   *
+   * getPlaylistVideos is declared as:
+   *   playlistId: string | undefined = PLAYLIST_ID
+   *
+   * A JavaScript default parameter fires whenever the argument is
+   * `undefined` - so passing an unset PODCAST_PLAYLIST_ID straight in would
+   * fall through to PLAYLIST_ID, the TESTIMONIALS playlist, which is the
+   * exact bug one layer down. Removing the `||` fallback above is not enough
+   * on its own; the call has to not happen at all.
+   */
+  const videos = PODCAST_PLAYLIST_ID
+    ? await getPlaylistVideos(PODCAST_PLAYLIST_ID, 50)
+    : [];
 
   return videos.map((v) => ({
     slug: generateSlug(v.title),

@@ -283,7 +283,7 @@ export const caseStudies: CaseStudy[] = [
         ],
         pull:
           "The rental market set the design brief. Not the architect, and not the client's preference.",
-        media: [{ caption: "Ground-floor columns up, the plot still raw. Small site, neighbours close on three sides \u2014 which is what the design had to work around.", kind: "photo" }],
+        media: [{ caption: "Ground-floor columns up, the plot still raw. Small site, neighbours close on three sides, which is what the design had to work around.", kind: "photo" }],
       },
       {
         key: "design",

@@ -9,7 +9,7 @@ export const footerDetails: {
 } = {
   resources: [
     {
-      text: "Jenga Kwako Ammortization Table",
+      text: "Jenga Kwako Amortisation Table",
       url: "/documents/amortizationtable.pdf",
     },
     {
@@ -17,7 +17,7 @@ export const footerDetails: {
       url: "/documents/jkrequirements.pdf",
     },
     {
-      text: "Diaspora Payment Guide - USA",
+      text: "Diaspora Payment Guide (USA)",
       url: "/documents/usapaymentguide.pdf",
     },
     {
@@ -39,5 +39,5 @@ export const footerDetails: {
     instagram: "https://www.instagram.com/bbsltdofficial/",
   },
   address:
-    "Room F10, 1st Floor, Residential Wing, K-Unity Building - Kiambu Town",
+    "Room F10, 1st Floor, Residential Wing, K-Unity Building, Kiambu Town",
 };

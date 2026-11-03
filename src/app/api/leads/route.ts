@@ -12,7 +12,7 @@ import { teamNotification, acknowledgement } from "@/lib/leads/messages";
  * The single seam every lead passes through.
  *
  * The form knows about this route and nothing else. Adding a CRM later means
- * adding a branch here — the form, the validation and the payload shape do
+ * adding a branch here: the form, the validation and the payload shape do
  * not change, and nothing has to be migrated.
  *
  * Storing the lead and telling somebody about it are treated separately on

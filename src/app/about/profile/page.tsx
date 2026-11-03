@@ -91,8 +91,8 @@ export default function CorporateProfilePage() {
             ]}
           />
           <ComingSoon
-            title="The profile is being finished, not written."
-            body="Everything it will contain already exists elsewhere on this site - who we are, how we work, the market we build in and the projects behind it. What is left is checking two figures against our own records, because a profile that a bank reads is the wrong place to round anything up."
+            title="The profile is being finished."
+            body="Everything in it already exists across this site in the meantime."
             primary={{ label: "How we work", href: "/about/how-we-work" }}
             secondary={{ label: "The team", href: "/about/leadership" }}
           />

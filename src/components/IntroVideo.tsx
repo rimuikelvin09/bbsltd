@@ -12,8 +12,8 @@ interface IntroVideoProps {
 }
 
 /**
- * Autoplays muted on load — the only way a browser will start a video
- * unprompted — and unmutes on the first click or key press. Captions are
+ * Autoplays muted on load, the only way a browser will start a video
+ * unprompted, and unmutes on the first click or key press. Captions are
  * turned on programmatically rather than trusting the `default` attribute,
  * which browsers honour inconsistently.
  */

@@ -41,7 +41,7 @@ function haystack(i: LearnItem): string {
 const HubSearch: React.FC<Props> = ({
   items,
   categoryTitles,
-  placeholder = "Search everything — costs, approvals, financing, the law",
+  placeholder = "Search everything: costs, approvals, financing, the law",
 }) => {
   const router = useRouter();
   const [query, setQuery] = useState("");

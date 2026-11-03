@@ -36,7 +36,7 @@ const CREDENTIALS = [
 /**
  * One product, one full viewport, one message.
  *
- * The fold carries the eyebrow, the hook, one paragraph and one button —
+ * The fold carries the eyebrow, the hook, one paragraph and one button, and
  * nothing else. Supporting points live in the band below, as three
  * numbered items rather than a bulleted list.
  *

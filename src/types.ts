@@ -5,7 +5,14 @@ export interface IMenuItem {
 }
 
 export interface ILeadership {
+  /** The person's name, on its own. No "Meet" prefix. */
   title: string;
+  /**
+   * The role. Rendered directly under the name in the accent colour, so a
+   * visitor scanning the page can tell who does what without reading the
+   * paragraph. Keep it to a job title, not a summary.
+   */
+  role: string;
   description: string;
   imageSrc: string;
   /** Shown on hover. Falls back to imageSrc where a second frame does not exist. */
@@ -40,12 +47,6 @@ export interface IFAQ {
 export interface DailyTip {
   heading: string;
   tip: string;
-}
-
-export interface IStats {
-  title: string;
-  icon: JSX.Element;
-  description: string;
 }
 
 export interface ISocials {
@@ -96,13 +97,6 @@ export interface MapSectionProps {
   address: string;
   phone: string;
   email: string;
-}
-
-export interface OurPromiseItem {
-  title: string;
-  description: string;
-  values?: string[];
-  icon?: string;
 }
 
 export interface OurApproachStep {

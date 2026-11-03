@@ -76,7 +76,7 @@ const PortalBanner: React.FC = () => {
                 {subheading}
               </p>
               <div className="eyebrow-rule"></div>
-              <h2 className="text-left capitalize text-[#212466]">{title}</h2>
+              <h2 className="text-left text-[#212466]">{title}</h2>
             </div>
             <ul className="space-y-4">
               {features.map((feature, index) => {

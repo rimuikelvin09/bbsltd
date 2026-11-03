@@ -77,8 +77,8 @@ export default function PortfolioPage() {
             <CaseGrid items={items} />
           ) : (
             <ComingSoon
-              title="The first case studies are with their clients for sign-off."
-              body="Each one names a real client, a real budget and what actually went wrong, so none of them goes up until the person who paid for it has read it and agreed. In the meantime the photographs are all here."
+              title="Case studies are on the way."
+              body="The photographs are all here in the meantime."
               primary={{ label: "See the gallery", href: "/portfolio/gallery" }}
               secondary={{ label: "Talk to us", href: "/contact" }}
             />

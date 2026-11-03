@@ -116,7 +116,7 @@ const AskForm: React.FC<Props> = ({ slug, timestamp }) => {
           name="question"
           required
           rows={4}
-          placeholder="Be specific - county, budget range, the stage you are at. Vague questions get vague answers."
+          placeholder="Be specific: county, budget range, the stage you are at. Vague questions get vague answers."
           className="w-full resize-y rounded-lg border border-[color:var(--rule)] bg-white px-3 py-[10px] text-[0.9375rem] text-[color:var(--text)] focus:border-[color:var(--accent)] focus:outline-none"
         />
       </div>

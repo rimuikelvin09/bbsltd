@@ -1,23 +1,25 @@
 export const siteDetails = {
   siteName: "Benchmark Building Solutions ltd",
   siteDescription:
-    "Experience a stress-free, A-Z construction journey with Benchmark Building Solutions Ltd. From conceptualization and architectural drawings to project completion and handover, we handle every step so you can enjoy peace of mind throughout your residential or commercial project in Kenya.",
+    "Design, county approvals and construction on one contract. A Kenyan building contractor since 2012, with architects and engineers in house.",
   /**
    * The CANONICAL domain, and the single source for every absolute URL the
    * site emits: metadataBase, every canonical tag, the Open Graph URL, the
    * sitemap, robots.txt and the structured data @ids.
    *
-   * It is bbsltd.co.ke, bare, no www - that is what the live site answers on.
-   * It previously read www.bbsltd.ke, which is the mail and Microsoft 365
-   * domain and serves no website. Left unchanged it would have told Google
-   * the canonical version of every page lived on a domain that does not host
-   * the site, which is worse than having no canonical at all.
+   * It is bbsltd.ke, bare, no www. Moved from bbsltd.co.ke on 3 Nov 2026 so
+   * the website and email share one domain. bbsltd.co.ke and www.bbsltd.ke
+   * both 308-redirect here at Vercel; keep bbsltd.co.ke renewed so old links,
+   * print and QR codes keep landing.
+   *
+   * Only the apex A record and the www CNAME at HostAfrica point at Vercel.
+   * The MX, SPF and autodiscover records are Microsoft 365's: do not touch.
    */
-  siteUrl: "https://bbsltd.co.ke",
+  siteUrl: "https://bbsltd.ke",
   metadata: {
     title: "Benchmark Building Solutions ltd",
     description:
-      "Benchmark Building Solutions Ltd offers a seamless, end-to-end construction experience in Kenya. Our A-Z approach covers everything from architectural design to final handover.",
+      "A Kenyan building contractor since 2012. Design, county approvals and construction on one contract, with architects and engineers in house.",
   },
   language: "en-us",
   locale: "en-US",

@@ -212,7 +212,7 @@ const MortgageCalculator: React.FC = () => {
               <p className="eyebrow">Before you talk to anyone</p>
               <h2 className="mt-5">What would it cost you a month?</h2>
               <p className="lede mt-5 max-w-lg">
-                9.5% fixed for the whole term — it does not move when the
+                9.5% fixed for the whole term. It doesn’t move when the
                 Central Bank rate moves. Set the two figures and the answer
                 appears beside them.
               </p>
@@ -341,7 +341,7 @@ const MortgageCalculator: React.FC = () => {
                   onClick={() => setIsFormOpen(true)}
                   className="btn-pill btn-pill-dark mt-8 w-full"
                 >
-                  Begin my application
+                  Start my application
                 </button>
                 {/* The reassurance goes directly under the button, where the
                     hesitation happens. */}
@@ -399,7 +399,7 @@ const MortgageCalculator: React.FC = () => {
                 <p className="body-text mt-4">
                   Over {term} that is{" "}
                   <strong className="numeral">{money(rentTotal)}</strong> paid
-                  out, and none of it is yours at the end &mdash; and that
+                  out, and none of it is yours at the end. And that
                   assumes your rent never goes up.
                 </p>
                 <p className="body-text mt-3">

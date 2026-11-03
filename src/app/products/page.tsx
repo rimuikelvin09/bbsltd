@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Products",
     description:
-      "Six routes to building in Kenya - from a full managed build to drawings only. Compare them side by side.",
+      "Six routes to building in Kenya: from a full managed build to drawings only. Compare them side by side.",
     url: "/products",
     type: "website",
     images: ["/images/seoimage.jpg"],
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Products",
     description:
-      "Six routes to building in Kenya - from a full managed build to drawings only. Compare them side by side.",
+      "Six routes to building in Kenya: from a full managed build to drawings only. Compare them side by side.",
     images: ["/images/seoimage.jpg"],
   },
 };
@@ -51,7 +51,7 @@ export default async function ProductsPage() {
             Six ways to build, and one of them is yours.
           </h1>
           <p className="lede mt-6 max-w-2xl">
-            The right route depends on what you already have — land, financing,
+            The right route depends on what you already have: land, financing,
             materials, or just a plan. Answer three questions and we will point
             you at it, or read all six below.
           </p>

@@ -13,14 +13,14 @@ import { getProducts } from "@/lib/content";
 
 /**
  * HOME PAGE ORDER
- * 1. Hero              — what this company does, in the first thirty words
- * 2. The process       — how it works, and why that is transparent
- * 3. The six routes    — full-height rows, with the guide riding along
- * 4. Financing        — a pointer to the calculator on Jenga Kwako
- * 5. Client Portal     — the tool that keeps the process visible
- * 6. Logos             — who has trusted them
- * 7. CTA               — the page's one conversion action
- * 8. Testimonials      — closes on client voices, per the Peak-End Rule
+ * 1. Hero              : what this company does, in the first thirty words
+ * 2. The process       : how it works, and why that is transparent
+ * 3. The six routes    : full-height rows, with the guide riding along
+ * 4. Financing        : a pointer to the calculator on Jenga Kwako
+ * 5. Client Portal     : the tool that keeps the process visible
+ * 6. Logos             : who has trusted them
+ * 7. CTA               : the page's one conversion action
+ * 8. Testimonials      : closes on client voices, per the Peak-End Rule
  *
  * The hero's button is navigation ("See How It Works"), not a second ask: a
  * first-time visitor is top of funnel. The conversion action appears once,

@@ -223,7 +223,7 @@ const CaseNarrative: React.FC<{ chapters: NarrativeChapter[] }> = ({
             className="scroll-mt-[calc(var(--header-h,5rem)+2rem)]"
           >
             <p className="font-mono text-[0.68rem] font-bold tracking-[0.16em] text-[color:var(--text-muted)]">
-              {String(i + 1).padStart(2, "0")} &mdash; {c.kicker}
+              {String(i + 1).padStart(2, "0")} &middot; {c.kicker}
             </p>
             <h3 className="t-sub mt-2">{c.title}</h3>
             {c.body.map((para) => (

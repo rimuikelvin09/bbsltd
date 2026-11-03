@@ -125,7 +125,7 @@ const ProductGuide: React.FC<ProductGuideProps> = ({ products }) => {
             ref={panelRef}
             tabIndex={-1}
             role="region"
-            aria-label="Find the right product"
+            aria-label="Find your route"
             className="flex flex-col overflow-hidden rounded-2xl border border-[color:var(--rule)] bg-white shadow-[0_18px_50px_-12px_rgba(23,23,23,0.35)] outline-none"
           >
             <div className="flex items-center justify-between gap-4 bg-[#212466] px-5 py-4">

@@ -136,7 +136,7 @@ export function buildNavigation(products: Product[]): NavEntry[] {
       href: "/learn",
       columns: [
         {
-          heading: "Watch & read",
+          heading: "Watch and read",
           links: [
             { label: "Podcast", href: "/learn/podcast", blurb: "The Smart Builder Real Estate Podcast" },
             {
@@ -156,7 +156,7 @@ export function buildNavigation(products: Product[]): NavEntry[] {
           ],
         },
         {
-          heading: "Use & download",
+          heading: "Use and download",
           links: [
             { label: "Guides", href: "/learn/guides", blurb: "Checklists, tables, document lists" },
             {

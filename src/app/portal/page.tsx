@@ -45,8 +45,8 @@ const PortalPage = () => {
       <Container>
         <Section
           id="features"
-          title="Features"
-          description="Experience True Peace of mind"
+          title="The portal"
+          description="What you can see in it"
         >
           <Features />
           <CTA />

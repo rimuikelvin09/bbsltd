@@ -94,9 +94,9 @@ const LeadForm: React.FC<LeadFormProps> = ({
     const e: Record<string, string> = {};
     if (!form.fullName.trim()) e.fullName = "Please tell us your name";
     if (!/^\+?[\d\s()-]{9,20}$/.test(form.phoneNumber.trim()))
-      e.phoneNumber = "A phone number we can reach you on";
+      e.phoneNumber = "Please add a phone number we can reach you on";
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(form.email.trim()))
-      e.email = "A valid email address";
+      e.email = "Please check this email address";
     if (form.locationType === "KENYA" && !form.county)
       e.county = "Which county?";
     if (form.locationType === "INTERNATIONAL" && !form.country)
@@ -212,11 +212,12 @@ const LeadForm: React.FC<LeadFormProps> = ({
                 <path d="M20 6 9 17l-5-5" />
               </svg>
             </div>
-            <h2 className="t-sub mt-6 text-[#212466]">That is with us.</h2>
+            <h2 className="t-sub mt-6 text-[#212466]">That’s with us.</h2>
             <p className="body-text mx-auto mt-4 max-w-sm">
-              Thank you{form.fullName ? `, ${form.fullName.split(" ")[0]}` : ""}.
-              We have your enquiry about <strong>{productLabel}</strong> and
-              someone will be in touch. A confirmation is on its way to{" "}
+              Thanks{form.fullName ? `, ${form.fullName.split(" ")[0]}` : ""}.
+              We{"\u2019"}ve got your enquiry about{" "}
+              <strong>{productLabel}</strong> and we will come back to you
+              within one working day. A confirmation is on its way to{" "}
               {form.email}.
             </p>
             <button
@@ -434,7 +435,7 @@ const LeadForm: React.FC<LeadFormProps> = ({
                 <label htmlFor={`${uid}-notes`} className={label}>
                   About your project{" "}
                   <span className="font-normal normal-case tracking-normal text-[color:var(--text-muted)]">
-                    — optional
+                    (optional)
                   </span>
                 </label>
                 <textarea

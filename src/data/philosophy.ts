@@ -21,7 +21,7 @@ export interface PhilosophyPanel {
  *
  * THE WORDING BELOW IS THE BRAND'S OWN, VERBATIM. It is used across the
  * company's material, so it is not paraphrased, shortened or given a
- * headline of its own — the section name is the heading and the statement
+ * headline of its own: the section name is the heading and the statement
  * speaks for itself.
  */
 export const philosophyPanels: PhilosophyPanel[] = [

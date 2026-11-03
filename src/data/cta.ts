@@ -1,4 +1,4 @@
 export const ctaDetails = {
-  heading: "Let’s Build Your Legacy—Start Today",
+  heading: "Tell us about your plot.",
   buttonUrl: "#", // Add this line
 };

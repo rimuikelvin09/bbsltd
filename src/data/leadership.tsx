@@ -12,7 +12,8 @@ import { ILeadership } from "@/types";
 
 export const leaders: ILeadership[] = [
   {
-    title: "Meet Alice Karanja",
+    title: "Alice Karanja",
+    role: "Managing Director",
     description:
       "Alice Karanja is the Managing Director of BBS, providing strategic oversight for administration, financial operations, and crucial stakeholder engagement. With over 20 years of robust experience in sales and business management, she is a results-oriented leader who ensures precision and efficiency in all undertakings.",
     bullets: [
@@ -39,7 +40,8 @@ export const leaders: ILeadership[] = [
     imageHoverSrc: "/images/team/akaranja2.jpg",
   },
   {
-    title: "Meet Joseph Gachinga",
+    title: "Joseph Gachinga",
+    role: "Technical Director",
     description:
       "Joseph Gachinga is the Technical Director at BBS, bringing over 30 years of certified experience in Building and Civil Engineering. He expertly oversees all technical aspects of construction processes, from initial architectural designs to stringent quality management and successful project execution.",
     bullets: [
@@ -67,7 +69,8 @@ export const leaders: ILeadership[] = [
   },
 
   {
-    title: "Meet Dobson Waweru",
+    title: "Dobson Waweru",
+    role: "Sales, Marketing & Business Development Director",
     description:
       "Dobson Waweru is the Sales, Marketing & Business Development Director at BBS, driving market expansion, strategic partnerships, and revenue growth. With 8+ years in direct sales management, he combines business strategy with financial expertise to strengthen Benchmark’s industry presence. He holds an LLB from the University of Nairobi, with additional training in Economics and Finance from Kenyatta University.",
     bullets: [

@@ -20,7 +20,7 @@ export const faqs: IFAQ[] = [
   },
   {
     question: "How do you keep me updated on project progress?",
-    answer: `Communication is a priority at ${siteDetails.siteName}. We assign a dedicated project manager to your project who provides regular updates via your preferred method—email, phone, or in-person meetings. You’ll receive progress reports, photos, and milestone updates, and we’re always available to address questions. Our transparent approach ensures you’re informed every step of the way.`,
+    answer: `Communication is a priority at ${siteDetails.siteName}. We assign a dedicated project manager to your project who provides regular updates via your preferred method: email, phone, or in-person meetings. You’ll receive progress reports, photos, and milestone updates, and we’re always available to address questions. Our transparent approach ensures you’re informed every step of the way.`,
   },
   {
     question: "What kind of support do you offer after project completion?",

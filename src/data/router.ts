@@ -55,7 +55,7 @@ export const routerQuestions: RouterQuestion[] = [
   {
     id: "start",
     short: "What you have",
-    question: "First — what do you have so far?",
+    question: "First, what do you have so far?",
     options: [
       { label: "A plot, ready to build on", next: "funding" },
       { label: "Nothing yet. Still looking for land.", next: "funding" },
@@ -85,7 +85,7 @@ export const routerQuestions: RouterQuestion[] = [
   {
     id: "where",
     short: "Where you will be",
-    question: "Last one — where will you be while we build?",
+    question: "Last one. Where will you be while we build?",
     options: [
       { label: "Here in Kenya", resolve: "Jenga Stress Free" },
       { label: "Abroad", resolve: "Diaspora Building Solutions" },

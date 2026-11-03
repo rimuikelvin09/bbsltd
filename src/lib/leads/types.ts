@@ -2,7 +2,7 @@
  * The lead record, as it leaves the browser and as it is stored.
  *
  * Keep this in step with the SharePoint list columns in graph.ts. It is the
- * contract between the form, the API route and every destination — adding a
+ * contract between the form, the API route and every destination. Adding a
  * CRM later means adding a destination, not changing this shape.
  */
 export interface LeadPayload {

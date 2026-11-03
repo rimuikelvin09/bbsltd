@@ -46,7 +46,7 @@ export const categories: LearnCategoryDef[] = [
     slug: "articles",
     parked: true,
     parkedNote:
-      "We would rather publish four articles worth reading than twenty worth skimming. The first are being written by the people who run the sites, not by a copywriter, which is slower and the only way they will be any use.",
+      "Being written by the people who run the sites, which takes longer and is the only way they will be any use.",
     title: "Articles",
     blurb:
       "Costs, process, and the things nobody warns you about. Written to answer the question you actually typed.",
@@ -68,10 +68,10 @@ export const categories: LearnCategoryDef[] = [
     slug: "legislation",
     parked: true,
     parkedNote:
-      "Approval thresholds, county requirements and the Building Code change, and a page that is wrong about NEMA is worse than no page at all. Every figure is being checked against the current regulations before any of it goes up.",
+      "Every figure is being checked against the current regulations first. A page that is wrong about NEMA is worse than no page.",
     title: "Legislation",
     blurb:
-      "What the NCA, NEMA, the Building Code and your county actually require - in plain language, kept current.",
+      "What the NCA, NEMA, the Building Code and your county actually require, in plain language, kept current.",
     intro:
       "The rules that govern building in Kenya, written out so you can act on them.",
     form: "written",
@@ -81,7 +81,7 @@ export const categories: LearnCategoryDef[] = [
     slug: "trends",
     parked: true,
     parkedNote:
-      "Most construction trend writing is borrowed from elsewhere and never asks what it means on a Kenyan site. Ours will carry dated, sourced figures or it will not go up.",
+      "Ours will carry dated, sourced figures for building here, or it will not go up.",
     title: "Trends",
     blurb:
       "What shifts in materials, methods and money elsewhere mean for a build in Kenya. Interpretation, not news.",
@@ -142,7 +142,7 @@ export const guides: LearnItem[] = [
     slug: "diaspora-payment-guide-usa",
     category: "guides",
     form: "download",
-    title: "Diaspora payment guide — USA",
+    title: "Diaspora payment guide (USA)",
     summary:
       "How to move funds for a build from the United States, step by step, and what evidence to keep at each release.",
     publishedAt: "2026-10-13",

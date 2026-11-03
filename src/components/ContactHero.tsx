@@ -12,7 +12,12 @@ const ContactHero: React.FC = () => {
       <div className="absolute inset-0 -z-10 w-full h-full overflow-hidden">
         <Image
           src={contactDetails.heroBgsrc}
-          alt="Hero background"
+          /* Decorative. These sit BEHIND headline text which carries all
+             the meaning, so an empty alt is the correct accessible choice -
+             and it stops Google indexing the image and surfacing its alt
+             text as a search result, which is where "Hero background" was
+             coming from. */
+          alt=""
           fill
           className="w-full h-full object-cover"
           priority

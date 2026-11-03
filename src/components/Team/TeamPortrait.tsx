@@ -19,7 +19,7 @@ interface TeamPortraitProps {
  *
  * The frame is a fixed aspect ratio and both images are cropped to fill it,
  * so the two photos can have completely different dimensions and the layout
- * never moves — nobody has to scroll to find where the picture went.
+ * never moves, so nobody has to scroll to find where the picture went.
  *
  * Both images are always in the DOM and cross-faded, so there is no flash
  * while the second one loads. Where a person has no second frame, nothing
