@@ -53,14 +53,13 @@ const ANNUAL_RATE = 0.095;
 const MARKET_RATE = 0.135;
 const MARKET_LABEL = "13.5%";
 /**
- * The previous constant was 14.39%, the CBK's general COMMERCIAL BANK
- * LENDING rate. That is the wrong series to hold a mortgage against - it
- * covers all lending, sits higher, and overstated the saving. These are
- * from the CBK Residential Mortgage Market Survey: the average residential
- * mortgage rate, and the spread across individual loans.
+ * The prior-rate and range labels that used to live here (15.2%, and a
+ * spread of 7.5% to 20.4%) moved to /learn/financing in Nov 2026 along with
+ * the rate panel that printed them. They come from the CBK Residential
+ * Mortgage Market Survey. If you change MARKET_RATE above, change the prose
+ * on that page in the same commit: the two are now in different files and
+ * nothing will tell you when they drift apart.
  */
-const MARKET_PRIOR_LABEL = "15.2%";
-const MARKET_RANGE_LABEL = "7.5% to 20.4%";
 
 const MAX_LOAN = 10_500_000;
 const MIN_LOAN = 1_000_000;
@@ -182,10 +181,10 @@ const MortgageCalculator: React.FC = () => {
   // Rent assumed FLAT for the whole term, which understates what renting
   // actually costs. Deliberately conservative: the comparison should be
   // one nobody can accuse us of loading.
-  const rentTotal = rent * 12 * years;
   const gap = monthly - rent;
-  // What one percentage point of movement does, on a loan where it can.
-  const onePointMore = monthlyPayment(loan, ANNUAL_RATE + 0.01, years) - monthly;
+  // The one figure this section now exists to produce: how long the same
+  // house takes to reach by saving the difference instead of borrowing it.
+  const yearsToSave = gap > 0 ? Math.round(loan / gap / 12) : 0;
 
   const prefill = [
     "Jenga Kwako application started from the calculator.",
@@ -368,21 +367,103 @@ const MortgageCalculator: React.FC = () => {
             presented as history with its source and its recent decline
             stated beside it.
           */}
+          {/* WHAT MOVED, AND WHY. Nov 2026.
+
+              This carried three panels: a rent comparison, a rate-certainty
+              panel and a HassConsult appreciation figure. All three are now
+              at /learn/financing. They were not wrong and they were not
+              weakened; they were simply too much to read at the moment
+              somebody is deciding, and the audience on this page is a
+              first-time owner.
+
+              WHAT STAYS IS ONE SENTENCE, built from the reader's own rent.
+              Click-through from a product page into a Learn article runs in
+              low single figures, so a reader who never clicks still has to
+              meet the argument once. This is that once. Do not grow it back:
+              anything that needs a second paragraph belongs in the hub. */}
           <div className="mt-16 border-t border-[color:var(--rule)] pt-12 sm:mt-20">
             <p className="eyebrow">What you get for it</p>
-            <h3 className="t-sub mt-4 max-w-[28ch]">
-              The rate is the headline. The ownership is the point.
-            </h3>
 
-            <div className="mt-9 grid grid-cols-1 gap-6 lg:grid-cols-3 lg:gap-8">
-              <div className="flex flex-col rounded-xl border border-[color:var(--rule)] bg-white p-6 lg:p-7">
-                <p className="meta font-bold uppercase tracking-[0.16em]">
-                  Against rent
+            <div className="mt-6 grid grid-cols-1 gap-9 lg:grid-cols-[1fr_280px] lg:items-start lg:gap-14">
+              <div className="min-w-0">
+                <h3 className="t-sub max-w-[24ch]">
+                  {gap > 0 ? (
+                    <>
+                      You move in now. Saving for the same house takes{" "}
+                      <span className="numeral">{yearsToSave}</span>{" "}
+                      {yearsToSave === 1 ? "year" : "years"}.
+                    </>
+                  ) : (
+                    "Your rent is already higher than the repayment."
+                  )}
+                </h3>
+
+                <p className="body-text mt-4 max-w-[54ch]">
+                  {gap > 0 ? (
+                    <>
+                      Both cost you about the same each month. Save the{" "}
+                      <strong className="numeral">{money(gap)}</strong>{" "}
+                      difference instead of borrowing it and you reach{" "}
+                      {money(loan)} in {yearsToSave} years, paying rent the
+                      whole way. That assumes your rent never rises. If it
+                      does, the saving takes longer.
+                    </>
+                  ) : (
+                    <>
+                      You would pay{" "}
+                      <strong className="numeral">{money(-gap)}</strong> a
+                      month less owning this house than you currently pay to
+                      live in somebody else&rsquo;s.
+                    </>
+                  )}
                 </p>
-                <label htmlFor={`${uid}-rent`} className="meta mt-4 block">
+
+                <ul className="mt-7 grid gap-3">
+                  {[
+                    "The rate is fixed for the whole term, so the figure above is your budget for twenty-five years.",
+                    "Interest on a home you build is deductible against your taxable income, up to KES 360,000 a year.",
+                    "You own the house from day one, and the equity in it is something a bank will lend against later.",
+                  ].map((line) => (
+                    <li key={line} className="flex gap-3">
+                      <span
+                        aria-hidden="true"
+                        className="mt-[0.62em] h-1 w-1 shrink-0 rounded-full bg-[#991212]"
+                      />
+                      <span className="body-text">{line}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="mt-8 flex flex-wrap gap-x-7 gap-y-3">
+                  <Link
+                    href="/learn/financing"
+                    className="meta font-bold text-[#212466] underline underline-offset-4"
+                  >
+                    See the working on all of this
+                  </Link>
+                  <Link
+                    href="/learn/guides/jenga-kwako-repayment-table"
+                    className="meta font-bold text-[#212466] underline underline-offset-4"
+                  >
+                    The full repayment table
+                  </Link>
+                  <Link
+                    href="/learn/guides/jenga-kwako-requirements-checklist"
+                    className="meta font-bold text-[#212466] underline underline-offset-4"
+                  >
+                    What the bank asks for
+                  </Link>
+                </div>
+              </div>
+
+              <div className="rounded-xl border border-[color:var(--rule)] bg-white p-6">
+                <label
+                  htmlFor={`${uid}-rent`}
+                  className="meta block font-bold uppercase tracking-[0.16em]"
+                >
                   What do you pay in rent now?
                 </label>
-                <div className="mt-2 flex items-center gap-2 rounded-lg border border-[color:var(--rule)] px-3 py-2 focus-within:border-[#991212]">
+                <div className="mt-3 flex items-center gap-2 rounded-lg border border-[color:var(--rule)] px-3 py-2 focus-within:border-[#991212]">
                   <span className="meta font-bold text-[color:var(--text-muted)]">
                     KES
                   </span>
@@ -393,77 +474,11 @@ const MortgageCalculator: React.FC = () => {
                     autoComplete="off"
                     value={rentText}
                     onChange={(e) => onRentChange(e.target.value)}
-                    className="numeral w-full border-0 bg-transparent p-0 text-[length:var(--type-card)] font-semibold text-[#212466] outline-none"
+                    className="numeral w-full min-w-0 border-0 bg-transparent p-0 text-[length:var(--type-card)] font-semibold text-[#212466] outline-none"
                   />
                 </div>
-                <p className="body-text mt-4">
-                  Over {term} that is{" "}
-                  <strong className="numeral">{money(rentTotal)}</strong> paid
-                  out, and none of it is yours at the end. And that
-                  assumes your rent never goes up.
-                </p>
-                <p className="body-text mt-3">
-                  {gap >= 0 ? (
-                    <>
-                      The repayment above is{" "}
-                      <strong className="numeral">{money(gap)}</strong> a month
-                      more than that, for a house you own.
-                    </>
-                  ) : (
-                    <>
-                      The repayment above is{" "}
-                      <strong className="numeral">{money(-gap)}</strong> a
-                      month <em>less</em> than that, for a house you own.
-                    </>
-                  )}
-                </p>
-              </div>
-
-              <div className="flex flex-col rounded-xl border border-[color:var(--rule)] bg-white p-6 lg:p-7">
-                <p className="meta font-bold uppercase tracking-[0.16em]">
-                  A rate that cannot move
-                </p>
-                <p className="numeral mt-4 text-[length:var(--type-sub)] font-semibold leading-none text-[#212466]">
-                  9.5%
-                </p>
-                <p className="meta mt-2">fixed, for the whole term</p>
-                <p className="body-text mt-4">
-                  A variable rate is a different promise. The Central
-                  Bank&rsquo;s mortgage survey put the market average at{" "}
-                  {MARKET_PRIOR_LABEL} in 2024 and {MARKET_LABEL} in 2025,
-                  with individual loans ranging from {MARKET_RANGE_LABEL}.
-                </p>
-                <p className="body-text mt-3">
-                  On a loan where the rate can move, one percentage point
-                  changes this monthly by about{" "}
-                  <strong className="numeral">{money(onePointMore)}</strong>.
-                  Yours cannot move.
-                </p>
-              </div>
-
-              <div className="flex flex-col rounded-xl border border-[color:var(--rule)] bg-white p-6 lg:p-7">
-                <p className="meta font-bold uppercase tracking-[0.16em]">
-                  What the asset has done
-                </p>
-                <p className="numeral mt-4 text-[length:var(--type-sub)] font-semibold leading-none text-[#212466]">
-                  3.10&times;
-                </p>
-                <p className="meta mt-2">
-                  satellite-town house prices since December 2007
-                </p>
-                <p className="body-text mt-4">
-                  That is roughly 6.3% a year over eighteen years, and ahead
-                  of the Nairobi suburbs over the same period.
-                </p>
-                <p className="body-text mt-3">
-                  It is not a straight line. Kiambu prices fell 4.8% in the
-                  year to June 2026. A rate fixed for {term} is how you sit
-                  out a year like that rather than being forced to sell into
-                  it.
-                </p>
-                <p className="meta mt-4">
-                  HassConsult Property Price Index, Q2 2026. Past movement is
-                  not a forecast.
+                <p className="meta mt-3">
+                  The sentence beside this is built from your rent.
                 </p>
               </div>
             </div>

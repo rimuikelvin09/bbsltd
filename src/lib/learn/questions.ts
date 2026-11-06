@@ -51,7 +51,7 @@ const samples: LearnQuestion[] = [
     askedAt: "2026-10-02",
     answeredBy: "Benchmark · Technical team",
     answer:
-      "The rate does not change - it is fixed for the term. What changes is the drawdown. The bank releases against certified stages, so stopping at roof level stops the release there too, and the repayment is calculated on what you have actually drawn. The risk is the second phase: you re-enter at whatever the terms are then, and an unfinished house is harder security.",
+      "The rate does not change. It is fixed for the term. What changes is the drawdown. The bank releases against certified stages, so stopping at roof level stops the release there too, and the repayment is calculated on what you have actually drawn. The risk is the second phase: you re-enter at whatever the terms are then, and an unfinished house is harder security.",
   },
   {
     id: "s3",
@@ -62,7 +62,7 @@ const samples: LearnQuestion[] = [
     askedAt: "2026-09-26",
     answeredBy: "Benchmark · Technical team",
     answer:
-      "He can hold a power of attorney, and many people do it that way. We would still not make him the one who certifies the work. Certification should sit with someone whose professional registration is on the line - the project QS or the supervising engineer - and your brother should be the second pair of eyes, not the only pair. That one separation prevents most of what goes wrong on diaspora builds.",
+      "He can hold a power of attorney, and many people do it that way. We would still not make him the one who certifies the work. Certification should sit with someone whose professional registration is on the line: the project QS or the supervising engineer. Your brother should be the second pair of eyes, not the only pair. That one separation prevents most of what goes wrong on diaspora builds.",
   },
 ];
 

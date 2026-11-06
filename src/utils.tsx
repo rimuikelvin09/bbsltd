@@ -1,5 +1,6 @@
 import {
   FaFacebook,
+  FaWhatsapp,
   FaGithub,
   FaInstagram,
   FaLinkedin,
@@ -15,6 +16,9 @@ export const getPlatformIconByName = (
   switch (platformName) {
     case "facebook": {
       return <FaFacebook size={24} className="min-w-fit" />;
+    }
+    case "whatsapp": {
+      return <FaWhatsapp size={24} className="min-w-fit" />;
     }
     case "github": {
       return <FaGithub size={24} className="min-w-fit" />;

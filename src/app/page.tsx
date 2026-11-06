@@ -4,7 +4,6 @@ import ProcessSection from "@/components/ProcessSection";
 import FinancingNudge from "@/components/FinancingNudge";
 import Logos from "@/components/Logos";
 import PortalBanner from "@/components/PortalBanner";
-import CTA from "@/components/CTA";
 import Testimonials from "@/components/Testimonials";
 import LearnBand from "@/components/LearnBand";
 import Container from "@/components/Container";
@@ -17,9 +16,8 @@ import { getProducts } from "@/lib/content";
  * 2. The process       : how it works, and why that is transparent
  * 3. The six routes    : full-height rows, with the guide riding along
  * 4. Financing        : a pointer to the calculator on Jenga Kwako
- * 5. Client Portal     : the tool that keeps the process visible
- * 6. Logos             : who has trusted them
- * 7. CTA               : the page's one conversion action
+ * 5. Logos             : who has trusted them
+ * 7. (the enquiry band and footer are rendered by the root layout)
  * 8. Testimonials      : closes on client voices, per the Peak-End Rule
  *
  * The hero's button is navigation ("See How It Works"), not a second ask: a
@@ -64,17 +62,15 @@ const HomePage = async () => {
 
       {/* White between the coloured bands so the page breathes instead of
           stacking two heavy blocks against each other. */}
+      <LearnBand />
+
+      {/* The portal banner sits AFTER Learn on purpose: it is the light band
+          that stops the Learn band, the enquiry band and the footer reading
+          as one long stretch of navy. If you reorder this page, keep a light
+          section immediately above the footer. */}
       <Container className="py-16 sm:py-20">
         <Reveal>
           <PortalBanner />
-        </Reveal>
-      </Container>
-
-      <LearnBand />
-
-      <Container>
-        <Reveal>
-          <CTA />
         </Reveal>
       </Container>
     </>

@@ -57,7 +57,7 @@ export const ourApproachData: OurApproachData = {
     {
       title: "Distill",
       description:
-        "We cut the brief down to what the budget and the site can genuinely carry. This is the uncomfortable conversation, and we would rather have it now than in month nine.",
+        "We cut the brief down to what the budget and the site can genuinely carry. We have that conversation now rather than in month nine.",
     },
     {
       title: "Express",

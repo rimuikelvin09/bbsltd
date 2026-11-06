@@ -5,6 +5,8 @@ import { notFound } from "next/navigation";
 
 import Container from "@/components/Container";
 import VideoFacade from "@/components/learn/VideoFacade";
+import RepaymentTable from "@/components/learn/RepaymentTable";
+import RequirementsList from "@/components/learn/RequirementsList";
 import AskDisclosure from "@/components/learn/AskDisclosure";
 import {
   getCategoryDef,
@@ -132,8 +134,10 @@ export default async function PublicationPage({ params }: PageProps) {
           <div className="mt-5 flex flex-wrap items-center gap-4">
             <span className="font-mono text-[length:var(--type-meta)] text-[color:var(--text-muted)]">
               {formatDate(item.publishedAt)}
-              {item.form === "written" && ` · ${item.readingMinutes ?? 5} min read`}
-              {item.form === "download" && item.fileMeta && ` · ${item.fileMeta}`}
+              {item.form === "written" &&
+                !item.tool &&
+                ` · ${item.readingMinutes ?? 5} min read`}
+              {item.fileMeta && ` · ${item.fileMeta}`}
             </span>
 
             {questions.length > 0 && (
@@ -160,7 +164,7 @@ export default async function PublicationPage({ params }: PageProps) {
               className="mt-8 aspect-video w-full max-w-[760px] rounded-xl object-cover" />
           )}
 
-          {item.form === "download" && item.fileUrl && (
+          {item.fileUrl && (
             <div className="mt-8 max-w-[560px] rounded-2xl border border-[color:var(--rule)] bg-white p-7">
               <p className="text-[length:var(--type-meta)] text-[color:var(--text-muted)]">
                 {/* No email wall. The enquiry form is the conversion point. */}
@@ -172,6 +176,11 @@ export default async function PublicationPage({ params }: PageProps) {
               </a>
             </div>
           )}
+
+          {/* Tools render full width, above the body. The blocks below them
+              are notes ON the tool, so they read in the right order. */}
+          {item.tool === "repayment-table" && <RepaymentTable />}
+          {item.tool === "requirements-checklist" && <RequirementsList />}
 
           <div className="mt-10 grid grid-cols-1 items-start gap-9 lg:grid-cols-[1.5fr_1fr] lg:gap-14">
             <div className="min-w-0">

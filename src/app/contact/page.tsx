@@ -1,7 +1,7 @@
 import FAQ from "@/components/FAQ";
 import Container from "@/components/Container";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import Reveal from "@/components/Reveal";
-import ContactHero from "@/components/ContactHero";
 import MapSection from "@/components/Maps";
 import { footerDetails } from "@/data/footer";
 
@@ -41,7 +41,19 @@ export const metadata: Metadata = {
 const ContactPage = () => {
   return (
     <>
-      <ContactHero />
+      {/* No hero. Somebody who clicked Contact wants the phone number, not a
+          photograph, so the page opens on the details. The enquiry band is
+          rendered site-wide by the root layout, which is why there is no
+          second form or button here. */}
+      <Container style={{ paddingTop: "calc(var(--header-h, 5rem) + 2rem)" }}>
+        <Breadcrumbs trail={[{ label: "Contact" }]} />
+        <h1 className="t-section mt-5 max-w-[18ch]">Talk to us about your project.</h1>
+        <p className="lede mt-5 max-w-[52ch]">
+          The office is in Kiambu Town and the phones are answered between
+          8.00am and 5.00pm, Monday to Friday. Saturday is by appointment.
+        </p>
+      </Container>
+
       <Container className="py-16">
         <Reveal>
           <FAQ />

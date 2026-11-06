@@ -278,7 +278,7 @@ export const caseStudies: CaseStudy[] = [
         title: "We priced the tenants before we drew the building.",
         caption: "Site and rental market",
         body: [
-          "Two 50x100 plots, a few metres off Waiyaki Way - close enough for tenants to reach town, far enough off it to sleep.",
+          "Two 50x100 plots, a few metres off Waiyaki Way, close enough for tenants to reach town, far enough off it to sleep.",
           "Before anything was drawn we surveyed what the area was actually letting for. Two-bedroom units aimed at families were going between KES 25,000 and 45,000 a month. That range decided the unit type.",
         ],
         pull:
@@ -290,7 +290,7 @@ export const caseStudies: CaseStudy[] = [
         title: "Forty units at full build, across two mirrored blocks.",
         caption: "The design, drawn",
         body: [
-          "Five floors, four units to a floor, parking in the basement - twenty units on the first plot, with the same block mirrored onto the second.",
+          "Five floors, four units to a floor, parking in the basement: twenty units on the first plot, with the same block mirrored onto the second.",
           "Two-bedroom throughout, sized for families rather than squeezed to whatever made the floor plan look efficient. A unit that lets for 45,000 and keeps its tenant for four years beats one that lets for 50,000 and turns over every eight months.",
         ],
       },
@@ -309,7 +309,7 @@ export const caseStudies: CaseStudy[] = [
         title: "We phased it around income, not around construction.",
         caption: "Phased around income",
         body: [
-          "Phase 1 is the first two floors of block one: eight complete, lettable units with their own services and their own entrance - not a half-finished frame waiting for more money.",
+          "Phase 1 is the first two floors of block one: eight complete, lettable units with their own services and their own entrance, not a half-finished frame waiting for more money.",
           "The structure was designed and built for five floors from day one, so phase 2 adds floors to a building that is already earning rather than starting a new argument with an engineer.",
         ],
         pull:
@@ -322,7 +322,7 @@ export const caseStudies: CaseStudy[] = [
         caption: "What went wrong",
         body: [
           "Two things went wrong, and neither is unusual: people presenting themselves as officials from regulatory bodies, looking for a reason to stop work; and suppliers delivering late.",
-          "Neither became her problem. Not because we hid them - because the paperwork was already in order before anybody asked to see it, and every exchange was documented and traceable. An approval you can produce on the spot ends that conversation in about a minute.",
+          "Neither became her problem. Not because we hid them, but because the paperwork was already in order before anybody asked to see it, and every exchange was documented and traceable. An approval you can produce on the spot ends that conversation in about a minute.",
         ],
         pull:
           "The same files that keep a client informed are the ones that make you difficult to extort.",
@@ -334,7 +334,7 @@ export const caseStudies: CaseStudy[] = [
         caption: "Phase 1, occupied",
         body: [
           "She has not had to move from Mombasa, and she has not had to spend her retirement supervising a building site.",
-          "Phase 2 will be built on what the building earns rather than on what is left of her savings - which was the whole point of phasing it this way.",
+          "Phase 2 will be built on what the building earns rather than on what is left of her savings, which was the whole point of phasing it this way.",
         ],
         media: [{ caption: "Phase 1 finished and painted, compound walled, tanks up.", kind: "photo" }],
       },
@@ -347,7 +347,7 @@ export const caseStudies: CaseStudy[] = [
           { term: "Location", value: "Kinoo, Kiambu County" },
           { term: "Plots", value: "2 x 50x100 ft" },
           { term: "Context", value: "A few metres off Waiyaki Way" },
-          { term: "Area rent, 2-bed", value: "KES 25,000 - 45,000 / month" },
+          { term: "Area rent, 2-bed", value: "KES 25,000 to 45,000 / month" },
         ],
       },
       {
@@ -400,7 +400,7 @@ export const caseStudies: CaseStudy[] = [
     title: "Four-Bedroom Maisonette, Kikuyu",
     headline: "Drawings he could build from without us.",
     summary:
-      "A client who intended to build it himself, in stages, with his own fundi. We did the design and the approvals and stopped there - on purpose.",
+      "A client who intended to build it himself, in stages, with his own fundi. We did the design and the approvals and stopped there, on purpose.",
     talkingPoints: [
       "Client self-building in stages over roughly three years",
       "Wanted drawings and approvals he could trust, not a contractor",
@@ -471,7 +471,7 @@ export const caseStudies: CaseStudy[] = [
         caption: "What was issued",
         body: [
           "Architectural and structural drawings, county approval, NEMA where it applied, and a bill of quantities so he can price materials against something real rather than against what a hardware tells him.",
-          "We quoted the build as well. He has not taken it, and that is fine - a client who comes back in two years because the drawings were honest is worth more than one talked into a contract today.",
+          "We quoted the build as well. He has not taken it. The drawings stand on their own, and he can take them to any contractor he chooses.",
         ],
         pull:
           "Not every commission should end with us on site. Pretending otherwise costs more work than it wins.",
@@ -510,7 +510,7 @@ export const caseStudies: CaseStudy[] = [
 
     askHeading: "Do you just need the drawings?",
     askBody:
-      "If you are planning to build it yourself and you want a set of drawings and approvals you can rely on, that is a commission on its own. We will cost the build too, so you know what you are taking on - and you are under no obligation to give it to us.",
+      "If you are planning to build it yourself and you want a set of drawings and approvals you can rely on, that is a commission on its own. We will cost the build too, so you know what you are taking on, and you are under no obligation to give it to us.",
   },
 
   /* ---------------------------------------------------------------------
@@ -542,7 +542,7 @@ export const caseStudies: CaseStudy[] = [
       "Frame complete; cladding from November",
     ],
 
-    statusNote: "In progress - steel frame complete, cladding from November 2026.",
+    statusNote: "In progress. Steel frame complete, cladding from November 2026.",
     location: "Ruiru, Kiambu County",
 
     hero: {
@@ -567,7 +567,7 @@ export const caseStudies: CaseStudy[] = [
         caption: "The brief",
         body: [
           "A distributor operating out of rented space in Industrial Area, with a lease running to October and a landlord who had already found the next tenant. They had bought land in Ruiru and needed a building on it that worked.",
-          "Everything in the project ran off that one date. A warehouse delivered two months late is not a warehouse delivered late - it is storage rented twice and stock moved twice.",
+          "Everything in the project ran off that one date. A warehouse delivered two months late is not a warehouse delivered late. It is storage rented twice and stock moved twice.",
         ],
         media: [
           { caption: "The site before work", kind: "photo" },
@@ -593,7 +593,7 @@ export const caseStudies: CaseStudy[] = [
         caption: "The design",
         body: [
           "Clear span of 24 metres, eaves at 7, with the loading bays on the south face away from the access road.",
-          "Steel was not the cheapest option. It was the one that could be fabricated off site while the foundations were still going in, which bought about seven weeks against a masonry alternative - and seven weeks was the whole margin.",
+          "Steel was not the cheapest option. It was the one that could be fabricated off site while the foundations were still going in, which bought about seven weeks against a masonry alternative, and seven weeks was the whole margin.",
         ],
         media: [
           { caption: "Long elevation", kind: "drawing" },
@@ -606,7 +606,7 @@ export const caseStudies: CaseStudy[] = [
         title: "The office block was going to sink the programme.",
         caption: "The problem",
         body: [
-          "The original brief had a two-storey office attached to the shed, sharing its structure. That tied the warehouse's completion to the office's finishes - plastering, glazing, fit-out - none of which the client needed in October.",
+          "The original brief had a two-storey office attached to the shed, sharing its structure. That tied the warehouse's completion to the office's finishes: plastering, glazing, fit-out, none of which the client needed in October.",
           "Built as drawn, the whole building would have been handed over at once, in December.",
         ],
         media: [

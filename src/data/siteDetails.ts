@@ -1,7 +1,7 @@
 export const siteDetails = {
   siteName: "Benchmark Building Solutions ltd",
   siteDescription:
-    "Design, county approvals and construction on one contract. A Kenyan building contractor since 2012, with architects and engineers in house.",
+    "Design, county approvals and construction on one contract. A Kenyan building contractor since 2012, with all consultants in house.",
   /**
    * The CANONICAL domain, and the single source for every absolute URL the
    * site emits: metadataBase, every canonical tag, the Open Graph URL, the
@@ -19,7 +19,7 @@ export const siteDetails = {
   metadata: {
     title: "Benchmark Building Solutions ltd",
     description:
-      "A Kenyan building contractor since 2012. Design, county approvals and construction on one contract, with architects and engineers in house.",
+      "A Kenyan building contractor since 2012. Design, county approvals and construction on one contract, with all consultants in house.",
   },
   language: "en-us",
   locale: "en-US",

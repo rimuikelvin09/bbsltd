@@ -44,11 +44,6 @@ export interface IFAQ {
   answer: string;
 }
 
-export interface DailyTip {
-  heading: string;
-  tip: string;
-}
-
 export interface ISocials {
   facebook?: string;
   instagram?: string;
@@ -334,6 +329,15 @@ export interface LearnItem {
   /** form: "written" */
   blocks?: LearnBlock[];
   readingMinutes?: number;
+
+  /**
+   * An interactive component rendered above the blocks. Set this where a
+   * guide is worth more as a thing you use than a thing you read: the
+   * repayment table and the requirements checklist both began as PDFs.
+   * The PDF stays alongside, as `fileUrl`, because that is what people
+   * carry to the bank.
+   */
+  tool?: "repayment-table" | "requirements-checklist";
 
   /** Visible in development, excluded from production builds. */
   draft?: boolean;

@@ -331,10 +331,6 @@ export default function CorporateProfilePage() {
               Sources for every figure on this page
             </summary>
 
-            <p className="mt-5 max-w-[62ch] text-[length:var(--type-meta)] text-[color:var(--text-muted)]">
-              Citing the numbers is the same argument this page is making,
-              performed rather than claimed.
-            </p>
 
             <div className="mt-5 overflow-x-auto">
               <table className="w-full border-collapse text-[0.8125rem]">

@@ -117,7 +117,8 @@ export const guides: LearnItem[] = [
   {
     slug: "jenga-kwako-repayment-table",
     category: "guides",
-    form: "download",
+    form: "written",
+    tool: "repayment-table",
     title: "Jenga Kwako repayment table",
     summary:
       "Every monthly repayment from KES 1M to 10.5M, across 1 to 25 years, at 9.5% fixed. Find your figure before you talk to anyone.",
@@ -125,11 +126,28 @@ export const guides: LearnItem[] = [
     topics: ["financing", "jenga-kwako", "repayments", "mortgage"],
     fileUrl: "/documents/amortizationtable.pdf",
     fileMeta: "PDF",
+    blocks: [
+      { type: "h2", text: "What these figures assume" },
+      {
+        type: "p",
+        text: "9.5% fixed on reducing balance for the whole term. Arrangement and valuation fees, stamp duty and insurance are not in these numbers. They are real costs and your bank quotes them separately, so treat the figure above as the repayment rather than the total cost of borrowing.",
+      },
+      {
+        type: "p",
+        text: "The maximum loan is KES 10.5 million over a maximum of 25 years. Your whole project, land included, can run to KES 15 million, with the mortgage covering up to 10.5 of it and you putting in the rest.",
+      },
+      { type: "h2", text: "Why the early years look like that" },
+      {
+        type: "p",
+        text: "Interest is charged on what you still owe, so in year one almost all of the payment is interest and very little comes off the loan. That reverses as the balance falls. It is how every reducing-balance mortgage works.",
+      },
+    ],
   },
   {
     slug: "jenga-kwako-requirements-checklist",
     category: "guides",
-    form: "download",
+    form: "written",
+    tool: "requirements-checklist",
     title: "Jenga Kwako requirements checklist",
     summary:
       "What the bank asks for, salaried and self-employed, plus the construction documents. Gather these before you apply and the file moves.",
@@ -137,6 +155,22 @@ export const guides: LearnItem[] = [
     topics: ["financing", "jenga-kwako", "documents", "mortgage"],
     fileUrl: "/documents/jkrequirements.pdf",
     fileMeta: "PDF",
+    blocks: [
+      { type: "h2", text: "The one that stops most applications" },
+      {
+        type: "p",
+        text: "The title has to be in your name and it has to be clean. Any lender takes a charge on the title, and it cannot do that where the succession is unfinished or the land is still registered to somebody else. If that is your position, start the succession now, because it moves far more slowly than a loan application does.",
+      },
+      { type: "h2", text: "Gather them before you apply, not after" },
+      {
+        type: "p",
+        text: "A file that arrives complete moves. A file that arrives in pieces goes back to the bottom of the pile every time it is returned, and the three or four weeks that costs are the most avoidable delay in this whole process.",
+      },
+      {
+        type: "p",
+        text: "The construction stack is the part we prepare with you: the priced bill of quantities, the approved plans and structural drawings, the NCA compliance certificate and the practising certificates for each consultant. On a Jenga Kwako build that work is already happening, which is most of the reason the applications we submit move faster than the ones clients assemble alone.",
+      },
+    ],
   },
   {
     slug: "diaspora-payment-guide-usa",
@@ -181,7 +215,7 @@ export const written: LearnItem[] = [
       { type: "p", text: "The rate is 9.5% fixed for the term, supported by the Kenya Mortgage Refinance Company. Fixed is the part worth pausing on: a variable rate that starts lower can finish higher, and on a twenty-year commitment that is a risk you carry alone. [CONFIRM: maximum term, maximum loan amount, and whether the rate is fixed for the full term.]" },
       { type: "h2", text: "Who it is for" },
       { type: "p", text: "In practice, three groups. People who own a plot and have been saving towards building on it in cash, slowly, for years. People already building who have run out of money somewhere around roof level. And Kenyans abroad who own land here and want to build without flying home every quarter." },
-      { type: "p", text: "The common requirement is the one that stops most applications before they start: the title must be in your name. Any lender takes a charge on the title, and it cannot do that against a name that is not yours. If the land is still registered to a parent, start the transfer or the succession now - it moves far more slowly than your drawings will." },
+      { type: "p", text: "The common requirement is the one that stops most applications before they start: the title must be in your name. Any lender takes a charge on the title, and it cannot do that against a name that is not yours. If the land is still registered to a parent, start the transfer or the succession now. It moves far more slowly than your drawings will." },
       { type: "h2", text: "What the bank asks for" },
       { type: "p", text: "There are three stacks of paper, gathered in parallel rather than in sequence. The full checklist is in the downloadable guide; in summary:" },
       { type: "ul", items: [
@@ -189,9 +223,9 @@ export const written: LearnItem[] = [
         "Income. Salaried applicants bring payslips and bank statements; self-employed applicants bring business statements and returns. [CONFIRM: months required for each.]",
         "The build. Approved architectural drawings, a bill of quantities, and county approval for the works.",
       ]},
-      { type: "p", text: "The third stack is where most delay happens, and it is the one we handle. Drawings and a bill of quantities are not paperwork you produce to satisfy a bank - they are the thing that tells you what the house costs before you commit to it." },
+      { type: "p", text: "The third stack is where most delay happens, and it is the one we handle. Drawings and a bill of quantities are not paperwork you produce to satisfy a bank. They are the thing that tells you what the house costs before you commit to it." },
       { type: "h2", text: "Where people go wrong" },
-      { type: "p", text: "Three patterns, repeatedly. Applying before the title is clean, which stalls everything. Budgeting from the construction cost alone and forgetting approvals, professional fees and the connection charges that arrive at the end. And stopping at roof level intending to finish later - the rate does not change, but the release stops there, and an unfinished house is harder security if you need to come back." },
+      { type: "p", text: "Three patterns, repeatedly. Applying before the title is clean, which stalls everything. Budgeting from the construction cost alone and forgetting approvals, professional fees and the connection charges that arrive at the end. And stopping at roof level intending to finish later. The rate does not change, but the release stops there, and an unfinished house is harder security if you need to come back." },
     ],
   },
   {
@@ -206,7 +240,7 @@ export const written: LearnItem[] = [
     readingMinutes: 6,
     draft: true,
     blocks: [
-      { type: "p", text: "PLACEHOLDER - structure only. This piece exists so the Legislation category can be designed with content in it. Every figure below needs verifying against the current regulations before anything is published." },
+      { type: "p", text: "PLACEHOLDER: structure only. This piece exists so the Legislation category can be designed with content in it. Every figure below needs verifying against the current regulations before anything is published." },
       { type: "h2", text: "The threshold" },
       { type: "p", text: "Not every build needs an environmental licence, and a great many people pay for one they did not require. [CONFIRM: the current project thresholds under the Environmental Management and Co-ordination Act and its regulations, and whether they changed in the latest amendment.]" },
       { type: "h2", text: "What a submission contains" },
@@ -217,7 +251,7 @@ export const written: LearnItem[] = [
       ]},
       { type: "h2", text: "What stalls a file" },
       { type: "p", text: "In our experience two things: a submission that does not match the drawings lodged with the county, and public participation that was not documented properly. Both are avoidable and neither is obvious from the forms." },
-      { type: "p", text: "This is the register the whole Legislation category should be written in - what the rule is, what it costs, what goes wrong - rather than quoting the Act back at people." },
+      { type: "p", text: "This is the register the whole Legislation category should be written in: what the rule is, what it costs, what goes wrong, rather than quoting the Act back at people." },
     ],
   },
   {
@@ -232,7 +266,7 @@ export const written: LearnItem[] = [
     readingMinutes: 6,
     draft: true,
     blocks: [
-      { type: "p", text: "PLACEHOLDER - structure only. This piece exists so the Trends category can be designed with content in it, and to set the register: interpretation for a Kenyan builder, never news aggregation." },
+      { type: "p", text: "PLACEHOLDER: structure only. This piece exists so the Trends category can be designed with content in it, and to set the register: interpretation for a Kenyan builder, never news aggregation." },
       { type: "h2", text: "What is actually happening" },
       { type: "p", text: "[CONFIRM: current adoption figures and which markets, with sources. Anything cited here must be verifiable and dated.]" },
       { type: "h2", text: "What transfers" },
@@ -243,7 +277,7 @@ export const written: LearnItem[] = [
       ]},
       { type: "h2", text: "What does not" },
       { type: "p", text: "Transport. A panel that saves three days in a factory loses them on a road to a site a lorry cannot reach, and much of the country is that site. Financing is the other barrier: staged release against certified work assumes work happening on the plot, and a bank has no obvious way to certify a component sitting in a yard." },
-      { type: "p", text: "That second point is the kind of thing only someone who has drawn down a construction loan would notice - which is precisely why this category is worth writing and why a reposted news item would not be." },
+      { type: "p", text: "That second point is the kind of thing only someone who has drawn down a construction loan would notice, which is precisely why this category is worth writing and why a reposted news item would not be." },
     ],
   },
 ];

@@ -9,7 +9,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "About us",
   description:
-    "Who we are: a Kenyan building contractor since 2012, with architectural, structural and MEP work in house, and the values the team is held to.",
+    "Who we are: a Kenyan building contractor since 2012, with all consultants in house, and the values the team is held to.",
   alternates: { canonical: "/about" },
 
   /**
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "About us",
     description:
-      "Who we are: a Kenyan building contractor since 2012, with architectural, structural and MEP work in house.",
+      "Who we are: a Kenyan building contractor since 2012, with all consultants in house.",
     url: "/about",
     type: "website",
     images: ["/images/seoimage.jpg"],
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "About us",
     description:
-      "Who we are: a Kenyan building contractor since 2012, with architectural, structural and MEP work in house.",
+      "Who we are: a Kenyan building contractor since 2012, with all consultants in house.",
     images: ["/images/seoimage.jpg"],
   },
 };

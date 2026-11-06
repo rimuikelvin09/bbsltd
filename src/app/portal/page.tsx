@@ -3,7 +3,6 @@ import PortalHero from "@/components/PortalHero";
 import Features from "@/components/Features/Features";
 import Container from "@/components/Container";
 import Section from "@/components/Section";
-import CTA from "@/components/CTA";
 
 import type { Metadata } from "next";
 
@@ -49,7 +48,6 @@ const PortalPage = () => {
           description="What you can see in it"
         >
           <Features />
-          <CTA />
         </Section>
       </Container>
     </>

@@ -5,6 +5,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 
 import Header from "@/components/Header";
 import ThemeScript from "@/components/ThemeScript";
+import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
 import Preloader from "@/components/Preloader";
 import WhatsAppButton from "@/components/WhatsAppButton";
@@ -114,6 +115,9 @@ export default async function RootLayout({
         <BackToTop />
 
         <main>{children}</main>
+        {/* The enquiry band is the top of the footer and renders on every
+            page. Do not add <CTA /> to a page: it is already here. */}
+        <CTA />
         <Footer products={products} />
         <SpeedInsights />
       </body>

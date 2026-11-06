@@ -65,10 +65,9 @@ export default function PortfolioPage() {
             </h1>
           </div>
           <p className="max-w-[46ch] text-[length:var(--type-lede)] leading-[1.6] text-[color:var(--text-soft)]">
-            Not a gallery. Each one sets out what the client came to us with,
-            what the site and the numbers allowed, where it got difficult, and
-            what it is doing now. If one sounds like your situation, that is
-            the point.
+            Each one sets out what the client came to us with, what the site
+            and the numbers allowed, where it got difficult, and what it is
+            doing now. If one sounds like your situation, start there.
           </p>
         </div>
 

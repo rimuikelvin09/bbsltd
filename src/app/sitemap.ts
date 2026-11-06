@@ -62,6 +62,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE}/contact`, lastModified: now, changeFrequency: "yearly", priority: 0.6 },
     { url: `${BASE}/portal`, lastModified: now, changeFrequency: "yearly", priority: 0.4 },
     { url: `${BASE}/learn`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
+    // The financing hub is a static segment beside /learn/[category], so it
+    // is not produced by the category loop below and has to be listed here.
+    { url: `${BASE}/learn/financing`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
   ];
 
   const productPages: MetadataRoute.Sitemap = products.map((p) => ({

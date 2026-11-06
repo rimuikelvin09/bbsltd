@@ -123,6 +123,30 @@ export default async function LearnPage() {
         className="surface-light w-full scroll-mt-24 py-16 sm:py-20 lg:py-24"
       >
         <Container>
+          {/* The financing hub is a TOPIC view, not a category, so it cannot
+              live in the six-card grid without breaking what a category
+              means. It sits above them instead, which also matches how
+              people arrive: paying for it is the first question. */}
+          <Link
+            href="/learn/financing"
+            className="group mb-14 flex flex-col gap-3 rounded-xl border border-[color:var(--rule)] bg-white p-7 transition-colors hover:border-[#991212] sm:flex-row sm:items-center sm:justify-between sm:gap-8"
+          >
+            <div className="min-w-0">
+              <p className="eyebrow">Start here</p>
+              <h2 className="t-card mt-2 text-[color:var(--text)]">
+                Affordable construction financing
+              </h2>
+              <p className="body-text mt-2 max-w-[60ch]">
+                What a construction mortgage costs a month, what the bank asks
+                for, and whether borrowing beats saving. The repayment table
+                and the requirements checklist live here.
+              </p>
+            </div>
+            <span className="meta shrink-0 font-bold text-[#212466] group-hover:underline">
+              Open it
+            </span>
+          </Link>
+
           <div className="max-w-[58ch]">
             <p className="eyebrow">Six places to start</p>
             <h2 className="t-section mt-4">Pick what you came for.</h2>

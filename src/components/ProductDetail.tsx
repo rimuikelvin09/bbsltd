@@ -30,7 +30,7 @@ const CREDENTIALS = [
   "NCA accredited",
   "Building since 2012",
   "300+ personnel on site",
-  "Architectural · structural · MEP in-house",
+  "All consultants in house",
 ];
 
 /**
